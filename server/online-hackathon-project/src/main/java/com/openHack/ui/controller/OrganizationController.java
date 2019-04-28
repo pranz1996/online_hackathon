@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.openHack.service.OrganizationService;
 import com.openHack.shared.dto.OrganizationDto;
-import com.openHack.ui.model.request.OrganizationRequestModel;
-import com.openHack.ui.model.response.OrganizationResponseModel;
+import com.openHack.ui.model.request.OrganizationDetailsRequestModel;
+import com.openHack.ui.model.response.OrganizationDetailsResponseModel;
 
 @RestController
 @RequestMapping("organizations")  // http://localhost:8080/organizations
@@ -27,12 +27,12 @@ public class OrganizationController {
 	
 	// create and add new organization
 	@PostMapping
-	public OrganizationResponseModel createOrganization(@RequestBody OrganizationRequestModel organizationRequestModel) {
+	public OrganizationDetailsResponseModel createOrganization(@RequestBody OrganizationDetailsRequestModel organizationRequestModel) {
 		
 		// OrganizationRequestModel object: contains input request data
 		
 		// response model to send data to UI
-		OrganizationResponseModel returnModel = new OrganizationResponseModel();
+		OrganizationDetailsResponseModel returnModel = new OrganizationDetailsResponseModel();
 		
 		// DTO object to hold the input request data
 		OrganizationDto organizationDto = new OrganizationDto();
@@ -49,10 +49,10 @@ public class OrganizationController {
 	
 	// get any organization by id
 	@GetMapping(path = "/{id}")
-	public OrganizationResponseModel getOrganization(@PathVariable long id) {
+	public OrganizationDetailsResponseModel getOrganization(@PathVariable long id) {
 		
 		// response model to send data to UI
-		OrganizationResponseModel returnModel = new OrganizationResponseModel();
+		OrganizationDetailsResponseModel returnModel = new OrganizationDetailsResponseModel();
 		
 		// Service method Call to get organization data based on id
 		OrganizationDto organizationDetails = organizationService.getOrganizationById(id);
@@ -64,12 +64,12 @@ public class OrganizationController {
 	
 	// update any organization
 	@PutMapping(path = "/{id}")
-	public OrganizationResponseModel updateOrganization(@PathVariable long id, @RequestBody OrganizationRequestModel organizationRequestModel) {
+	public OrganizationDetailsResponseModel updateOrganization(@PathVariable long id, @RequestBody OrganizationDetailsRequestModel organizationRequestModel) {
 		
 		// OrganizationRequestModel object: contains input request data
 		
 		// response model to send data to UI
-		OrganizationResponseModel returnModel = new OrganizationResponseModel();
+		OrganizationDetailsResponseModel returnModel = new OrganizationDetailsResponseModel();
 		
 		// DTO object to hold the input request data
 		OrganizationDto organizationDto = new OrganizationDto();

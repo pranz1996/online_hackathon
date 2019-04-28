@@ -2,7 +2,7 @@ package com.openHack.ui.model.request;
 
 import com.openHack.embeddedEntity.Address;
 
-public class OrganizationRequestModel {
+public class OrganizationDetailsRequestModel {
 	private String name;
 	private long owner;
 	private String description;

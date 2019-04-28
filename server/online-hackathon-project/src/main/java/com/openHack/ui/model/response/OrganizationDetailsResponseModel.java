@@ -2,7 +2,7 @@ package com.openHack.ui.model.response;
 
 import com.openHack.embeddedEntity.Address;
 
-public class OrganizationResponseModel {
+public class OrganizationDetailsResponseModel {
 	private long id;
 	private String name;
 	private long owner;
@@ -40,8 +40,9 @@ public class OrganizationResponseModel {
 	}
 	@Override
 	public String toString() {
-		return "OrganizationResponseModel [id=" + id + ", name=" + name + ", owner=" + owner + ", description="
-				+ description + ", address=" + address + "]";
+		return "OrganizationDetailsResponseModel [name=" + name + ", owner=" + owner + ", description=" + description
+				+ ", address=" + address + "]";
 	}
+	
 
 }

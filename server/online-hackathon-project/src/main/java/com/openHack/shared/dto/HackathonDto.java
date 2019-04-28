@@ -45,7 +45,7 @@ public class HackathonDto {
 	}
 	@Override
 	public String toString() {
-		return "HackathonDto [id=" + id + ", eventName=" + eventName + ", description=" + description + ", fee=" + fee
+		return "HackathonDto [eventName=" + eventName + ", description=" + description + ", fee=" + fee
 				+ ", minTeamSize=" + minTeamSize + ", maxTeamSize=" + maxTeamSize + "]";
 	}
 	

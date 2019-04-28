@@ -64,6 +64,9 @@ public class OrganizationServiceImpl implements OrganizationService {
 		organizationEntity.setName(organizationEntity.getName());
 		organizationEntity.setDescription(organizationDto.getDescription());
 		
+//		Address updatedAddress = organizationDto.getAddress();
+//		organizationEntity.setAddress(updatedAddress);
+	
 		Address updateAddress = new Address();
 		updateAddress.setStreet(organizationDto.getAddress().getStreet());
 		updateAddress.setCity(organizationDto.getAddress().getCity());

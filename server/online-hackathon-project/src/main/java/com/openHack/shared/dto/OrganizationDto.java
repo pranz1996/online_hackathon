@@ -40,9 +40,8 @@ public class OrganizationDto {
 	}
 	@Override
 	public String toString() {
-		return "OrganizationDto [id=" + id + ", name=" + name + ", owner=" + owner + ", description=" + description
-				+ ", address=" + address + "]";
+		return "OrganizationDto [name=" + name + ", owner=" + owner + ", description=" + description + ", address="
+				+ address + "]";
 	}
-	
 	
 }

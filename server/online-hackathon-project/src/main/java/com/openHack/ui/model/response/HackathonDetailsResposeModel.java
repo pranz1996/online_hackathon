@@ -45,8 +45,9 @@ public class HackathonDetailsResposeModel {
 	}
 	@Override
 	public String toString() {
-		return "HackathonDetailsResposeModel [id=" + id + ", eventName=" + eventName + ", description=" + description
-				+ ", fee=" + fee + ", minTeamSize=" + minTeamSize + ", maxTeamSize=" + maxTeamSize + "]";
+		return "HackathonDetailsResposeModel [eventName=" + eventName + ", description=" + description + ", fee=" + fee
+				+ ", minTeamSize=" + minTeamSize + ", maxTeamSize=" + maxTeamSize + "]";
 	}
+	
 	
 }
