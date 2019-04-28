@@ -29,14 +29,13 @@ public class HackathonController {
 	// get any hackathon by id
 	@GetMapping(path="/{id}")
 	public HackathonDetailsResposeModel getHackathon(@PathVariable long id) {
-		// HackathonDetailsRequestModel object: contains input request data
 		
 		// response model to send data to UI
 		HackathonDetailsResposeModel returnModel = new HackathonDetailsResposeModel();
 					
 		// Service method Call to get hackathon data based on id
 		HackathonDto hackathonDetails = hackathonService.getHackathonById(id);
-		// transferring Dto object data to response model
+		// transferring DTO object data to response model
 		BeanUtils.copyProperties(hackathonDetails, returnModel);
 				
 		return returnModel;
@@ -73,6 +72,7 @@ public class HackathonController {
 	// update any hackathon details
 	@PutMapping(path="/{id}")
 	public HackathonDetailsResposeModel updateHackthon(@PathVariable long id, @RequestBody HackathonDetailsRequestModel hackathonDetailsRequestModel) {
+		
 		// HackathonDetailsRequestModel object: contains input request data
 		
 		// response model to send data to UI

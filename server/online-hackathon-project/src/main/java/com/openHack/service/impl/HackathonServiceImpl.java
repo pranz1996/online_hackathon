@@ -58,7 +58,7 @@ public class HackathonServiceImpl implements HackathonService {
 		// Repository method (findById()) to fetch hackathon details
 		HackathonEntity hackathonEntity = hackathonRepository.findById(id);
 		
-		// updatating the fields for hackathonEntity
+		// updating the fields for hackathonEntity
 		hackathonEntity.setDescription(hackathonDto.getDescription());
 		hackathonEntity.setEventName(hackathonDto.getEventName());
 		hackathonEntity.setFee(hackathonDto.getFee());
