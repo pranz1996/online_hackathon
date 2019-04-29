@@ -10,7 +10,7 @@ public class UserDetailsResponseModel {
 	private String title; // business title
 	private String about;
 	private Address address;
-	
+
 	public long getId() {
 		return id;
 	}
@@ -53,6 +53,7 @@ public class UserDetailsResponseModel {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
+	
 	@Override
 	public String toString() {
 		return "UserDetailsResponseModel [userName=" + userName + ", email=" + email + ", portraitUrl=" + portraitUrl

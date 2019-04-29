@@ -5,7 +5,7 @@ import com.openHack.embeddedEntity.Address;
 public class OrganizationDto {
 	private long id;
 	private String name;
-	private long owner;
+	private long ownerId;
 	private String description;
 	private Address address;
 	public long getId() {
@@ -20,11 +20,11 @@ public class OrganizationDto {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public long getOwner() {
-		return owner;
+	public long getOwnerId() {
+		return ownerId;
 	}
-	public void setOwner(long owner) {
-		this.owner = owner;
+	public void setOwnerId(long ownerId) {
+		this.ownerId = ownerId;
 	}
 	public String getDescription() {
 		return description;
@@ -40,7 +40,7 @@ public class OrganizationDto {
 	}
 	@Override
 	public String toString() {
-		return "OrganizationDto [name=" + name + ", owner=" + owner + ", description=" + description + ", address="
+		return "OrganizationDto [name=" + name + ", ownerId=" + ownerId + ", description=" + description + ", address="
 				+ address + "]";
 	}
 	

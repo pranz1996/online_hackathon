@@ -26,7 +26,7 @@ public class UserController {
 	
 	// create and add new user
 	@PostMapping
-	public UserDetailsResponseModel createUser(@RequestBody UserDetailsRequestModel userDetailsRequestModel) {
+	public UserDetailsResponseModel sugnUp(@RequestBody UserDetailsRequestModel userDetailsRequestModel) {
 		
 		// UserDetailsRequestModel object: contains input request data
 		

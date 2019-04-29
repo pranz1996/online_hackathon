@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openHack.embeddedEntity.Address;
 import com.openHack.io.entity.OrganizationEntity;
+import com.openHack.io.entity.UserEntity;
 import com.openHack.io.repository.OrganizationRepository;
+import com.openHack.io.repository.UserRepository;
 import com.openHack.service.OrganizationService;
 import com.openHack.shared.dto.OrganizationDto;
 
@@ -17,20 +19,47 @@ public class OrganizationServiceImpl implements OrganizationService {
 	@Autowired
 	OrganizationRepository organizationRepository;
 	
+	@Autowired
+	UserRepository userRepository;
+	
 	// service method to store organization object to database
 	@Override
 	public OrganizationDto createOrganization(OrganizationDto organizationDto) {
 		
-		// DTO object to Entity object transfer
+		// Converting DTO object to Entity object
 		OrganizationEntity organizationEntity = new OrganizationEntity();
 		BeanUtils.copyProperties(organizationDto, organizationEntity);
 		
-		// Repository method (save) to save OrganizationEntity object to table organizations
-		OrganizationEntity storedOrganizationDetails = organizationRepository.save(organizationEntity);
+		// Fetch Organization 
+		OrganizationEntity existingOrganization = organizationRepository.findByName(organizationEntity.getName());
+		// To check if organization already exists ... 
+		if(existingOrganization != null)
+			throw new RuntimeException("Organization with name already exists ... ");
+				
+		// Fetch User
+		UserEntity userEntity = userRepository.findById(organizationDto.getOwnerId());
+		// To check if user is associated with any organization
+		if(userEntity.getOrganizationEntity() != null) 
+			throw new RuntimeException("User is already joined with any organization ... ");
 		
-		// returning the saved object to UI
+		// adding new organization details for user 
+		userEntity.setOrganizationEntity(organizationEntity);
+		// removing all the sent request to organizations
+		userEntity.setOrganizations(null);
+		
+		userEntity = userRepository.save(userEntity);
+		
+//		System.out.println(" user " + userEntity);
+//		System.out.println(" user " + userEntity.getOrganizationEntity());
+//		
+	
+		// return organizationEntity details
+		organizationEntity = userEntity.getOrganizationEntity();
+		
+		//System.out.println(organizationEntity);
+		
 		OrganizationDto returnValue = new OrganizationDto();
-		BeanUtils.copyProperties(storedOrganizationDetails, returnValue);
+		BeanUtils.copyProperties(organizationEntity, returnValue);
 		
 		return returnValue;
 	}

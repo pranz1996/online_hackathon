@@ -24,7 +24,6 @@ public class OrganizationController {
 	@Autowired
 	OrganizationService organizationService;
 		
-	
 	// create and add new organization
 	@PostMapping
 	public OrganizationDetailsResponseModel createOrganization(@RequestBody OrganizationDetailsRequestModel organizationRequestModel) {

@@ -53,11 +53,12 @@ public class UserDetailsRequestModel {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
+	
 	@Override
 	public String toString() {
-		return "UserDetailsRequestModel [userName=" + userName + ", email=" + email + ", portraitUrl=" + portraitUrl
-				+ ", title=" + title + ", about=" + about + ", address=" + address + "]";
+		return "UserDetailsRequestModel [userName=" + userName + ", email=" + email + ", password=" + password
+				+ ", portraitUrl=" + portraitUrl + ", title=" + title + ", about=" + about + ", address=" + address
+				+ "]";
 	}
-	
 }
 

@@ -21,8 +21,21 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDto createUser(UserDto userDto) {
 		
+		// check for Admin or not -> email ends with @sjsu.edu 
+		String email = userDto.getEmail();
+		if(email.endsWith("@sjsu.edu"))
+			userDto.setAdminCheck(true);
+		
+		// User with email id already exists or not
+		UserEntity existingUserDetails = userRepository.findByEmail(userDto.getEmail());
+		// if exists then throwing an error
+		if(existingUserDetails != null)
+			throw new RuntimeException("User with email already exists ... ");
+		
 		// DTO object to Entity object transfer
 		UserEntity userEntity = new UserEntity();
+		
+		
 		BeanUtils.copyProperties(userDto, userEntity);
 		
 		// Repository method (save) to save UserEntity object to table users

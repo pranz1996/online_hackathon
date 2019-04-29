@@ -8,4 +8,5 @@ import com.openHack.io.entity.OrganizationEntity;
 @Repository
 public interface OrganizationRepository extends CrudRepository< OrganizationEntity, Long>{
 	OrganizationEntity findById(long id);
+	OrganizationEntity findByName(String name);
 }

@@ -1,5 +1,6 @@
 package com.openHack;
 
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 //import org.springframework.context.annotation.Bean;
@@ -28,6 +29,13 @@ public class OnlineHackathonProjectApplication {
 //	            .allowCredentials(false);
 //			}
 //		};
+//	}
+	
+//	@Bean
+//	@Lazy(value = true)
+//	public JoinRequestDto joinRequestDto() {
+//		return new JoinRequestDto();
+//
 //	}
 
 }

@@ -5,9 +5,10 @@ import com.openHack.embeddedEntity.Address;
 public class OrganizationDetailsResponseModel {
 	private long id;
 	private String name;
-	private long owner;
+	private long ownerId;
 	private String description;
 	private Address address;
+	
 	public long getId() {
 		return id;
 	}
@@ -18,13 +19,13 @@ public class OrganizationDetailsResponseModel {
 		return name;
 	}
 	public void setName(String name) {
-		this.name = name;
+		this.name = name.substring(0,1).toUpperCase() + name.substring(1);
 	}
-	public long getOwner() {
-		return owner;
+	public long getOwnerId() {
+		return ownerId;
 	}
-	public void setOwner(long owner) {
-		this.owner = owner;
+	public void setOwnerId(long ownerId) {
+		this.ownerId = ownerId;
 	}
 	public String getDescription() {
 		return description;
@@ -38,11 +39,11 @@ public class OrganizationDetailsResponseModel {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
+
 	@Override
 	public String toString() {
-		return "OrganizationDetailsResponseModel [name=" + name + ", owner=" + owner + ", description=" + description
-				+ ", address=" + address + "]";
+		return "OrganizationDetailsResponseModel [name=" + name + ", ownerId=" + ownerId + ", description="
+				+ description + ", address=" + address + "]";
 	}
 	
-
 }

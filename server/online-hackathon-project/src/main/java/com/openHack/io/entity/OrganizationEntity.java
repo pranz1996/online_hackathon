@@ -1,13 +1,20 @@
 package com.openHack.io.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 import com.openHack.embeddedEntity.Address;
 
@@ -24,14 +31,18 @@ public class OrganizationEntity implements Serializable{
 	private String name;
 	
 	@Column(unique = true)
-	private long owner;
+	private long ownerId;
 	
 	private String description;
 	
 	@Column
 	@Embedded
 	private Address address;
-
+	
+	@ManyToMany(fetch = FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+	@JoinTable(name="organization_join_request", joinColumns = @JoinColumn(name="organization_id"), inverseJoinColumns = @JoinColumn(name="user_id"))
+	private List<UserEntity> users;
+	
 	public long getId() {
 		return id;
 	}
@@ -48,12 +59,12 @@ public class OrganizationEntity implements Serializable{
 		this.name = name;
 	}
 
-	public long getOwner() {
-		return owner;
+	public long getOwnerId() {
+		return ownerId;
 	}
 
-	public void setOwner(long owner) {
-		this.owner = owner;
+	public void setOwnerId(long ownerId) {
+		this.ownerId = ownerId;
 	}
 
 	public String getDescription() {
@@ -72,9 +83,22 @@ public class OrganizationEntity implements Serializable{
 		this.address = address;
 	}
 
+	public List<UserEntity> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<UserEntity> users) {
+		this.users = users;
+	}
+	public void addUser(UserEntity userEntity) {
+		if(users == null)
+			users = new ArrayList<>();
+		users.add(userEntity);
+	}
+	
 	@Override
 	public String toString() {
-		return "OrganizationEntity [id=" + id + ", name=" + name + ", owner=" + owner + ", description=" + description
+		return "OrganizationEntity [name=" + name + ", ownerId=" + ownerId + ", description=" + description
 				+ ", address=" + address + "]";
 	}
 	

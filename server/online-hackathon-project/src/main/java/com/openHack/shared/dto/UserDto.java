@@ -1,7 +1,9 @@
 package com.openHack.shared.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.openHack.embeddedEntity.Address;
 
+@JsonIgnoreProperties(value = {"organizationEntity"})
 public class UserDto {
 
 	private long id;
@@ -12,6 +14,8 @@ public class UserDto {
 	private String title; // business title
 	private String about;
 	private Address address;
+	private boolean adminCheck = false;
+	
 	public long getId() {
 		return id;
 	}
@@ -60,12 +64,19 @@ public class UserDto {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
+
+	public boolean isAdminCheck() {
+		return adminCheck;
+	}
+	public void setAdminCheck(boolean adminCheck) {
+		this.adminCheck = adminCheck;
+	}
 	@Override
 	public String toString() {
-		return "UserDto [userName=" + userName + ", email=" + email + ", portraitUrl=" + portraitUrl + ", title="
-				+ title + ", about=" + about + ", address=" + address + "]";
+		return "UserDto [userName=" + userName + ", email=" + email + ", password=" + password + ", portraitUrl="
+				+ portraitUrl + ", title=" + title + ", about=" + about + ", address=" + address
+				+ "]";
 	}
-	
 	
 }
 
