@@ -11,7 +11,7 @@
 	<groupId>com.openHack</groupId>
 	<artifactId>online-hackathon-project</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>online-hackathon-project</name>
+	<role>online-hackathon-project</role>
 	<description>Team project for CMPE275</description>
 
 	<properties>
