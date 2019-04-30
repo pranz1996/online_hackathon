@@ -1,11 +1,19 @@
 package com.openHack.ui.model.request;
 
+import java.util.List;
+
+import com.openHack.io.entity.UserEntity;
+
 public class HackathonDetailsRequestModel {
 	private String eventName;
+	private String startTime;
+	private String endTime;
 	private String description;
 	private String fee;
 	private String minTeamSize;
 	private String maxTeamSize;
+	private List<UserEntity> judges;
+	
 	public String getEventName() {
 		return eventName;
 	}
@@ -36,10 +44,31 @@ public class HackathonDetailsRequestModel {
 	public void setMaxTeamSize(String maxTeamSize) {
 		this.maxTeamSize = maxTeamSize;
 	}
+	
+	public String getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+	public String getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
+	public List<UserEntity> getJudges() {
+		return judges;
+	}
+	public void setJudges(List<UserEntity> judges) {
+		this.judges = judges;
+	}
 	@Override
 	public String toString() {
-		return "HackathonDetailsRequestModel [eventName=" + eventName + ", description=" + description + ", fee=" + fee
-				+ ", minTeamSize=" + minTeamSize + ", maxTeamSize=" + maxTeamSize + "]";
+		return "HackathonDetailsRequestModel [eventName=" + eventName + ", startTime=" + startTime + ", endTime="
+				+ endTime + ", description=" + description + ", fee=" + fee + ", minTeamSize=" + minTeamSize
+				+ ", maxTeamSize=" + maxTeamSize + ", judges=" + judges + "]";
 	}
+	
 	
 }

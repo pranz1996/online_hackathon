@@ -45,6 +45,7 @@ public class UserEntity implements Serializable{
 	
 	private String about;
 	
+	
 	@Column(columnDefinition = "boolean default false")
 	private boolean adminCheck;
 	
@@ -56,6 +57,12 @@ public class UserEntity implements Serializable{
 	@JoinTable(name="organization_join_request", joinColumns = @JoinColumn(name="user_id"), 
 												 inverseJoinColumns = @JoinColumn(name="organization_id"))
 	private List<OrganizationEntity> organizations;
+	
+	@ManyToMany(fetch = FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+	@JoinTable(name="judges", joinColumns = @JoinColumn(name="judge_id"), 
+												 inverseJoinColumns = @JoinColumn(name="hackathon_id"))
+	private List<HackathonEntity> hackathons;
+	
 	
 	public long getId() {
 		return id;
@@ -152,6 +159,20 @@ public class UserEntity implements Serializable{
 		organizations.add(organizationEntity);
 	}
 	
+	public List<HackathonEntity> getHackathons() {
+		return hackathons;
+	}
+
+	public void setHackathons(List<HackathonEntity> hackathons) {
+		this.hackathons = hackathons;
+	}
+	
+	public void addHackathon(HackathonEntity hackthon) {
+		if(hackathons == null)
+			hackathons = new ArrayList<>();
+		hackathons.add(hackthon);
+	}
+
 	@Override
 	public String toString() {
 		return "UserEntity [userName=" + userName + ", email=" + email + ", password=" + password + ", portraitUrl="

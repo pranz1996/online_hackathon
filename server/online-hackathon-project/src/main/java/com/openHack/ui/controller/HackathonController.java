@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openHack.service.HackathonService;
 import com.openHack.shared.dto.HackathonDto;
 import com.openHack.ui.model.request.HackathonDetailsRequestModel;
@@ -51,6 +52,8 @@ public class HackathonController {
 	@PostMapping
 	public HackathonDetailsResposeModel createHackathon(@RequestBody HackathonDetailsRequestModel hackathonDetailsRequestModel) {
 		
+		System.out.println(hackathonDetailsRequestModel);
+		
 		// HackathonDetailsRequestModel object: contains input request data
 		
 		// response model to send data to UI
@@ -59,13 +62,15 @@ public class HackathonController {
 		// DTO object to hold the input request data
 		HackathonDto hackathonDto = new HackathonDto();
 		// transferring input data to DTO object
-		BeanUtils.copyProperties(hackathonDetailsRequestModel, hackathonDto);
-			
+		ObjectMapper mapper = new ObjectMapper();
+		hackathonDto = mapper.convertValue(hackathonDetailsRequestModel, HackathonDto.class);
+		System.out.println(hackathonDto);
 		// Service method Call to insert data
 		HackathonDto createHacathon = hackathonService.createHackthon(hackathonDto);
 		// Transferring DTO object data to response model
-		BeanUtils.copyProperties(createHacathon, returnModel);
-		
+		mapper = new ObjectMapper();
+		returnModel = mapper.convertValue(createHacathon, HackathonDetailsResposeModel.class);
+	
 		return returnModel;
 	}
 	
