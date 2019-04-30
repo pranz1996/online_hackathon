@@ -15,6 +15,29 @@ public class TeamController {
 
     @Autowired
     TeamService teamService;
+    
+    // create and add new Team
+    @PostMapping
+    public TeamDetailsResposeModel createTeam(@RequestBody TeamDetailsRequestModel teamDetailsRequestModel) {
+
+    	// response model to send data to UI
+        TeamDetailsResposeModel returnModel = new TeamDetailsResposeModel();
+    	
+        // TeamDetailsRequestModel object: contains input request data
+    	
+       
+//        // DTO object to hold the input request data
+//        TeamDto teamDto = new TeamDto();
+//        // transferring input data to DTO object
+//        BeanUtils.copyProperties(teamDetailsRequestModel, teamDto);
+//
+//        // Service method Call to insert data
+//        TeamDto createTeam = teamService.createTeam(teamDto);
+//        // Transferring DTO object data to response model
+//        BeanUtils.copyProperties(createTeam, returnModel);
+
+        return returnModel;
+    }
 
     // get any team by id
     @GetMapping(path="/{id}")
@@ -23,10 +46,10 @@ public class TeamController {
         // response model to send data to UI
         TeamDetailsResposeModel returnModel = new TeamDetailsResposeModel();
 
-        // Service method Call to get team data based on id
-        TeamDto teamDetails = teamService.getTeamById(id);
-        // transferring DTO object data to response model
-        BeanUtils.copyProperties(teamDetails, returnModel);
+//        // Service method Call to get team data based on id
+//        TeamDto teamDetails = teamService.getTeamById(id);
+//        // transferring DTO object data to response model
+//        BeanUtils.copyProperties(teamDetails, returnModel);
 
         return returnModel;
     }
@@ -37,27 +60,6 @@ public class TeamController {
         return "get all teams method was called";
     }
 
-    // create and add new Team
-    @PostMapping
-    public TeamDetailsResposeModel createTeam(@RequestBody TeamDetailsRequestModel teamDetailsRequestModel) {
-
-        // TeamDetailsRequestModel object: contains input request data
-
-        // response model to send data to UI
-        TeamDetailsResposeModel returnModel = new TeamDetailsResposeModel();
-
-        // DTO object to hold the input request data
-        TeamDto teamDto = new TeamDto();
-        // transferring input data to DTO object
-        BeanUtils.copyProperties(teamDetailsRequestModel, teamDto);
-
-        // Service method Call to insert data
-        TeamDto createTeam = teamService.createTeam(teamDto);
-        // Transferring DTO object data to response model
-        BeanUtils.copyProperties(createTeam, returnModel);
-
-        return returnModel;
-    }
 
     // update any Team details
     @PutMapping(path="/{id}")
@@ -68,15 +70,15 @@ public class TeamController {
         // response model to send data to UI
         TeamDetailsResposeModel returnModel = new TeamDetailsResposeModel();
 
-        // DTO object to hold the input request data
-        TeamDto teamDto = new TeamDto();
-        // transferring input data to DTO object
-        BeanUtils.copyProperties(teamDetailsRequestModel, teamDto);
-
-        // Service method Call to update data
-        TeamDto updatedTeam = teamService.updateTeam(id, teamDto);
-        // Transferring DTO object data to response model
-        BeanUtils.copyProperties(updatedTeam, returnModel);
+//        // DTO object to hold the input request data
+//        TeamDto teamDto = new TeamDto();
+//        // transferring input data to DTO object
+//        BeanUtils.copyProperties(teamDetailsRequestModel, teamDto);
+//
+//        // Service method Call to update data
+//        TeamDto updatedTeam = teamService.updateTeam(id, teamDto);
+//        // Transferring DTO object data to response model
+//        BeanUtils.copyProperties(updatedTeam, returnModel);
 
         return returnModel;
     }

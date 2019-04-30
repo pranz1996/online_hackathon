@@ -3,7 +3,6 @@ package com.openHack.io.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity(name="teams")
 public class TeamEntity implements Serializable{
 
 	private static final long serialVersionUID = -2974038348995949230L;

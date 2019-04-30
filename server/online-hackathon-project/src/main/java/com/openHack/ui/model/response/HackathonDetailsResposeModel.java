@@ -1,9 +1,5 @@
 package com.openHack.ui.model.response;
 
-import java.util.List;
-
-import com.openHack.io.entity.UserEntity;
-
 public class HackathonDetailsResposeModel {
 	private long id;
 	private String eventName;
@@ -13,7 +9,6 @@ public class HackathonDetailsResposeModel {
 	private String fee;
 	private String minTeamSize;
 	private String maxTeamSize;
-	private List<UserEntity> judges;
 	public long getId() {
 		return id;
 	}
@@ -62,17 +57,12 @@ public class HackathonDetailsResposeModel {
 	public void setMaxTeamSize(String maxTeamSize) {
 		this.maxTeamSize = maxTeamSize;
 	}
-	public List<UserEntity> getJudges() {
-		return judges;
-	}
-	public void setJudges(List<UserEntity> judges) {
-		this.judges = judges;
-	}
+
 	@Override
 	public String toString() {
 		return "HackathonDetailsResposeModel [eventName=" + eventName + ", startTime=" + startTime + ", endTime="
 				+ endTime + ", description=" + description + ", fee=" + fee + ", minTeamSize=" + minTeamSize
-				+ ", maxTeamSize=" + maxTeamSize + ", judges=" + judges + "]";
+				+ ", maxTeamSize=" + maxTeamSize + "]";
 	}
 	
 }

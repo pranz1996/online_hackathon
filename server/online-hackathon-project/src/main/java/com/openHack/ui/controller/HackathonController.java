@@ -1,6 +1,6 @@
 package com.openHack.ui.controller;
 
-import org.springframework.beans.BeanUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openHack.service.HackathonService;
 import com.openHack.shared.dto.HackathonDto;
 import com.openHack.ui.model.request.HackathonDetailsRequestModel;
@@ -36,9 +35,11 @@ public class HackathonController {
 					
 		// Service method Call to get hackathon data based on id
 		HackathonDto hackathonDetails = hackathonService.getHackathonById(id);
+		
 		// transferring DTO object data to response model
-		BeanUtils.copyProperties(hackathonDetails, returnModel);
-				
+		ModelMapper mapper = new ModelMapper();
+		returnModel = mapper.map(hackathonDetails, HackathonDetailsResposeModel.class);
+		
 		return returnModel;
 	}
 	
@@ -62,14 +63,14 @@ public class HackathonController {
 		// DTO object to hold the input request data
 		HackathonDto hackathonDto = new HackathonDto();
 		// transferring input data to DTO object
-		ObjectMapper mapper = new ObjectMapper();
-		hackathonDto = mapper.convertValue(hackathonDetailsRequestModel, HackathonDto.class);
+		ModelMapper mapper = new ModelMapper();
+		hackathonDto = mapper.map(hackathonDetailsRequestModel, HackathonDto.class);
 		System.out.println(hackathonDto);
 		// Service method Call to insert data
 		HackathonDto createHacathon = hackathonService.createHackthon(hackathonDto);
 		// Transferring DTO object data to response model
-		mapper = new ObjectMapper();
-		returnModel = mapper.convertValue(createHacathon, HackathonDetailsResposeModel.class);
+		mapper = new ModelMapper();
+		returnModel = mapper.map(createHacathon, HackathonDetailsResposeModel.class);
 	
 		return returnModel;
 	}
@@ -86,13 +87,15 @@ public class HackathonController {
 		// DTO object to hold the input request data
 		HackathonDto hackathonDto = new HackathonDto();
 		// transferring input data to DTO object
-		BeanUtils.copyProperties(hackathonDetailsRequestModel, hackathonDto);
+		ModelMapper mapper = new ModelMapper();
+		hackathonDto = mapper.map(hackathonDetailsRequestModel, HackathonDto.class);
 		
 		// Service method Call to update data
 		HackathonDto updatedHackthon = hackathonService.updateHackathon(id, hackathonDto);
 		// Transferring DTO object data to response model
-		BeanUtils.copyProperties(updatedHackthon, returnModel);
-						
+		mapper = new ModelMapper();
+		returnModel = mapper.map(updatedHackthon, HackathonDetailsResposeModel.class);
+					
 		return returnModel;
 	}
 	
