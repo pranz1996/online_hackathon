@@ -1,8 +1,12 @@
 package com.openHack.io.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity(name = "teams")
 public class TeamEntity implements Serializable{
 
 	private static final long serialVersionUID = -2974038348995949230L;
@@ -12,18 +16,20 @@ public class TeamEntity implements Serializable{
 	private long id;
 
 	@Column(nullable = false)
-	private long hId;
-
+	private long hackathonId;
+	
 	@Column(nullable = false)
-	private String name;
-
+	private String teamName;
+	
 	@Column(nullable = false)
-	private int size;
-
+	private String teamSize;
+	
 	@Column(nullable = false)
-	private long leaderId;
-
-
+	private String userId;
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "teamId")
+	private List<TeamMemberEntity> teamMembers;
 
 	public long getId() {
 		return id;
@@ -33,36 +39,56 @@ public class TeamEntity implements Serializable{
 		this.id = id;
 	}
 
-	public long gethId() {
-		return hId;
+	public long getHackathonId() {
+		return hackathonId;
 	}
 
-	public void sethId(long hId) {
-		this.hId = hId;
+	public void setHackathonId(long hackathonId) {
+		this.hackathonId = hackathonId;
 	}
 
-	public String getName() {
-		return name;
+	public String getTeamName() {
+		return teamName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
 	}
 
-	public int getSize() {
-		return size;
+	public String getTeamSize() {
+		return teamSize;
 	}
 
-	public void setSize(int size) {
-		this.size = size;
+	public void setTeamSize(String teamSize) {
+		this.teamSize = teamSize;
 	}
 
-	public long getLeaderId() {
-		return leaderId;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setLeaderId(long leaderId) {
-		this.leaderId = leaderId;
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public List<TeamMemberEntity> getTeamMembers() {
+		return teamMembers;
+	}
+
+	public void setTeamMembers(List<TeamMemberEntity> teamMembers) {
+		this.teamMembers = teamMembers;
+	}
+	
+	public void addTeamMember(TeamMemberEntity teamMember) {
+		if(teamMembers == null)
+			teamMembers = new ArrayList<>();
+		teamMembers.add(teamMember);
+	}
+
+	@Override
+	public String toString() {
+		return "TeamEntity [id=" + id + ", hackathonId=" + hackathonId + ", teamName=" + teamName + ", teamSize="
+				+ teamSize + ", userId=" + userId + ", teamMembers=" + teamMembers + "]";
 	}
 	
 }

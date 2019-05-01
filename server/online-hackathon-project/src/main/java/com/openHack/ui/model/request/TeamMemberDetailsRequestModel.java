@@ -4,10 +4,12 @@ public class TeamMemberDetailsRequestModel {
 
 	private String userId;
 	private String role;
-	public String getUser_id() {
+	private long hackathonId;
+	private boolean paid = false;
+	public String getUserId() {
 		return userId;
 	}
-	public void setUser_id(String userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 	public String getRole() {
@@ -16,9 +18,22 @@ public class TeamMemberDetailsRequestModel {
 	public void setRole(String role) {
 		this.role = role;
 	}
+	public long getHackathonId() {
+		return hackathonId;
+	}
+	public void setHackathonId(long hackathonId) {
+		this.hackathonId = hackathonId;
+	}
+	public boolean isPaid() {
+		return paid;
+	}
+	public void setPaid(boolean paid) {
+		this.paid = paid;
+	}
 	@Override
 	public String toString() {
-		return "TeamMemberDetailsRequestModel [userId=" + userId + ", role=" + role + "]";
+		return "TeamMemberDetailsRequestModel [userId=" + userId + ", role=" + role + ", hackathonId=" + hackathonId
+				+ ", paid=" + paid + "]";
 	}
 	
 }

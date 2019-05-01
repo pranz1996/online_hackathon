@@ -1,8 +1,13 @@
 package com.openHack.io.entity;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
+@Entity(name = "teamMembers")
 public class TeamMemberEntity implements Serializable{
 
 	private static final long serialVersionUID = -2974038348995949230L;
@@ -10,18 +15,18 @@ public class TeamMemberEntity implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-
+	
 	@Column(nullable = false)
-	private long tId;
-
-	@Column(nullable = false)
+	private String userId;
+	
+	@Column(nullable = false) 
 	private String role;
+	
+	@Column(nullable = false)
+	private long hackathonId;
 
 	@Column(nullable = false)
 	private boolean paid;
-
-	@Column(nullable = false)
-	private long uId;
 
 	public long getId() {
 		return id;
@@ -31,12 +36,12 @@ public class TeamMemberEntity implements Serializable{
 		this.id = id;
 	}
 
-	public long gettId() {
-		return tId;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void settId(long tId) {
-		this.tId = tId;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getRole() {
@@ -47,7 +52,7 @@ public class TeamMemberEntity implements Serializable{
 		this.role = role;
 	}
 
-	public boolean getPaid() {
+	public boolean isPaid() {
 		return paid;
 	}
 
@@ -55,12 +60,21 @@ public class TeamMemberEntity implements Serializable{
 		this.paid = paid;
 	}
 
-	public long getuId() {
-		return uId;
-	}
-
-	public void setuId(long uId) {
-		this.uId = uId;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	
+	public long getHackathonId() {
+		return hackathonId;
+	}
+
+	public void setHackathonId(long hackathonId) {
+		this.hackathonId = hackathonId;
+	}
+
+	@Override
+	public String toString() {
+		return "TeamMemberEntity [id=" + id + ", userId=" + userId + ", role=" + role + ", hackathonId=" + hackathonId
+				+ ", paid=" + paid + "]";
+	}
 }

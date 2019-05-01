@@ -2,58 +2,40 @@ package com.openHack.shared.dto;
 
 public class TeamMemberDto {
 	private long id;
-	private long tId;
+	private String userId;
 	private String role;
+	private long hackathonId;
 	private boolean paid;
-	private long uId;
-
-	public long getId() {
-		return id;
+	public String getUserId() {
+		return userId;
 	}
-
-	public void setId(long id) {
-		this.id = id;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
-
-	public long gettId() {
-		return tId;
-	}
-
-	public void settId(long tId) {
-		this.tId = tId;
-	}
-
 	public String getRole() {
 		return role;
 	}
-
 	public void setRole(String role) {
 		this.role = role;
 	}
-
-	public boolean getPaid() {
+	public long getHackathonId() {
+		return hackathonId;
+	}
+	public void setHackathonId(long hackathonId) {
+		this.hackathonId = hackathonId;
+	}
+	public boolean isPaid() {
 		return paid;
 	}
-
 	public void setPaid(boolean paid) {
 		this.paid = paid;
 	}
-
-	public long getuId() {
-		return uId;
+	public long getId() {
+		return id;
 	}
-
-	public void setuId(long uId) {
-		this.uId = uId;
-	}
-
-
-
-	@Override
-	public String toString() {
-		return "TeamMemberDto [tId=" + tId + ", role=" + role + ", paid=" + paid
-				+ ", uId=" + uId + "]";
+	public void setId(long id) {
+		this.id = id;
 	}
 	
-
+	
 }
