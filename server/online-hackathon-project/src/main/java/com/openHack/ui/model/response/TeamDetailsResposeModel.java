@@ -12,6 +12,8 @@ public class TeamDetailsResposeModel {
 	private String teamName;
 	private String teamSize;
 	private String userId;
+	private String submissionLink;
+	
 	private List<TeamDetailsResposeModel> teamMembers;
 	public long getId() {
 		return id;
@@ -49,10 +51,18 @@ public class TeamDetailsResposeModel {
 	public void setTeamMembers(List<TeamDetailsResposeModel> teamMembers) {
 		this.teamMembers = teamMembers;
 	}
+	
+	public String getSubmissionLink() {
+		return submissionLink;
+	}
+	public void setSubmissionLink(String submissionLink) {
+		this.submissionLink = submissionLink;
+	}
 	@Override
 	public String toString() {
 		return "TeamDetailsResposeModel [id=" + id + ", hackathonId=" + hackathonId + ", teamName=" + teamName
-				+ ", teamSize=" + teamSize + ", userId=" + userId + ", teamMembers=" + teamMembers + "]";
+				+ ", teamSize=" + teamSize + ", userId=" + userId + ", submissionLink=" + submissionLink
+				+ ", teamMembers=" + teamMembers + "]";
 	}
 	
 }

@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+
 @Entity(name="hackathons")
 public class HackathonEntity implements Serializable{
 
@@ -46,13 +47,15 @@ public class HackathonEntity implements Serializable{
 	@Column(nullable = false)
 	private String maxTeamSize;
 	
+	@Column(nullable = false) 
+	private boolean hackatonWinner;
+	
 	@ManyToMany(fetch = FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
 	@JoinTable(name="judges", joinColumns = @JoinColumn(name="hackathon_id"), inverseJoinColumns = @JoinColumn(name="judge_id"))
 	private List<UserEntity> judges;
-		
-//	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-//	@JoinColumn(name="course_id")
-//	private List<Review> reviews;
+	
+//	@OneToMany(mappedBy = "hackathon_id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//	private List<SubmissionEntity> teamAssociate;
 
 	public long getId() {
 		return id;
@@ -132,12 +135,33 @@ public class HackathonEntity implements Serializable{
 		judges.add(userEntity);
 	}
 
+	public boolean isHackatonWinner() {
+		return hackatonWinner;
+	}
+
+	public void setHackatonWinner(boolean hackatonWinner) {
+		this.hackatonWinner = hackatonWinner;
+	}
+	
+//	public List<SubmissionEntity> getTeamAssociate() {
+//		return teamAssociate;
+//	}
+//
+//	public void setTeamAssociate(List<SubmissionEntity> teamAssociate) {
+//		this.teamAssociate = teamAssociate;
+//	}
+//	
+//	public void addTeamAssociate(SubmissionEntity submission) {
+//		if(teamAssociate == null)
+//			teamAssociate = new ArrayList<>();
+//		teamAssociate.add(submission);
+//	}
+
 	@Override
 	public String toString() {
 		return "HackathonEntity [eventName=" + eventName + ", startTime=" + startTime + ", endTime=" + endTime
 				+ ", description=" + description + ", fee=" + fee + ", minTeamSize=" + minTeamSize + ", maxTeamSize="
-				+ maxTeamSize + ", judges=" + judges + "]";
+				+ maxTeamSize + ", hackatonWinner=" + hackatonWinner + ", judges=" + judges + "]";
 	}
-
 	
 }

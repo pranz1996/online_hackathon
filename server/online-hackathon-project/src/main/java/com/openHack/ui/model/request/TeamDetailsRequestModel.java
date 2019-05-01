@@ -8,6 +8,7 @@ public class TeamDetailsRequestModel {
 	private String teamName;
 	private String teamSize;
 	private String userId;
+	private String submissionLink = null;
 	private List<TeamMemberDetailsRequestModel> teamMembers;
 	
 	public long getHackathonId() {
@@ -40,6 +41,12 @@ public class TeamDetailsRequestModel {
 	}
 	public void setTeamMembers(List<TeamMemberDetailsRequestModel> teamMembers) {
 		this.teamMembers = teamMembers;
+	}
+	public String getSubmissionLink() {
+		return submissionLink;
+	}
+	public void setSubmissionLink(String submissionLink) {
+		this.submissionLink = submissionLink;
 	}
 	@Override
 	public String toString() {

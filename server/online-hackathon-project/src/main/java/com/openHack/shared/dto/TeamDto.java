@@ -9,6 +9,8 @@ public class TeamDto {
 	private String teamName;
 	private String teamSize;
 	private String userId;
+	private String submissionLink;
+	
 	private List<TeamMemberDto> teamMembers;
 	public long getId() {
 		return id;
@@ -46,11 +48,19 @@ public class TeamDto {
 	public void setTeamMembers(List<TeamMemberDto> teamMembers) {
 		this.teamMembers = teamMembers;
 	}
+	
+	public String getSubmissionLink() {
+		return submissionLink;
+	}
+	public void setSubmissionLink(String submissionLink) {
+		this.submissionLink = submissionLink;
+	}
 	@Override
 	public String toString() {
 		return "TeamDto [id=" + id + ", hackathonId=" + hackathonId + ", teamName=" + teamName + ", teamSize="
-				+ teamSize + ", userId=" + userId + ", teamMembers=" + teamMembers + "]";
+				+ teamSize + ", userId=" + userId + ", submissionLink=" + submissionLink + ", teamMembers="
+				+ teamMembers + "]";
 	}
-
 	
+
 }

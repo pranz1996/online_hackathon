@@ -3,6 +3,7 @@ package com.openHack.ui.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openHack.service.TeamService;
 import com.openHack.shared.dto.TeamDto;
+import com.openHack.ui.model.request.SubmissionDetailsRequestModel;
 import com.openHack.ui.model.request.TeamDetailsRequestModel;
 import com.openHack.ui.model.response.TeamDetailsResposeModel;
 
@@ -84,5 +85,23 @@ public class TeamController {
         returnModel = mapper.convertValue(updatedTeam, TeamDetailsResposeModel.class);
 
         return returnModel;
+    }
+    
+    // submission for any hackathon by particular team
+    @PatchMapping(path = "/submission/{id}") 
+    public String sumbission(@PathVariable long id, @RequestBody SubmissionDetailsRequestModel submission) {
+    	
+    	teamService.createSubmission(id, submission);
+    	 	
+    	return "you have submitted for hackathon";
+    }
+    
+    // payment by any team member for a hackathon
+    @PatchMapping(path="/pay/{id}")
+    public String paymentForHackathon(@PathVariable long id) {
+    	
+    	teamService.createPayment(id);
+    	
+    	return "successfully pay for the hackathon";
     }
 }

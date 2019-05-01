@@ -13,8 +13,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TeamMemberRepository extends CrudRepository<TeamMemberEntity, Long>
 {
+	TeamMemberEntity findById(long id);
 	@Transactional
 	@Modifying
 	@Query(value="delete from team_members where team_id = :id", nativeQuery = true)
 	void deleteAllById(@Param("id") long id);
+	
 }

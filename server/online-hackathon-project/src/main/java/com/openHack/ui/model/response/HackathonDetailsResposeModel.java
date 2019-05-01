@@ -9,6 +9,7 @@ public class HackathonDetailsResposeModel {
 	private String fee;
 	private String minTeamSize;
 	private String maxTeamSize;
+	private boolean hackatonWinner;
 	public long getId() {
 		return id;
 	}
@@ -57,12 +58,18 @@ public class HackathonDetailsResposeModel {
 	public void setMaxTeamSize(String maxTeamSize) {
 		this.maxTeamSize = maxTeamSize;
 	}
-
+	public boolean isHackatonWinner() {
+		return hackatonWinner;
+	}
+	public void setHackatonWinner(boolean hackatonWinner) {
+		this.hackatonWinner = hackatonWinner;
+	}
 	@Override
 	public String toString() {
-		return "HackathonDetailsResposeModel [eventName=" + eventName + ", startTime=" + startTime + ", endTime="
-				+ endTime + ", description=" + description + ", fee=" + fee + ", minTeamSize=" + minTeamSize
-				+ ", maxTeamSize=" + maxTeamSize + "]";
+		return "HackathonDetailsResposeModel [id=" + id + ", eventName=" + eventName + ", startTime=" + startTime
+				+ ", endTime=" + endTime + ", description=" + description + ", fee=" + fee + ", minTeamSize="
+				+ minTeamSize + ", maxTeamSize=" + maxTeamSize + ", hackatonWinner=" + hackatonWinner + "]";
 	}
+	
 	
 }

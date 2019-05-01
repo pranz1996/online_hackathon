@@ -12,6 +12,7 @@ public class HackathonDetailsRequestModel {
 	private String fee;
 	private String minTeamSize;
 	private String maxTeamSize;
+	private boolean hackatonWinner = false;
 	private List<UserEntity> judges;
 	
 	public String getEventName() {
@@ -63,12 +64,17 @@ public class HackathonDetailsRequestModel {
 	public void setJudges(List<UserEntity> judges) {
 		this.judges = judges;
 	}
+	
+	public boolean isHackatonWinner() {
+		return hackatonWinner;
+	}
+	public void setHackatonWinner(boolean hackatonWinner) {
+		this.hackatonWinner = hackatonWinner;
+	}
 	@Override
 	public String toString() {
 		return "HackathonDetailsRequestModel [eventName=" + eventName + ", startTime=" + startTime + ", endTime="
 				+ endTime + ", description=" + description + ", fee=" + fee + ", minTeamSize=" + minTeamSize
-				+ ", maxTeamSize=" + maxTeamSize + ", judges=" + judges + "]";
+				+ ", maxTeamSize=" + maxTeamSize + ", hackatonWinner=" + hackatonWinner + ", judges=" + judges + "]";
 	}
-	
-	
 }

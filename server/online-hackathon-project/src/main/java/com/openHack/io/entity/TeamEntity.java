@@ -27,10 +27,15 @@ public class TeamEntity implements Serializable{
 	@Column(nullable = false)
 	private String userId;
 	
+	private String submissionLink;
+	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "teamId")
 	private List<TeamMemberEntity> teamMembers;
 
+//	@OneToMany(mappedBy = "team_id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//	private List<SubmissionEntity> hackathonAssociate;
+//	
 	public long getId() {
 		return id;
 	}
@@ -83,6 +88,29 @@ public class TeamEntity implements Serializable{
 		if(teamMembers == null)
 			teamMembers = new ArrayList<>();
 		teamMembers.add(teamMember);
+	}
+	
+	
+//	public List<SubmissionEntity> getHackathonAssociate() {
+//		return hackathonAssociate;
+//	}
+//
+//	public void setHackathonAssociate(List<SubmissionEntity> hackathonAssociate) {
+//		this.hackathonAssociate = hackathonAssociate;
+//	}
+//	
+//	public void addHackathonAssociate(SubmissionEntity submission) {
+//		if(hackathonAssociate == null)
+//			hackathonAssociate = new ArrayList<>();
+//		hackathonAssociate.add(submission);
+//	}
+
+	public String getSubmissionLink() {
+		return submissionLink;
+	}
+
+	public void setSubmissionLink(String submissionLink) {
+		this.submissionLink = submissionLink;
 	}
 
 	@Override

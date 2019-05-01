@@ -8,6 +8,7 @@ import com.openHack.io.repository.TeamRepository;
 import com.openHack.service.TeamService;
 import com.openHack.shared.dto.TeamDto;
 import com.openHack.shared.dto.TeamMemberDto;
+import com.openHack.ui.model.request.SubmissionDetailsRequestModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,6 +111,34 @@ public class TeamServiceImpl implements TeamService {
 		BeanUtils.copyProperties(updatedTeam, returnValue);
 	
 		return returnValue;
+	}
+
+	// method for submission for any team based on team id
+	public void createSubmission(long id, SubmissionDetailsRequestModel submission) {
+		
+		// Fetch team entity based on team id
+		TeamEntity teamEntity = teamRepository.findById(id);
+		
+		// updating submission field
+		teamEntity.setSubmissionLink(submission.getSubmission_link());
+		
+		// Saving the updated Team Entity
+		teamRepository.save(teamEntity);
+	
+	}
+
+	// method for payment by any team member
+	@Override
+	public void createPayment(long id) {
+		
+		// Fetch TeamMember details
+		TeamMemberEntity teamMemberEntity = teamMemberRepository.findById(id);
+		
+		// updating payment field
+		teamMemberEntity.setPaid(true);
+		
+		// Saving the updated TeamMebmer Details
+		teamMemberRepository.save(teamMemberEntity);
 	}
 
 }
