@@ -1,50 +1,50 @@
 package com.openHack.ui.model.request;
 
+import java.util.List;
+
 public class TeamDetailsRequestModel {
-
-	private long hId;
-	private String name;
-	private int size;
-	private long leaderId;
-
-	public long gethId() {
-		return hId;
+	
+	private long hackathonId;
+	private String teamName;
+	private String teamSize;
+	private String userId;
+	private List<TeamMemberDetailsRequestModel> teamMembers;
+	
+	public long getHackathonId() {
+		return hackathonId;
 	}
-
-	public void sethId(long hId) {
-		this.hId = hId;
+	public void setHackathonId(long hackathonId) {
+		this.hackathonId = hackathonId;
 	}
-
-	public String getName() {
-		return name;
+	public String getTeamName() {
+		return teamName;
 	}
-
-	public void setName(String name) {
-		this.name = name;
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
 	}
-
-	public int getSize() {
-		return size;
+	
+	public String getTeamSize() {
+		return teamSize;
 	}
-
-	public void setSize(int size) {
-		this.size = size;
+	public void setTeamSize(String teamSize) {
+		this.teamSize = teamSize;
 	}
-
-	public long getLeaderId() {
-		return leaderId;
+	public String getUserId() {
+		return userId;
 	}
-
-	public void setLeaderId(long leaderId) {
-		this.leaderId = leaderId;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
-
-
-
+	public List<TeamMemberDetailsRequestModel> getTeamMembers() {
+		return teamMembers;
+	}
+	public void setTeamMembers(List<TeamMemberDetailsRequestModel> teamMembers) {
+		this.teamMembers = teamMembers;
+	}
 	@Override
 	public String toString() {
-		return "TeamDetailsRequestModel [hId=" + hId + ", name=" + name + ", size=" + size
-				+ ", leaderId=" + leaderId + "]";
+		return "TeamDetailsRequestModel [hackathonId=" + hackathonId + ", teamName=" + teamName + ", teamSize=" + teamSize
+				+ ", userId=" + userId + ", teamMembers=" + teamMembers + "]";
 	}
 	
 }

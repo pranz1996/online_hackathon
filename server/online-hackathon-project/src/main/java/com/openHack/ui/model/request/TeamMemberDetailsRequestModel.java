@@ -2,49 +2,38 @@ package com.openHack.ui.model.request;
 
 public class TeamMemberDetailsRequestModel {
 
-	private long tId;
+	private String userId;
 	private String role;
-	private boolean paid;
-	private long uId;
-
-	public long gettId() {
-		return tId;
+	private long hackathonId;
+	private boolean paid = false;
+	public String getUserId() {
+		return userId;
 	}
-
-	public void settId(long tId) {
-		this.tId = tId;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
-
 	public String getRole() {
 		return role;
 	}
-
 	public void setRole(String role) {
 		this.role = role;
 	}
-
-	public boolean getPaid() {
+	public long getHackathonId() {
+		return hackathonId;
+	}
+	public void setHackathonId(long hackathonId) {
+		this.hackathonId = hackathonId;
+	}
+	public boolean isPaid() {
 		return paid;
 	}
-
 	public void setPaid(boolean paid) {
 		this.paid = paid;
 	}
-
-	public long getuId() {
-		return uId;
-	}
-
-	public void setuId(long uId) {
-		this.uId = uId;
-	}
-
-
-
 	@Override
 	public String toString() {
-		return "TeamMemberDetailsRequestModel [tId=" + tId + ", role=" + role + ", paid=" + paid
-				+ ", uId=" + uId + "]";
+		return "TeamMemberDetailsRequestModel [userId=" + userId + ", role=" + role + ", hackathonId=" + hackathonId
+				+ ", paid=" + paid + "]";
 	}
 	
 }

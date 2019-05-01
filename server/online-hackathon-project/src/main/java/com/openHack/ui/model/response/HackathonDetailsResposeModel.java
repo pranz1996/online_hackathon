@@ -3,6 +3,8 @@ package com.openHack.ui.model.response;
 public class HackathonDetailsResposeModel {
 	private long id;
 	private String eventName;
+	private String startTime;
+	private String endTime;
 	private String description;
 	private String fee;
 	private String minTeamSize;
@@ -18,6 +20,18 @@ public class HackathonDetailsResposeModel {
 	}
 	public void setEventName(String eventName) {
 		this.eventName = eventName;
+	}
+	public String getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+	public String getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
 	}
 	public String getDescription() {
 		return description;
@@ -43,11 +57,12 @@ public class HackathonDetailsResposeModel {
 	public void setMaxTeamSize(String maxTeamSize) {
 		this.maxTeamSize = maxTeamSize;
 	}
+
 	@Override
 	public String toString() {
-		return "HackathonDetailsResposeModel [eventName=" + eventName + ", description=" + description + ", fee=" + fee
-				+ ", minTeamSize=" + minTeamSize + ", maxTeamSize=" + maxTeamSize + "]";
+		return "HackathonDetailsResposeModel [eventName=" + eventName + ", startTime=" + startTime + ", endTime="
+				+ endTime + ", description=" + description + ", fee=" + fee + ", minTeamSize=" + minTeamSize
+				+ ", maxTeamSize=" + maxTeamSize + "]";
 	}
-	
 	
 }
