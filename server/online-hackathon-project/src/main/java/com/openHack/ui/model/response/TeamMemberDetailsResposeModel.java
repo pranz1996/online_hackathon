@@ -4,7 +4,6 @@ public class TeamMemberDetailsResposeModel {
 	private long id;
 	private String userId;
 	private String role;
-	private long hackathonId;
 	private boolean paid;
 	public long getId() {
 		return id;
@@ -24,12 +23,7 @@ public class TeamMemberDetailsResposeModel {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	public long getHackathonId() {
-		return hackathonId;
-	}
-	public void setHackathonId(long hackathonId) {
-		this.hackathonId = hackathonId;
-	}
+	
 	public boolean isPaid() {
 		return paid;
 	}
@@ -38,10 +32,7 @@ public class TeamMemberDetailsResposeModel {
 	}
 	@Override
 	public String toString() {
-		return "TeamMemberDetailsResposeModel [id=" + id + ", userId=" + userId + ", role=" + role + ", hackathonId="
-				+ hackathonId + ", paid=" + paid + "]";
-	}
-	
-	
-	
+		return "TeamMemberDetailsResposeModel [id=" + id + ", userId=" + userId + ", role=" + role + ", paid=" + paid
+				+ "]";
+	}	
 }

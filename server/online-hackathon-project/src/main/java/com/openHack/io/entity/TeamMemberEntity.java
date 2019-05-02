@@ -21,9 +21,6 @@ public class TeamMemberEntity implements Serializable{
 	
 	@Column(nullable = false) 
 	private String role;
-	
-	@Column(nullable = false)
-	private long hackathonId;
 
 	@Column(nullable = false)
 	private boolean paid;
@@ -63,18 +60,10 @@ public class TeamMemberEntity implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	public long getHackathonId() {
-		return hackathonId;
-	}
-
-	public void setHackathonId(long hackathonId) {
-		this.hackathonId = hackathonId;
-	}
 
 	@Override
 	public String toString() {
-		return "TeamMemberEntity [id=" + id + ", userId=" + userId + ", role=" + role + ", hackathonId=" + hackathonId
-				+ ", paid=" + paid + "]";
+		return "TeamMemberEntity [id=" + id + ", userId=" + userId + ", role=" + role + ", paid=" + paid + "]";
 	}
+
 }
