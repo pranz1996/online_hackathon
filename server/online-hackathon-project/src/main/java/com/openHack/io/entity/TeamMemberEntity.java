@@ -16,6 +16,9 @@ public class TeamMemberEntity implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
+	@Column(nullable = false)
+	private String userId;
+	
 	@Column(nullable = false) 
 	private String role;
 	
@@ -25,10 +28,6 @@ public class TeamMemberEntity implements Serializable{
 	@Column(nullable = false)
 	private boolean paid;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-	@JoinColumn(name = "userId")
-	private UserEntity userEntity;
-	
 	public long getId() {
 		return id;
 	}
@@ -36,12 +35,13 @@ public class TeamMemberEntity implements Serializable{
 	public void setId(long id) {
 		this.id = id;
 	}
-	public UserEntity getUserEntity() {
-		return userEntity;
+
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setUserEntity(UserEntity userEntity) {
-		this.userEntity = userEntity;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getRole() {
@@ -74,8 +74,7 @@ public class TeamMemberEntity implements Serializable{
 
 	@Override
 	public String toString() {
-		return "TeamMemberEntity [role=" + role + ", hackathonId=" + hackathonId + ", paid=" + paid + ", userEntity="
-				+ userEntity + "]";
+		return "TeamMemberEntity [id=" + id + ", userId=" + userId + ", role=" + role + ", hackathonId=" + hackathonId
+				+ ", paid=" + paid + "]";
 	}
-	
 }
