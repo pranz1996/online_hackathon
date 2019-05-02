@@ -1,16 +1,19 @@
 package com.openHack.ui.model.request;
 
+import com.openHack.io.entity.UserEntity;
+
 public class TeamMemberDetailsRequestModel {
 
-	private String userId;
 	private String role;
 	private long hackathonId;
 	private boolean paid = false;
-	public String getUserId() {
-		return userId;
+	private UserEntity userEntity;
+	
+	public UserEntity getUserEntity() {
+		return userEntity;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUserEntity(UserEntity userEntity) {
+		this.userEntity = userEntity;
 	}
 	public String getRole() {
 		return role;
@@ -32,8 +35,9 @@ public class TeamMemberDetailsRequestModel {
 	}
 	@Override
 	public String toString() {
-		return "TeamMemberDetailsRequestModel [userId=" + userId + ", role=" + role + ", hackathonId=" + hackathonId
-				+ ", paid=" + paid + "]";
+		return "TeamMemberDetailsRequestModel [role=" + role + ", hackathonId=" + hackathonId + ", paid=" + paid
+				+ ", userEntity=" + userEntity + "]";
 	}
+	
 	
 }

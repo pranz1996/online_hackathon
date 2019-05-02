@@ -1,17 +1,14 @@
 package com.openHack.shared.dto;
 
+import com.openHack.io.entity.UserEntity;
+
 public class TeamMemberDto {
 	private long id;
-	private String userId;
+	private UserEntity userEntity;
 	private String role;
 	private long hackathonId;
 	private boolean paid;
-	public String getUserId() {
-		return userId;
-	}
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+
 	public String getRole() {
 		return role;
 	}
@@ -36,6 +33,11 @@ public class TeamMemberDto {
 	public void setId(long id) {
 		this.id = id;
 	}
-	
+	public UserEntity getUserEntity() {
+		return userEntity;
+	}
+	public void setUserEntity(UserEntity userEntity) {
+		this.userEntity = userEntity;
+	}
 	
 }
