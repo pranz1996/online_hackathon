@@ -3,7 +3,7 @@ package com.openHack.shared.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.openHack.embeddedEntity.Address;
 
-@JsonIgnoreProperties(value = {"organizationEntity"})
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserDto {
 
 	private long id;

@@ -7,35 +7,44 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 //import org.springframework.web.servlet.config.annotation.CorsRegistry;
 //import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-//@SuppressWarnings("deprecation")
+
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+
+
+@SuppressWarnings("deprecation")
 @SpringBootApplication
 public class OnlineHackathonProjectApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(OnlineHackathonProjectApplication.class, args);
 	}
-	
-//	@Bean
-//	public WebMvcConfigurer corsConfigurer() {
-//		return new WebMvcConfigurerAdapter( ) {
-//			@Override
-//			public void addCorsMappings(CorsRegistry registry) {
-//				registry.addMapping("/hackathons/**")
-//	            .allowedOrigins("http://localhost:3000")
-//	            .allowedMethods("POST", "GET", "PUT", "DELETE")
-//	            .allowedHeaders("Content-Type", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers")
-//	            .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials")
-//	            .allowCredentials(false);
-//			}
-//		};
-//	}
-	
-//	@Bean
-//	@Lazy(value = true)
-//	public JoinRequestDto joinRequestDto() {
-//		return new JoinRequestDto();
-//
-//	}
 
+	
+	// Global CORS Configuration
+	@Bean
+    public WebMvcConfigurerAdapter corsConfigurer() {
+        return new WebMvcConfigurerAdapter() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**").allowedOrigins("http://localhost:3000").allowCredentials(true);	// allow react client to access server
+            }
+        };
+    }
+	
+	// Bean for password encryption using Bcrypt algorithm
+	@Bean
+	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
+	
+	// initial Bean creation for login Authentication
+	@Bean
+	public SpringApplicationContext springApplicationContext() {
+		return new SpringApplicationContext();
+	}
 }

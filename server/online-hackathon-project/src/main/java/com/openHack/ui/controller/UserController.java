@@ -2,6 +2,7 @@ package com.openHack.ui.controller;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,9 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
+	@Autowired
+	BCryptPasswordEncoder bCryptPasswordEncoder;
+	
 	// create and add new user
 	@PostMapping
 	public UserDetailsResponseModel signUp(@RequestBody UserDetailsRequestModel userDetailsRequestModel) {
@@ -32,6 +36,8 @@ public class UserController {
 		
 		// response model to send data to UI
 		UserDetailsResponseModel returnModel = new UserDetailsResponseModel();
+		
+		userDetailsRequestModel.setPassword(bCryptPasswordEncoder.encode(userDetailsRequestModel.getPassword()));
 		
 		// DTO object to hold the input request data
 		UserDto userDto = new UserDto();

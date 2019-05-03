@@ -1,7 +1,12 @@
 package com.openHack.service.impl;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -86,6 +91,35 @@ public class UserServiceImpl implements UserService {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		returnValue = mapper.convertValue(updatedUser, UserDto.class);
+		
+		return returnValue;
+	}
+
+	// Login method automatically called by Spring Security
+	@Override
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		
+		// if no user with requested email is found
+		UserEntity userEntity = userRepository.findByEmail(email);
+		
+		if(userEntity == null)
+			throw new UsernameNotFoundException(email);
+		
+		return new User(userEntity.getEmail(), userEntity.getPassword(), new ArrayList<>());
+	}
+
+	// Convenient method to find the user in database while LOGIN
+	@Override
+	public UserDto getUser(String email) {
+		
+		UserDto returnValue = new UserDto();
+		
+		UserEntity userEntity = userRepository.findByEmail(email);
+		
+		if(userEntity == null)
+			throw new UsernameNotFoundException(email);
+		
+		BeanUtils.copyProperties(userEntity, returnValue);
 		
 		return returnValue;
 	}
