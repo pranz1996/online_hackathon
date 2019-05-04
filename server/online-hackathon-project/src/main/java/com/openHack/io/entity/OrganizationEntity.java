@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 
 import com.openHack.embeddedEntity.Address;
 
@@ -30,8 +31,9 @@ public class OrganizationEntity implements Serializable{
 	@Column(nullable = false, unique = true)
 	private String name;
 	
-	@Column(unique = true)
-	private long ownerId;
+	@OneToOne(fetch = FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+	@JoinColumn(name = "ownerId")
+	private UserEntity userEntity;
 	
 	private String description;
 	
@@ -59,12 +61,12 @@ public class OrganizationEntity implements Serializable{
 		this.name = name;
 	}
 
-	public long getOwnerId() {
-		return ownerId;
+	public UserEntity getUserEntity() {
+		return userEntity;
 	}
 
-	public void setOwnerId(long ownerId) {
-		this.ownerId = ownerId;
+	public void setUserEntity(UserEntity userEntity) {
+		this.userEntity = userEntity;
 	}
 
 	public String getDescription() {
@@ -95,11 +97,11 @@ public class OrganizationEntity implements Serializable{
 			users = new ArrayList<>();
 		users.add(userEntity);
 	}
-	
+
 	@Override
 	public String toString() {
-		return "OrganizationEntity [name=" + name + ", ownerId=" + ownerId + ", description=" + description
-				+ ", address=" + address + "]";
+		return "OrganizationEntity [id=" + id + ", name=" + name + ", userEntity=" + userEntity + ", description="
+				+ description + ", address=" + address + ", users=" + users + "]";
 	}
 	
 }

@@ -8,8 +8,7 @@ public class OrganizationDetailsRequestModel {
 	private long ownerId;
 	private String description;
 	private Address address;
-	private boolean adminCheck = false;
-
+	
 	public String getName() {
 		return name;
 	}
@@ -34,17 +33,11 @@ public class OrganizationDetailsRequestModel {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
-	public boolean isAdminCheck() {
-		return adminCheck;
-	}
-	public void setAdminCheck(boolean adminCheck) {
-		this.adminCheck = adminCheck;
-	}
-	
+
 	@Override
 	public String toString() {
 		return "OrganizationDetailsRequestModel [name=" + name + ", ownerId=" + ownerId + ", description=" + description
-				+ ", address=" + address + ", adminCheck=" + adminCheck + "]";
+				+ ", address=" + address + "]";
 	}
 	
 

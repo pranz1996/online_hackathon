@@ -27,7 +27,8 @@ public class JoinRequestServiceImpl implements JoinRequestService{
 	
 		// Fetch user details 
 		UserEntity userEntity = userRepository.findById(joinRequestDto.getUser_id());
-	 
+	
+		
 		// To check if user is associated with any organization or not
 		if(userEntity.getOrganizationEntity() != null) 
 			throw new RuntimeException("User is already joined with any organization ... ");

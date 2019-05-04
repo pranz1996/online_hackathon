@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.openHack.io.entity.UserEntity;
 import com.openHack.service.OrganizationService;
 import com.openHack.shared.dto.OrganizationDto;
 import com.openHack.ui.model.request.OrganizationDetailsRequestModel;
@@ -35,14 +36,25 @@ public class OrganizationController {
 		
 		// DTO object to hold the input request data
 		OrganizationDto organizationDto = new OrganizationDto();
+		
 		// transferring input data to DTO object
-		BeanUtils.copyProperties(organizationRequestModel, organizationDto);
+		organizationDto.setName(organizationRequestModel.getName());
+		organizationDto.setDescription(organizationRequestModel.getDescription());
+		organizationDto.setAddress(organizationRequestModel.getAddress());
+		UserEntity userEntity = new UserEntity();
+		userEntity.setId(organizationRequestModel.getOwnerId());
+		organizationDto.setUserEntity(userEntity);
 		
 		// Service method Call to insert data
 		OrganizationDto createOrganization = organizationService.createOrganization(organizationDto);
 		// Transferring DTO object data to response model
-		BeanUtils.copyProperties(createOrganization, returnModel);
-
+		
+		returnModel.setId(createOrganization.getId());
+		returnModel.setName(createOrganization.getName());
+		returnModel.setDescription(createOrganization.getDescription());
+		returnModel.setAddress(createOrganization.getAddress());
+		returnModel.setOwnerId(createOrganization.getUserEntity().getId());
+	
 		return returnModel;
 	}
 	

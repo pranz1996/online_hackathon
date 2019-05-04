@@ -1,11 +1,12 @@
 package com.openHack.shared.dto;
 
 import com.openHack.embeddedEntity.Address;
+import com.openHack.io.entity.UserEntity;
 
 public class OrganizationDto {
 	private long id;
 	private String name;
-	private long ownerId;
+	private UserEntity userEntity;
 	private String description;
 	private Address address;
 	public long getId() {
@@ -20,11 +21,11 @@ public class OrganizationDto {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public long getOwnerId() {
-		return ownerId;
+	public UserEntity getUserEntity() {
+		return userEntity;
 	}
-	public void setOwnerId(long ownerId) {
-		this.ownerId = ownerId;
+	public void setUserEntity(UserEntity userEntity) {
+		this.userEntity = userEntity;
 	}
 	public String getDescription() {
 		return description;
@@ -40,8 +41,8 @@ public class OrganizationDto {
 	}
 	@Override
 	public String toString() {
-		return "OrganizationDto [name=" + name + ", ownerId=" + ownerId + ", description=" + description + ", address="
-				+ address + "]";
+		return "OrganizationDto [id=" + id + ", name=" + name + ", userEntity=" + userEntity + ", description="
+				+ description + ", address=" + address + "]";
 	}
 	
 }

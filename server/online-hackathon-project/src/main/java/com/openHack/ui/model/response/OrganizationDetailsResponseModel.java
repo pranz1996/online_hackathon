@@ -1,7 +1,6 @@
 package com.openHack.ui.model.response;
 
 import com.openHack.embeddedEntity.Address;
-
 public class OrganizationDetailsResponseModel {
 	private long id;
 	private String name;
@@ -39,11 +38,10 @@ public class OrganizationDetailsResponseModel {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
-
 	@Override
 	public String toString() {
-		return "OrganizationDetailsResponseModel [name=" + name + ", ownerId=" + ownerId + ", description="
-				+ description + ", address=" + address + "]";
+		return "OrganizationDetailsResponseModel [id=" + id + ", name=" + name + ", ownerId=" + ownerId
+				+ ", description=" + description + ", address=" + address + "]";
 	}
 	
 }
