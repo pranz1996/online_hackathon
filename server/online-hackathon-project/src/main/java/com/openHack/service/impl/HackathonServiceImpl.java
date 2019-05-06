@@ -29,15 +29,33 @@ public class HackathonServiceImpl implements HackathonService {
 	@Override
 	public HackathonDto createHackthon(HackathonDto hackathonDto) {
 		
+		
+		System.out.println(hackathonDto);
+		System.out.println(" hackathon ... ");
+		
+		String admin = hackathonDto.getCreatedBy();
+		
+		// only admin have access to create an hackathon
+		if(!admin.endsWith("sjsu.edu")) {
+			throw new RuntimeException(" You don't have accesss to create a Hackathon ...  ");
+		}
+	
 		// DTO object to Entity object transfer
 		HackathonEntity hackathonEntity = new HackathonEntity();
-		
+				
 		hackathonEntity.setEventName(hackathonDto.getEventName());
+		
+		// check for existing event-name: event-name is unique for entire system
+		HackathonEntity existingHackathonEntity = hackathonRepository.findByEventName(hackathonDto.getEventName());
+		if(existingHackathonEntity != null)
+			throw new RuntimeException(" Found existing same event-name, change the event-name ...  ");
+		
 		hackathonEntity.setDescription(hackathonDto.getDescription());
 		hackathonEntity.setFee(hackathonDto.getFee());
 		hackathonEntity.setMinTeamSize(hackathonDto.getMinTeamSize());
 		hackathonEntity.setMaxTeamSize(hackathonDto.getMaxTeamSize());
 		hackathonEntity.setJudges(hackathonDto.getJudges());
+		hackathonEntity.setCreatedBy(hackathonDto.getCreatedBy());
 		
 		hackathonEntity.setStartTime(Timestamp.valueOf(hackathonDto.getStartTime()));
 		hackathonEntity.setEndTime(Timestamp.valueOf(hackathonDto.getEndTime()));

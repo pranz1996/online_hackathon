@@ -8,4 +8,5 @@ import com.openHack.io.entity.HackathonEntity;
 @Repository
 public interface HackathonRepository extends CrudRepository<HackathonEntity, Long>{
 	HackathonEntity findById(long id);
+	HackathonEntity findByEventName(String eventName);
 }

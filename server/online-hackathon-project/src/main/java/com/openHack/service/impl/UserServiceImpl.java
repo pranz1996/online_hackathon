@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
 	
 	// service method to store user object to database
 	@Override
-	public UserDto createUser(UserDto userDto) {
+public UserDto createUser(UserDto userDto) {
 		
 		// check for Admin or not -> email ends with @sjsu.edu 
 		String email = userDto.getEmail();
@@ -32,14 +32,18 @@ public class UserServiceImpl implements UserService {
 			userDto.setAdminCheck(true);
 		
 		// User with email id already exists or not
-		UserEntity existingUserDetails = userRepository.findByEmail(userDto.getEmail());
+		UserEntity existingUserWithEmail = userRepository.findByEmail(userDto.getEmail());
 		// if exists then throwing an error
-		if(existingUserDetails != null)
+		if(existingUserWithEmail != null)
 			throw new RuntimeException("User with email already exists ... ");
+		
+		// if existing use with same username
+		UserEntity existingUserWithUserName = userRepository.findByUserName(userDto.getUserName());
+		if(existingUserWithUserName != null)
+			throw new RuntimeException("User with same username already exists ... ");
 		
 		// DTO object to Entity object transfer
 		UserEntity userEntity = new UserEntity();
-		
 		
 		BeanUtils.copyProperties(userDto, userEntity);
 		
@@ -52,6 +56,7 @@ public class UserServiceImpl implements UserService {
 		
 		return returnValue;
 	}
+
 	
 	// Service method to get any user based on it's id(primary key)
 	@Override

@@ -9,6 +9,7 @@ public class HackathonDetailsResposeModel {
 	private String fee;
 	private String minTeamSize;
 	private String maxTeamSize;
+	private String createdBy;
 	private boolean hackatonWinner;
 	public long getId() {
 		return id;
@@ -64,12 +65,19 @@ public class HackathonDetailsResposeModel {
 	public void setHackatonWinner(boolean hackatonWinner) {
 		this.hackatonWinner = hackatonWinner;
 	}
+	
+	public String getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
 	@Override
 	public String toString() {
 		return "HackathonDetailsResposeModel [id=" + id + ", eventName=" + eventName + ", startTime=" + startTime
 				+ ", endTime=" + endTime + ", description=" + description + ", fee=" + fee + ", minTeamSize="
-				+ minTeamSize + ", maxTeamSize=" + maxTeamSize + ", hackatonWinner=" + hackatonWinner + "]";
+				+ minTeamSize + ", maxTeamSize=" + maxTeamSize + ", createdBy=" + createdBy + ", hackatonWinner="
+				+ hackatonWinner + "]";
 	}
-	
 	
 }
