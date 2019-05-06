@@ -4,7 +4,7 @@ import { Redirect } from 'react-router'
 import Header from '../Miscellanous/Header';
 import Footer from '../Miscellanous/Footer';
 
-export default class CreateHackathon extends Component {
+export default class MyOrganization extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -99,27 +99,18 @@ export default class CreateHackathon extends Component {
                             <div class="hackathon-main-div">
                                 <div class="hackathon-panel">
                                     {/* <img src={openhacklogo} width="75px" height="75px" /> */}
-                                    <h2>Create A Hackathon</h2><br />
+                                    <h2>My Organization</h2><br />
                                 </div>
-                                <form onSubmit={this.submitHandler}>
-                                    <div class="form-group">
-                                        <input name="eventName" class="form-control" type="text" placeholder="Enter the Event Name" onChange={this.eventNameHandler} required />
+                                <div class="form-group">
+                                    <div class="card" >
+                                        <div class="card-body">
+                                            <h3 class="card-title"> Organization Name<span class="tab" /></h3>
+                                            <h6 class="card-subtitle mb-2 text-muted"> Subtitle</h6>
+                                            <p class="card-text">something</p>
+                                            <button type="button" class="btn btn-danger btn-lg btn-block">Leave</button>
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <input name="description" class="form-control" type="text" placeholder=" Description (10 chars)" onChange={this.descriptionHandler} required />
-                                    </div>
-                                    <div class="form-group">
-                                        <input name="fee" class="form-control" type="text" placeholder="Amount to Pay" onChange={this.feeHandler} required />
-                                    </div>
-                                    <div class="form-group">
-                                        <input name="minTeamSize" class="form-control" type="text" placeholder="Minimum Team Size" onChange={this.minTeamSizeHandler} required />
-                                    </div>
-                                    <div class="form-group">
-                                        <input name="maxTeamSize" class="form-control" type="text" placeholder="Maximum Team Size" onChange={this.maxTeamSizeHandler} required />
-                                    </div>
-                                    <br />
-                                    <button type="submit" class="btn btn-secondary btn-lg btn-block">Create</button><br />
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -3,8 +3,9 @@ import axios from 'axios'
 import { Redirect } from 'react-router'
 import Header from '../Miscellanous/Header';
 import Footer from '../Miscellanous/Footer';
+import OrganizationCard from '../Organization/CardSearchOrganization';
 
-export default class CreateHackathon extends Component {
+export default class SearchHackathon extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -95,35 +96,26 @@ export default class CreateHackathon extends Component {
 
 
                     <div>
-                        <div class="hackathon-login-form">
-                            <div class="hackathon-main-div">
-                                <div class="hackathon-panel">
+                        <div class="organization-login-form">
+                            <div class="organization-main-div">
+                                <div class="organization-panel">
                                     {/* <img src={openhacklogo} width="75px" height="75px" /> */}
-                                    <h2>Create A Hackathon</h2><br />
+                                    <h2>Search a Hackathon to Register</h2><br />
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" placeholder="Organization Name" aria-label="Recipient's username" aria-describedby="button-addon2" />
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-primary" type="button" id="button-addon2">Search</button><span class="tabmini"/><button type="button" class="btn btn-outline-danger">+ Create</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <form onSubmit={this.submitHandler}>
-                                    <div class="form-group">
-                                        <input name="eventName" class="form-control" type="text" placeholder="Enter the Event Name" onChange={this.eventNameHandler} required />
-                                    </div>
-                                    <div class="form-group">
-                                        <input name="description" class="form-control" type="text" placeholder=" Description (10 chars)" onChange={this.descriptionHandler} required />
-                                    </div>
-                                    <div class="form-group">
-                                        <input name="fee" class="form-control" type="text" placeholder="Amount to Pay" onChange={this.feeHandler} required />
-                                    </div>
-                                    <div class="form-group">
-                                        <input name="minTeamSize" class="form-control" type="text" placeholder="Minimum Team Size" onChange={this.minTeamSizeHandler} required />
-                                    </div>
-                                    <div class="form-group">
-                                        <input name="maxTeamSize" class="form-control" type="text" placeholder="Maximum Team Size" onChange={this.maxTeamSizeHandler} required />
-                                    </div>
-                                    <br />
-                                    <button type="submit" class="btn btn-secondary btn-lg btn-block">Create</button><br />
+                                <form onSubmit={this.submitHandler} style={{marginTop: '110px'}} >
+                                <OrganizationCard/>
                                 </form>
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <Footer />
             </div>

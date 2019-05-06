@@ -4,7 +4,7 @@ import { Redirect } from 'react-router'
 import Header from '../Miscellanous/Header';
 import Footer from '../Miscellanous/Footer';
 
-export default class CreateHackathon extends Component {
+export default class CreateOrganization extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -99,7 +99,7 @@ export default class CreateHackathon extends Component {
                             <div class="hackathon-main-div">
                                 <div class="hackathon-panel">
                                     {/* <img src={openhacklogo} width="75px" height="75px" /> */}
-                                    <h2>Create A Hackathon</h2><br />
+                                    <h2>Create Organization</h2><br />
                                 </div>
                                 <form onSubmit={this.submitHandler}>
                                     <div class="form-group">
