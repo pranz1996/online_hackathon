@@ -3,6 +3,7 @@ import axios from 'axios'
 import { Redirect } from 'react-router'
 import Header from '../Miscellanous/Header';
 import Footer from '../Miscellanous/Footer';
+import {Link} from 'react-router-dom'
 
 export default class LandingPage extends Component {
     constructor(props) {
@@ -88,7 +89,7 @@ export default class LandingPage extends Component {
                     <div style={{ backgroundColor: "#000000"}} class="container">
                         <div class="col-md-12">
                             <img class="img-responsive" src={openhacklogo} alt="" />
-                            <button type="button" class="btnl btn-danger btn-lg">Register</button>
+                            <Link class="btnl btn-danger btn-lg" to="/signup">Register</Link>
                         </div>
                     </div>
                 </div>

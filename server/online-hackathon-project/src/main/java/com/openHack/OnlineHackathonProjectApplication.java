@@ -10,12 +10,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-
-
-@SuppressWarnings("deprecation")
 @SpringBootApplication
 public class OnlineHackathonProjectApplication {
 
@@ -23,18 +17,6 @@ public class OnlineHackathonProjectApplication {
 		SpringApplication.run(OnlineHackathonProjectApplication.class, args);
 	}
 
-	
-	// Global CORS Configuration
-	@Bean
-    public WebMvcConfigurerAdapter corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("http://localhost:3000").allowCredentials(true);	// allow react client to access server
-            }
-        };
-    }
-	
 	// Bean for password encryption using Bcrypt algorithm
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -47,4 +29,5 @@ public class OnlineHackathonProjectApplication {
 	public SpringApplicationContext springApplicationContext() {
 		return new SpringApplicationContext();
 	}
+	
 }

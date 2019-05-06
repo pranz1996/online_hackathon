@@ -17,7 +17,7 @@ class RouteFile extends Component {
     render() {
         return(
             <div>
-                
+                <Route exact path="/" component={LandingPage} />
                 <Route path="/createHackathon" component={CreateHackathon} />
                 <Route path="/hackathonDetails" component={ViewHackathon} />
                 <Route path="/login" component={Login}/>

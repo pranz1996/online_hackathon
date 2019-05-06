@@ -13,6 +13,11 @@ export default class Header extends Component {
         this.setState({
         })
     }
+    
+    logoutHandler = () => {
+        localStorage.removeItem('token')
+        localStorage.removeItem('email')
+    }
 
     render() {
         const openhacklogo = require('../Miscellanous/openhack.png');
@@ -58,6 +63,9 @@ export default class Header extends Component {
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Teams</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/landingpage" onClick={this.logoutHandler}>Logout </a>
                                 </li>
                             </ul>
                         </div>

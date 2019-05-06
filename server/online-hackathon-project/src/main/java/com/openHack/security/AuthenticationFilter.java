@@ -1,6 +1,7 @@
 package com.openHack.security;
 
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -8,7 +9,6 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,6 +25,9 @@ import com.openHack.ui.model.request.UserLoginRequestModel;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+
+import javax.json.Json;
+import javax.json.JsonObject;
 
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter{
 
@@ -65,8 +68,35 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter{
 		UserService userService = (UserService) SpringApplicationContext.getBean("userServiceImpl");
 		UserDto userDto = userService.getUser(email);
 		
+		String user = userDto.getEmail();
+		boolean role = userDto.isAdminCheck();
+		
 		// setting token and email after successful LOGIN
-		response.addHeader(SecurityConstants.HEADER_STRING, token);
-		response.addHeader("userId", userDto.getEmail());
+
+		System.out.println(" response " + response);
+		
+		response.setContentType("application/json");
+	    response.setCharacterEncoding("UTF-8");
+//	    response.getWriter().write(
+//	            "{\"" + 
+//	            		SecurityConstants.HEADER_STRING + "\":\"" + token + 
+//	            "\"}"
+//	    );
+//	    response.getWriter().write(
+//	            "{\"" + 
+//	            	 "user" +  "\":\"" +	user + 
+//	            "\"}"
+//	    );
+	    
+	    JsonObject object = Json.createObjectBuilder().add("token", token)
+	    												.add("user", user)
+	    												.add("admin", role).build();
+	    
+	    
+	    response.getWriter().write(object.toString());
+		
+//		response.addHeader(SecurityConstants.HEADER_STRING, token);
+//		response.addHeader("userId", userDto.getEmail());
+//		response.setHeader("User", userDto.getEmail());
 	}	
 }

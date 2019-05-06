@@ -12,7 +12,8 @@ export default class Signup extends Component {
             username: "",
             password: "",
             repeatpassword: "",
-            email: ""
+            email: "",
+            successFlag : ""
         }
 
         this.usernameHandler = this.usernameHandler.bind(this);
@@ -23,7 +24,7 @@ export default class Signup extends Component {
 
     componentWillMount() {
         this.setState({
-           
+            successFlag : false
         })
     }
 
@@ -46,17 +47,16 @@ export default class Signup extends Component {
     submitHandler = (h) => {
         h.preventDefault()
         const data = {
-            username: this.state.username,
-            password: this.state.password,
-            repeatpassword: this.state.repeatpassword,
-            email: this.state.email
+            userName: this.state.username,
+            email: this.state.email,
+            password: this.state.password
         }
         console.log("signup: ", data);
         // axios.defaults.withCredentials = true
-        axios.post('http://localhost:8080/hackathons', data)
+        axios.post('http://localhost:8080/users', data)
             .then(response => {
-
-                console.log(response.data.id)
+                console.log(" response : " ,response)
+                console.log(" response status : " , response.status)
                 if (response.status === 200) {
                     this.setState({
                         successFlag: true
@@ -66,9 +66,13 @@ export default class Signup extends Component {
     }
 
     render() {
+        let redirectVar = null
+        if(this.state.successFlag) 
+            redirectVar = <Redirect to="/login" />
         const openhacklogo = require('../Miscellanous/openhack.png');
         return (
             <div style={{ backgroundColor: "#eceff1" }}>
+            {redirectVar}
                 <Header />
                 <div>
                     <div class="login-form">
@@ -93,7 +97,7 @@ export default class Signup extends Component {
                                 <br />
                                 <button type="submit" class="btn btn-secondary btn-lg btn-block">Sign Up</button><br />
                                 <div class="alert alert-info" role="alert">
-                                    Have an account? <a href="">Sign in here</a>
+                                    Have an account? <a href="/login">Sign in here</a>
                                 </div>
                              
                             </form>

@@ -9,17 +9,17 @@ export default class Login extends Component {
         super(props)
         this.state = {
             email: "",
-            password: ""
+            password: "",
+            successFlag : ""
         }
 
         this.emailHandler = this.emailHandler.bind(this);
         this.passwordHandler = this.passwordHandler.bind(this);
-
     }
 
     componentWillMount() {
         this.setState({
-    
+            successFlag : false
         })
     }
 
@@ -43,13 +43,15 @@ export default class Login extends Component {
             password: this.state.password
            
         }
-        this.props.history.push('/user');
-        console.log(data);
         // axios.defaults.withCredentials = true
-        axios.post('http://localhost:8080/hackathons', data)
+        axios.post('http://localhost:8080/login', data)
             .then(response => {
-
-                console.log(response.data.id)
+                console.log(response)
+                console.log(response.status)
+                console.log(response.data.user)
+                console.log(response.data.token)
+                localStorage.setItem('token',response.data.token)
+                localStorage.setItem('email',response.data.user)
                 if (response.status === 200) {
                     this.setState({
                         successFlag: true
@@ -59,9 +61,14 @@ export default class Login extends Component {
     }
 
     render() {
+        let redirectVar = null
+        if(this.state.successFlag) {
+            redirectVar = <Redirect to='/user' />
+        }
         const openhacklogo = require('../Miscellanous/openhack.png');
         return (
             <div style={{ backgroundColor: "#243e8c" }}>
+            {redirectVar}
            <div style={{ backgroundColor: "#243e8c" }}>
                 <Header />
                 <div style={{ backgroundColor: "#243e8c" }}>
@@ -81,7 +88,7 @@ export default class Login extends Component {
                                 <br />
                                 <button type="submit" class="btn btn-secondary btn-lg btn-block">Login</button><br />
                                 <div class="alert alert-info" role="alert">
-                                    Have an account? <a href="localhost:8080/signup">Sign in here</a>
+                                    Create an account <a href="/signup">Sign up here</a>
                                 </div>
                     
                             </form>
