@@ -10,6 +10,7 @@ import com.openHack.io.entity.UserEntity;
 public interface UserRepository extends CrudRepository<UserEntity, Long>{
 	UserEntity findById(long id);
 	UserEntity findByEmail(String email);
+	UserEntity findByUserName(String username);
 	
 	@Query(value="select id from users u where u.email=?1", nativeQuery = true)
 	UserEntity findUserByEmail(String email);

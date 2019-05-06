@@ -50,6 +50,9 @@ public class HackathonEntity implements Serializable{
 	@Column(nullable = false) 
 	private boolean hackatonWinner;
 	
+	@Column(nullable = false)
+	private String createdBy;
+	
 	@ManyToMany(fetch = FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
 	@JoinTable(name="judges", joinColumns = @JoinColumn(name="hackathon_id"), inverseJoinColumns = @JoinColumn(name="judge_id"))
 	private List<UserEntity> judges;
@@ -143,6 +146,8 @@ public class HackathonEntity implements Serializable{
 		this.hackatonWinner = hackatonWinner;
 	}
 	
+	
+	
 //	public List<SubmissionEntity> getTeamAssociate() {
 //		return teamAssociate;
 //	}
@@ -156,12 +161,22 @@ public class HackathonEntity implements Serializable{
 //			teamAssociate = new ArrayList<>();
 //		teamAssociate.add(submission);
 //	}
+	
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
 
 	@Override
 	public String toString() {
 		return "HackathonEntity [eventName=" + eventName + ", startTime=" + startTime + ", endTime=" + endTime
 				+ ", description=" + description + ", fee=" + fee + ", minTeamSize=" + minTeamSize + ", maxTeamSize="
-				+ maxTeamSize + ", hackatonWinner=" + hackatonWinner + ", judges=" + judges + "]";
+				+ maxTeamSize + ", hackatonWinner=" + hackatonWinner + ", createdBy=" + createdBy + ", judges=" + judges
+				+ "]";
 	}
+
 	
 }
