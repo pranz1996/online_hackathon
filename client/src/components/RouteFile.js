@@ -14,6 +14,8 @@ import MyHackathon from "./Hackathon/MyHackathon";
 import AdminHome from "./Admin/AdminHome";
 import RegisterForHackathon from "./Admin/RegisterForHackathon";
 import Payment from "./Admin/Payment";
+import ConfirmEmail from "./Admin/ConfirmEmail";
+import ConfirmEmailFinal from "./Admin/ConfirmEmailFinal";
 
 require("dotenv").config();
 class RouteFile extends Component {
@@ -35,6 +37,8 @@ class RouteFile extends Component {
         <Route path="/adminHome" component={AdminHome} />
         <Route path="/registerForHackathon" component={RegisterForHackathon} />
         <Route path="/payment" component={Payment} />
+        <Route path="/confirmEmail" component={ConfirmEmail} />
+        <Route path="/confirmEmailFinal" component={ConfirmEmailFinal} />
       </div>
     );
   }
