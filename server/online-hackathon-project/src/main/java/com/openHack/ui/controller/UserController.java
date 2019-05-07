@@ -1,5 +1,7 @@
 package com.openHack.ui.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openHack.service.UserService;
@@ -17,7 +20,6 @@ import com.openHack.ui.model.request.UserDetailsRequestModel;
 import com.openHack.ui.model.response.UserDetailsResponseModel;
 
 @RestController
-@RequestMapping("users")  // http://localhost:8080/users
 public class UserController {
 	
 	@Autowired
@@ -84,6 +86,16 @@ public class UserController {
 		// Transferring DTO object data to response model
 		BeanUtils.copyProperties(updatedUser, returnModel);
 		
+		return returnModel;
+	}
+	
+	@RequestMapping(method=RequestMethod.PUT, value="users/getUserByEmail",  produces = { "application/json", "application/xml" })
+	public UserDetailsResponseModel getUserByEmail(@RequestBody Map<String, Object> payload) 
+	{			
+		UserDetailsResponseModel returnModel = new UserDetailsResponseModel();
+		UserDto userDto = new UserDto();
+		userDto = userService.getUser((payload.get("email")).toString());
+		BeanUtils.copyProperties(userDto, returnModel);
 		return returnModel;
 	}
 	
