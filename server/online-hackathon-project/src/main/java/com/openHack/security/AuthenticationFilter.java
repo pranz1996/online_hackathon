@@ -76,6 +76,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter{
 		if (!isEmailVerified)
 		{
 			object = Json.createObjectBuilder().add("Message", "Email verification is pending").build();
+			response.setStatus(400);
 		}
 		else
 		{
