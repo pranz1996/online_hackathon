@@ -68,28 +68,20 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter{
 		UserService userService = (UserService) SpringApplicationContext.getBean("userServiceImpl");
 		UserDto userDto = userService.getUser(email);
 		
-		boolean isEmailVerified = userDto.isEmailVerfied();
 		JsonObject object;
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		
-		if (!isEmailVerified)
-		{
-			object = Json.createObjectBuilder().add("Message", "false").build();
-			
-		}
-		else
-		{
-			String user = userDto.getEmail();
-			boolean role = userDto.isAdminCheck();
+		String user = userDto.getEmail();
+		boolean role = userDto.isAdminCheck();
 		
-			// setting token and email after successful LOGIN
-			System.out.println(" response " + response);
+		// setting token and email after successful LOGIN
+		System.out.println(" response " + response);
 	    
-			object = Json.createObjectBuilder().add("token", token)
-	    									   .add("user", user)
-	    									   .add("admin", role).build();
-		}
+		object = Json.createObjectBuilder().add("token", token)
+	    									.add("user", user)
+	    									.add("admin", role).build();
+		
 	    response.getWriter().write(object.toString());
 	}	
 }
