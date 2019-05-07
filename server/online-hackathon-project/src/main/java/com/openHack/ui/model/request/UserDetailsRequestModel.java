@@ -10,6 +10,14 @@ public class UserDetailsRequestModel {
 	private String title;
 	private String about;
 	private Address address;
+	private boolean isEmailVerfied;
+	
+	public boolean isEmailVerfied() {
+		return isEmailVerfied;
+	}
+	public void setEmailVerfied(boolean isEmailVerfied) {
+		this.isEmailVerfied = isEmailVerfied;
+	}
 	public String getUserName() {
 		return userName;
 	}

@@ -10,7 +10,14 @@ public class UserDetailsResponseModel {
 	private String title; // business title
 	private String about;
 	private Address address;
-
+	private boolean isEmailVerfied;
+	
+	public boolean isEmailVerfied() {
+		return isEmailVerfied;
+	}
+	public void setEmailVerfied(boolean isEmailVerfied) {
+		this.isEmailVerfied = isEmailVerfied;
+	}
 	public long getId() {
 		return id;
 	}

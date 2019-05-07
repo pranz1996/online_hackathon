@@ -15,7 +15,14 @@ public class UserDto {
 	private String about;
 	private Address address;
 	private boolean adminCheck = false;
+	private boolean isEmailVerfied;
 	
+	public boolean isEmailVerfied() {
+		return isEmailVerfied;
+	}
+	public void setEmailVerfied(boolean isEmailVerfied) {
+		this.isEmailVerfied = isEmailVerfied;
+	}
 	public long getId() {
 		return id;
 	}

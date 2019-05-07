@@ -68,35 +68,27 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter{
 		UserService userService = (UserService) SpringApplicationContext.getBean("userServiceImpl");
 		UserDto userDto = userService.getUser(email);
 		
-		String user = userDto.getEmail();
-		boolean role = userDto.isAdminCheck();
-		
-		// setting token and email after successful LOGIN
-
-		System.out.println(" response " + response);
-		
+		boolean isEmailVerified = userDto.isEmailVerfied();
+		JsonObject object;
 		response.setContentType("application/json");
-	    response.setCharacterEncoding("UTF-8");
-//	    response.getWriter().write(
-//	            "{\"" + 
-//	            		SecurityConstants.HEADER_STRING + "\":\"" + token + 
-//	            "\"}"
-//	    );
-//	    response.getWriter().write(
-//	            "{\"" + 
-//	            	 "user" +  "\":\"" +	user + 
-//	            "\"}"
-//	    );
-	    
-	    JsonObject object = Json.createObjectBuilder().add("token", token)
-	    												.add("user", user)
-	    												.add("admin", role).build();
-	    
-	    
-	    response.getWriter().write(object.toString());
+		response.setCharacterEncoding("UTF-8");
 		
-//		response.addHeader(SecurityConstants.HEADER_STRING, token);
-//		response.addHeader("userId", userDto.getEmail());
-//		response.setHeader("User", userDto.getEmail());
+		if (!isEmailVerified)
+		{
+			object = Json.createObjectBuilder().add("Message", "Email verification is pending").build();
+		}
+		else
+		{
+			String user = userDto.getEmail();
+			boolean role = userDto.isAdminCheck();
+		
+			// setting token and email after successful LOGIN
+			System.out.println(" response " + response);
+	    
+			object = Json.createObjectBuilder().add("token", token)
+	    									   .add("user", user)
+	    									   .add("admin", role).build();
+		}
+	    response.getWriter().write(object.toString());
 	}	
 }

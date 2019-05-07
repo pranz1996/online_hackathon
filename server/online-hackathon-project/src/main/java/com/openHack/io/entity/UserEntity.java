@@ -37,6 +37,17 @@ public class UserEntity implements Serializable{
 	
 	private String portraitUrl;
 	
+	@Column(nullable = false)
+	private boolean isEmailVerfied;
+	
+	public boolean isEmailVerfied() {
+		return isEmailVerfied;
+	}
+
+	public void setEmailVerfied(boolean isEmailVerfied) {
+		this.isEmailVerfied = isEmailVerfied;
+	}
+
 	@OneToOne(fetch = FetchType.LAZY, cascade= {CascadeType.DETACH,CascadeType.MERGE ,CascadeType.PERSIST,CascadeType.REFRESH})
 	@JoinColumn(name="organizationId")
 	private OrganizationEntity organizationEntity;
