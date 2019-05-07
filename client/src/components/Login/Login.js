@@ -53,7 +53,7 @@ export default class Login extends Component {
       console.log("message: " + JSON.stringify(response));
       if (response.data.Message === "false") {
         alert(
-          "Email verification is pending, Please verify your email to continue."
+          "Email verification is pending, Please verify your email to continue.."
         );
         this.setState({
           successFlag: false
@@ -71,7 +71,14 @@ export default class Login extends Component {
   render() {
     let redirectVar = null;
     if (this.state.successFlag) {
-      redirectVar = <Redirect to="/user" />;
+      redirectVar = (
+        <Redirect
+          to={{
+            pathname: "/user",
+            state: { referrer: this.state.email }
+          }}
+        />
+      );
     }
     const openhacklogo = require("../Miscellanous/openhack.png");
     return (
