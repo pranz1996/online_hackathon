@@ -55,18 +55,18 @@ export default class Signup extends Component {
 
     submitHandler = (h) => {
         h.preventDefault()
-        var adminstr = "@sjsu.edu";
-        var isAdmin=0;
-        if(this.state.email.includes(adminstr)){
-            console.log("admin email");
-            isAdmin = 1;
-        }
+        // var adminstr = "@sjsu.edu";
+        // var isAdmin=0;
+        // if(this.state.email.includes(adminstr)){
+        //     console.log("admin email");
+        //     isAdmin = 1;
+        // }
 
         const data = {
             userName: this.state.username,
             email: this.state.email,
             password: this.state.password,
-            isAdmin: isAdmin
+        //    isAdmin: isAdmin
         }
         
         console.log("signup: ", data);
@@ -99,20 +99,23 @@ export default class Signup extends Component {
         //             console.log("error" + errorMessage);
         //         });
         //     }
-        var email = this.state.email;
-        var password = this.state.password;
-        console.log("in firebase", email);
-        console.log("in firebase", password);
-        console.log("here");
-        var user = fire.auth().currentUser;
-        // var isverified = user.emailVerified;
-        // if(user!=null){
-        //     var email = user.email;
-        //     console.log("email", email);
-        // }
-        console.log("user", user);
-        // console.log(isverified);
-        createUser(email,password, user);
+
+        // var email = this.state.email;
+        // var password = this.state.password;
+        // console.log("in firebase", email);
+        // console.log("in firebase", password);
+        // console.log("here");
+        // var user = fire.auth().currentUser;
+        // // // var isverified = user.emailVerified;
+        // // // if(user!=null){
+        // // //     var email = user.email;
+        // // //     console.log("email", email);
+        // // // }
+        // console.log("user", user);
+        // // // console.log(isverified);
+        // createUser(email,password);
+        // this.props.history.push('/showEmailSent')
+
         // sendemail(user);
 
             //  function sendVerification(h){
@@ -133,7 +136,7 @@ export default class Signup extends Component {
     render() {
         let redirectVar = null
         if(this.state.successFlag) 
-            redirectVar = <Redirect to="/showEmailSent" />
+            redirectVar = <Redirect to="/login" />
         const openhacklogo = require('../Miscellanous/openhack.png');
         return (
             <div style={{ backgroundColor: "#eceff1" }}>
@@ -160,20 +163,10 @@ export default class Signup extends Component {
                                     <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email" onChange={this.emailHandler} required/>
                                 </div>
                                 <br />
-                                <Route render={({ history }) => (
-                                        <button type="submit" class="btn btn-secondary btn-lg btn-block"
-                                            onClick={() => {
-                                                history.push({
-                                                    pathname: "/login",
-                                                    state: {
-                                                        username: this.state.username
-                                                    }
-                                                });
-                                            }}>
-                                            Sign Up</button> 
-                                    )} />
+                            
+                                
                                     <br/>
-                                {/* <button type="submit" class="btn btn-secondary btn-lg btn-block">Sign Up</button><br /> */}
+                                <button type="submit" class="btn btn-secondary btn-lg btn-block">Sign Up</button><br />
                                 <div class="alert alert-info" role="alert">
                                     Have an account? <a href="/login">Sign in here</a>
                                 </div>

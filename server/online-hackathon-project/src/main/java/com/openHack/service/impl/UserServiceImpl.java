@@ -1,30 +1,35 @@
 package com.openHack.service.impl;
 
-import java.util.ArrayList;
+
+import java.util.Date;
+
+import javax.json.Json;
+import javax.json.JsonObject;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.openHack.SecurityConstants;
 import com.openHack.embeddedEntity.Address;
 import com.openHack.io.entity.UserEntity;
 import com.openHack.io.repository.UserRepository;
 import com.openHack.service.UserService;
 import com.openHack.shared.dto.UserDto;
+import com.openHack.ui.model.request.UserLoginRequestModel;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService{
 
 	@Autowired
 	UserRepository userRepository;
 	
 	// service method to store user object to database
-	@Override
-public UserDto createUser(UserDto userDto) {
+	public UserDto createUser(UserDto userDto) {
 		
 		// check for Admin or not -> email ends with @sjsu.edu 
 		String email = userDto.getEmail();
@@ -59,7 +64,6 @@ public UserDto createUser(UserDto userDto) {
 
 	
 	// Service method to get any user based on it's id(primary key)
-	@Override
 	public UserDto getUserById(long id) {
 		
 		// returning object to UI
@@ -74,7 +78,6 @@ public UserDto createUser(UserDto userDto) {
 		return returnValue;
 	}
 
-	@Override
 	public UserDto updateUser(long id, UserDto userDto) {
 		
 		// returning object to UI
@@ -87,9 +90,11 @@ public UserDto createUser(UserDto userDto) {
 		userEntity.setPortraitUrl(userDto.getPortraitUrl());
 		userEntity.setTitle(userDto.getTitle());
 		userEntity.setAbout(userDto.getAbout());
-		
-		Address updatedAddress = userDto.getAddress();
-		userEntity.setAddress(updatedAddress);
+			
+		userEntity.setStreet(userDto.getStreet());
+		userEntity.setCity(userDto.getCity());
+		userEntity.setState(userDto.getState());
+		userEntity.setZip(userDto.getZip());
 		
 		// Repository method (save) to save updated UserEntity object to table users
 		UserEntity updatedUser = userRepository.save(userEntity);
@@ -98,19 +103,6 @@ public UserDto createUser(UserDto userDto) {
 		returnValue = mapper.convertValue(updatedUser, UserDto.class);
 		
 		return returnValue;
-	}
-
-	// Login method automatically called by Spring Security
-	@Override
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		
-		// if no user with requested email is found
-		UserEntity userEntity = userRepository.findByEmail(email);
-		
-		if(userEntity == null)
-			throw new UsernameNotFoundException(email);
-		
-		return new User(userEntity.getEmail(), userEntity.getPassword(), new ArrayList<>());
 	}
 
 	// Convenient method to find the user in database while LOGIN
@@ -122,11 +114,58 @@ public UserDto createUser(UserDto userDto) {
 		UserEntity userEntity = userRepository.findByEmail(email);
 		
 		if(userEntity == null)
-			throw new UsernameNotFoundException(email);
+			throw new RuntimeException(email);
 		
 		BeanUtils.copyProperties(userEntity, returnValue);
 		
 		return returnValue;
+	}
+
+
+	@Override
+	public JsonObject loginUser(UserLoginRequestModel userLoginRequestModel) {
+		
+		// check for Admin or not -> email ends with @sjsu.edu 
+		
+		
+		// User with email id already exists or not
+		UserEntity user = userRepository.findByEmail(userLoginRequestModel.getEmail());
+		// if exists then throwing an error
+		
+		if(user == null)
+			throw new RuntimeException("User does not exists ... ");
+		
+		JsonObject object = null; 
+		
+		System.out.println(" outside ");
+				
+		if(userLoginRequestModel.getPassword().equals(user.getPassword())) {
+			
+			System.out.println(" login done .. ");
+			
+			String token = Jwts.builder()
+					.setSubject(user.getEmail())
+					.setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_DATE))
+					.signWith(SignatureAlgorithm.HS512, SecurityConstants.TOKEN_SECRET)
+					.compact();
+			
+			object =Json.createObjectBuilder().add("token", token)
+					.add("status", 200)
+					.add("user", user.getId())
+					.add("email", user.getEmail())
+					.add("admin", user.isAdminCheck()).build();
+			
+			System.out.println("object " + object);
+		}
+		
+		else {
+			object =Json.createObjectBuilder()
+					.add("status", 400).build();
+		}
+		
+		return object;
+		
+		
 	}
 
 }

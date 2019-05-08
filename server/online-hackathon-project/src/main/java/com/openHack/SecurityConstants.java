@@ -1,4 +1,4 @@
-package com.openHack.security;
+package com.openHack;
 
 public class SecurityConstants {
 	public static final long EXPIRATION_DATE = 864000000;

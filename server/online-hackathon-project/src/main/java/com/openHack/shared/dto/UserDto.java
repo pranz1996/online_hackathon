@@ -13,8 +13,12 @@ public class UserDto {
 	private String portraitUrl;
 	private String title; // business title
 	private String about;
-	private Address address;
-	private boolean adminCheck = false;
+	private String street; 
+    private String city;
+    private String state;
+    private String zip;
+	
+    private boolean adminCheck = false;
 	private boolean isEmailVerfied;
 	
 	public boolean isEmailVerfied() {
@@ -65,13 +69,34 @@ public class UserDto {
 	public void setAbout(String about) {
 		this.about = about;
 	}
-	public Address getAddress() {
-		return address;
-	}
-	public void setAddress(Address address) {
-		this.address = address;
-	}
+		
+	
 
+
+	public String getStreet() {
+		return street;
+	}
+	public void setStreet(String street) {
+		this.street = street;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	public String getZip() {
+		return zip;
+	}
+	public void setZip(String zip) {
+		this.zip = zip;
+	}
 	public boolean isAdminCheck() {
 		return adminCheck;
 	}
@@ -80,10 +105,13 @@ public class UserDto {
 	}
 	@Override
 	public String toString() {
-		return "UserDto [userName=" + userName + ", email=" + email + ", password=" + password + ", portraitUrl="
-				+ portraitUrl + ", title=" + title + ", about=" + about + ", address=" + address
-				+ "]";
+		return "UserDto [id=" + id + ", userName=" + userName + ", email=" + email + ", password=" + password
+				+ ", portraitUrl=" + portraitUrl + ", title=" + title + ", about=" + about + ", street=" + street
+				+ ", city=" + city + ", state=" + state + ", zip=" + zip + ", adminCheck=" + adminCheck
+				+ ", isEmailVerfied=" + isEmailVerfied + "]";
 	}
+	
+	
 	
 }
 
