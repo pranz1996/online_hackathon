@@ -68,6 +68,7 @@ export default class Login extends Component {
                 // console.log(response.data.user)
                 // console.log(response.data.token)
 
+               
                 if (response.status === 200) {
                     localStorage.setItem('email', response.data.email)
                     localStorage.setItem('token', response.data.token)
@@ -77,6 +78,32 @@ export default class Login extends Component {
                     })
                 } 
             })
+        
+        
+            var email = this.state.email;
+            var password = this.state.password;
+            console.log(email, password);
+            fire.auth().signInWithEmailAndPassword(email, password)
+                .then((user) => {
+                    var check = fire.auth().currentUser.emailVerified;
+                    console.log("check", check);
+                    console.log("in login user email", user.user.email);
+                    console.log("in login verification status", user.user.emailVerified);
+                    if (user.user.emailVerified == true) {
+                        this.props.history.push('/user');
+                    } else {
+                        window.alert("Email not verified yet!")
+                        console.log("email not verified yet");
+                    }
+                })
+                .catch(function (error) {
+                    // Handle Errors here.
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    // ...
+                    window.alert(errorMessage);
+                    console.log("error" + errorMessage);
+                });
 
 
         // var email = this.state.email;
@@ -118,14 +145,10 @@ export default class Login extends Component {
     }
 
     render() {
-        let redirectVar = null
-        if(this.state.successFlag) {
-            redirectVar = <Redirect to='/user' />
-        }
         const openhacklogo = require('../Miscellanous/openhack.png');
         return (
             <div style={{ backgroundColor: "#243e8c" }}>
-                {redirectVar}
+                {/* {redirectVar} */}
                 <div style={{ backgroundColor: "#243e8c" }}>
                     {/* <Header /> */}
                     <div style={{ backgroundColor: "#243e8c" }}>

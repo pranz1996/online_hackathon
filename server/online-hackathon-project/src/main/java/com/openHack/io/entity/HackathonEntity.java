@@ -30,10 +30,10 @@ public class HackathonEntity implements Serializable{
 	private String eventName;
 	
 	@Column(nullable = false)
-	private Timestamp startTime;
+	private String startTime;
 	
 	@Column(nullable = false)
-	private Timestamp endTime;
+	private String endTime;
 	
 	@Column(nullable = false, length = 10)
 	private String description;
@@ -108,19 +108,19 @@ public class HackathonEntity implements Serializable{
 		this.maxTeamSize = maxTeamSize;
 	}
 
-	public Timestamp getStartTime() {
+	public String getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(Timestamp startTime) {
+	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
 
-	public Timestamp getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(Timestamp endTime) {
+	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
 
@@ -170,13 +170,7 @@ public class HackathonEntity implements Serializable{
 		this.createdBy = createdBy;
 	}
 
-	@Override
-	public String toString() {
-		return "HackathonEntity [eventName=" + eventName + ", startTime=" + startTime + ", endTime=" + endTime
-				+ ", description=" + description + ", fee=" + fee + ", minTeamSize=" + minTeamSize + ", maxTeamSize="
-				+ maxTeamSize + ", hackatonWinner=" + hackatonWinner + ", createdBy=" + createdBy + ", judges=" + judges
-				+ "]";
-	}
+	
 
 	
 }

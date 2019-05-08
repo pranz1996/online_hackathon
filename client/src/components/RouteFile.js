@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
-//import CreateHackathon from './Hackathon/CreateHackathon'
+import CreateHackathon from './Hackathon/CreateHackathon'
 import ViewHackathon from './Hackathon/ViewHackathon'
 import Login from './Login/Login';
 import Signup from './Login/Signup';
@@ -13,6 +13,11 @@ import SearchHackathon from './Hackathon/SearchHackathon';
 import MyHackathon from './Hackathon/MyHackathon';
 import JudgeHackathon from './Judge/JudgeHackathon';
 import ShowEmailSent from './Login/ShowEmailSent';
+import AdminHome from './Admin/AdminHome'
+import RegisterForHackathon from './Admin/RegisterForHackathon'
+import Payment from './Admin/Payment'
+import ConfirmEmail from './Admin/ConfirmEmail'
+import ConfirmEmailFinal from './Admin/ConfirmEmailFinal'
 
 require("dotenv").config();
 class RouteFile extends Component {
@@ -21,12 +26,16 @@ class RouteFile extends Component {
     return (
       <div>
         <Route exact path="/" component={LandingPage} />
-        {/* <Route path="/createHackathon" component={CreateHackathon} /> */}
-        <Route path="/hackathonDetails" component={ViewHackathon} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/landingpage" component={LandingPage} />
         <Route path="/user" component={UserProfile} />
+
+        <Route path="/createHackathon" component={CreateHackathon} />
+        <Route path="/searchHackathon" component={SearchHackathon} />
+
+        <Route path="/hackathonDetails" component={ViewHackathon} />
+        
         <Route path="/searchOrganization" component={SearchOrganization} />
         <Route path="/createOrganization" component={CreateOrganization} />
         <Route path="/myOrganization" component={MyOrganization} />

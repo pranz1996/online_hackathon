@@ -4,12 +4,14 @@ import { Redirect } from "react-router";
 import Header from "../Miscellanous/Header";
 import Footer from "../Miscellanous/Footer";
 
+
 export default class CreateHackathon extends Component {
   constructor(props) {
     super(props);
     this.state = {
       teamName: "",
-      team: ""
+      team: "",
+      teamMembers : []
     };
 
     this.teamNameHandler = this.teamNameHandler.bind(this);
@@ -40,21 +42,25 @@ export default class CreateHackathon extends Component {
 
     var emailList = this.state.team.split(",");
     for (var i = 0; i < emailList.length; i++) {
-      for (i = 0; i < emailList.length; i++) {
         var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
         var result = regex.test(emailList[i]);
+
         if (!result) {
           alert("Invalid Email");
           //document.getElementById("demo").innerHTML = "sorry enter a valid";
           return false;
         }
-      }
-
+        
       //   document.getElementById("demo").innerHTML =
       //     "Ur email address is successfully submitted";
+      this.setState({
+        teamMembers : emailList
+      })
       return true;
     }
 
+    console.log(this.satet.eamMembers)
     const data = {
       teamName: this.state.teamName,
       team: this.state.team

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openHack.io.entity.HackathonEntity;
@@ -75,7 +76,7 @@ public class HackathonController {
 	@PostMapping
 	public HackathonDetailsResposeModel createHackathon(@RequestBody HackathonDetailsRequestModel hackathonDetailsRequestModel) {
 		
-		System.out.println(hackathonDetailsRequestModel);
+		System.out.println("P" + hackathonDetailsRequestModel);
 		
 		// HackathonDetailsRequestModel object: contains input request data
 		
@@ -105,7 +106,7 @@ public class HackathonController {
 		
 		// response model to send data to UI
 		HackathonDetailsResposeModel returnModel = new HackathonDetailsResposeModel();
-			
+		
 		// DTO object to hold the input request data
 		HackathonDto hackathonDto = new HackathonDto();
 		// transferring input data to DTO object

@@ -143,7 +143,7 @@ export default class UserProfile extends Component {
                                                 <input type="text" readonly class="form-control-plaintext" id="staticEmail" value={JSON.parse(JSON.stringify(emailfromprops)})/>
                                             </div> */}
                                             {/* <input type="email" class="form-control" id="inputEmail4" placeholder="Email" readonly></input> */}
-                                            <input type="text" readonly class="form-control" id="staticEmail" value={localStorage.getItem('email')}></input>
+                                            <input type="text" readonly class="form-control" id="staticEmail" value={this.state.email}></input>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="input">Username</label>
