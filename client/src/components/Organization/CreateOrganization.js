@@ -15,6 +15,7 @@ export default class CreateOrganization extends Component {
       city: "",
       state: "",
       zip: "",
+      isCreated: false,
       successFlag: false
     };
 
@@ -100,109 +101,121 @@ export default class CreateOrganization extends Component {
         console.log(response.data.id);
         if (response.status === 200) {
           this.setState({
-            successFlag: true
+            successFlag: true,
+            isCreated: true
           });
         }
       });
   };
 
   render() {
-    let redirectVar = null;
-    if (this.state.successFlag) {
-      redirectVar = (
-        <Redirect
-          to={{
-            pathname: "/user",
-            state: { id: this.state.passIdToProps }
-          }}
-        />
+    // let redirectVar = null;
+    // if (this.state.successFlag) {
+    //   redirectVar = (
+    //     <Redirect
+    //       to={{
+    //         pathname: "/user",
+    //         state: { id: this.state.passIdToProps }
+    //       }}
+    //     />
+    //   );
+    // }
+
+    var page = null;
+    if (this.state.isCreated) {
+      page = (
+        <div class="organization-main-div">
+          {/* <img src={openhacklogo} width="75px" height="75px" /> */}
+          <h2>
+            Congratulations! The Organization has been created successfully!
+          </h2>
+        </div>
+      );
+    } else {
+      page = (
+        <div class="hackathon-main-div">
+          <div class="hackathon-panel">
+            {/* <img src={openhacklogo} width="75px" height="75px" /> */}
+            <h2>Create Organization</h2>
+            <br />
+          </div>
+          <form onSubmit={this.submitHandler}>
+            <div class="form-group">
+              <input
+                name="name"
+                class="form-control"
+                type="text"
+                placeholder="Organization Name"
+                onChange={this.nameHandler}
+                required
+              />
+            </div>
+            <div class="form-group">
+              <input
+                name="description"
+                class="form-control"
+                type="text"
+                placeholder=" Description"
+                onChange={this.descriptionHandler}
+                required
+              />
+            </div>
+            <div class="form-group">
+              <input
+                name="street"
+                class="form-control"
+                type="text"
+                placeholder="Street Address"
+                onChange={this.streetHandler}
+                required
+              />
+            </div>
+            <div class="form-group">
+              <input
+                name="city"
+                class="form-control"
+                type="text"
+                placeholder="City"
+                onChange={this.cityHandler}
+                required
+              />
+            </div>
+            <div class="form-group">
+              <input
+                name="state"
+                class="form-control"
+                type="text"
+                placeholder="State"
+                onChange={this.stateHandler}
+                required
+              />
+            </div>
+            <div class="form-group">
+              <input
+                name="zip"
+                class="form-control"
+                type="text"
+                placeholder="Zipcode"
+                onChange={this.zipHandler}
+                required
+              />
+            </div>
+            <br />
+            <button type="submit" class="btn btn-primary btn-lg btn-block">
+              Create
+            </button>
+            <br />
+          </form>
+        </div>
       );
     }
     return (
       <div style={{ backgroundColor: "#f2f2f2" }}>
-        {redirectVar}
+        {/* {redirectVar} */}
         <Header />
         <div>
           <div>
-            <div class="hackathon-login-form">
-              <div class="hackathon-main-div">
-                <div class="hackathon-panel">
-                  {/* <img src={openhacklogo} width="75px" height="75px" /> */}
-                  <h2>Create Organization</h2>
-                  <br />
-                </div>
-                <form onSubmit={this.submitHandler}>
-                  <div class="form-group">
-                    <input
-                      name="name"
-                      class="form-control"
-                      type="text"
-                      placeholder="Organization Name"
-                      onChange={this.nameHandler}
-                      required
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      name="description"
-                      class="form-control"
-                      type="text"
-                      placeholder=" Description"
-                      onChange={this.descriptionHandler}
-                      required
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      name="street"
-                      class="form-control"
-                      type="text"
-                      placeholder="Street Address"
-                      onChange={this.streetHandler}
-                      required
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      name="city"
-                      class="form-control"
-                      type="text"
-                      placeholder="City"
-                      onChange={this.cityHandler}
-                      required
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      name="state"
-                      class="form-control"
-                      type="text"
-                      placeholder="State"
-                      onChange={this.stateHandler}
-                      required
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      name="zip"
-                      class="form-control"
-                      type="text"
-                      placeholder="Zipcode"
-                      onChange={this.zipHandler}
-                      required
-                    />
-                  </div>
-                  <br />
-                  <button
-                    type="submit"
-                    class="btn btn-primary btn-lg btn-block"
-                  >
-                    Create
-                  </button>
-                  <br />
-                </form>
-              </div>
-            </div>
+            <div class="hackathon-login-form">{page}</div> />
           </div>
         </div>
         <Footer />
