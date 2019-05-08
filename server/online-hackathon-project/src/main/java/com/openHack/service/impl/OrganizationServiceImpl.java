@@ -131,4 +131,20 @@ public class OrganizationServiceImpl implements OrganizationService {
 		return allOrganisationsDto;
 	}
 
+	@Override
+	public OrganizationDto getMyOrganisations(long id) {
+		OrganizationEntity orgEntity;
+		// returning object to UI
+		OrganizationDto returnValue = new OrganizationDto();
+				
+		// Repository method (findById()) to fetch organization details
+		UserEntity userEntity = userRepository.findById(id);
+		
+		orgEntity = userEntity.getOrganizationEntity();
+		
+		BeanUtils.copyProperties(orgEntity, returnValue);
+		
+		return returnValue;
+	}
+
 }

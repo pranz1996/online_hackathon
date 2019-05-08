@@ -2,6 +2,7 @@ package com.openHack.ui.controller;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,6 +122,19 @@ public class OrganizationController {
 		return listOfOrganisations;
 	}
 
+	// get the organization that user is a part of
+	@RequestMapping(value = "/getMyOrganisation", method = RequestMethod.GET, produces = { "application/json", "application/xml" })
+	public OrganizationDetailsResponseModel getMyOrganistions(@RequestBody Map<String, Object> payload) 
+	{
+		long id;
+		id = Long.parseLong(payload.get("id").toString());
+		OrganizationDetailsResponseModel myOrg = new OrganizationDetailsResponseModel();
+		OrganizationDto myOrgDto = new OrganizationDto();
+						
+		myOrgDto = organizationService.getMyOrganisations(id);
+		BeanUtils.copyProperties(myOrgDto, myOrg);
+		return myOrg;
+	}
 	
 	// delete any organization
 	public String deleteOrganization() {

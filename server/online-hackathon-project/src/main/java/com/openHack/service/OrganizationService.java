@@ -9,4 +9,5 @@ public interface OrganizationService {
 	OrganizationDto getOrganizationById(long id);
 	OrganizationDto updateOrganization(long id, OrganizationDto organizationDto);
 	ArrayList<OrganizationDto> getAllOrganisations();
+	OrganizationDto getMyOrganisations(long id);
 }
