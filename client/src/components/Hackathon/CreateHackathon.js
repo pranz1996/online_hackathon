@@ -11,6 +11,8 @@ export default class CreateHackathon extends Component {
             eventName: "",
             description: "",
             fee: "",
+            startTime : "",
+            endTime : "",
             minTeamSize: "",
             maxTeamSize: "",
             passIdToProps: "",
@@ -26,6 +28,8 @@ export default class CreateHackathon extends Component {
         this.maxTeamSizeHandler = this.maxTeamSizeHandler.bind(this)
         this.submitHandler = this.submitHandler.bind(this)
         this.judgeHandler = this.judgeHandler.bind(this)
+        this.startTimeHandler = this.startTimeHandler.bind(this)
+        this.endTimeHandler = this.endTimeHandler.bind(this)
     }
 
     componentWillMount() {
@@ -64,6 +68,16 @@ export default class CreateHackathon extends Component {
             tempJudge : h.target.value
         })
     }
+    startTimeHandler = (h) => {
+        this.setState({
+            startTime : h.target.value
+        })
+    }
+    endTimeHandler = (h) => {
+        this.setState({
+            endTime : h.target.value
+        })
+    }
 
     submitHandler = (h) => {
         h.preventDefault()
@@ -94,8 +108,8 @@ export default class CreateHackathon extends Component {
 
         const data = {
             eventName: this.state.eventName,
-            startTime : "",
-            endTime : "",
+            startTime : this.state.startTime,
+            endTime : this.state.endTime,
             description: this.state.description,
             fee: this.state.fee,
             minTeamSize: this.state.minTeamSize,
@@ -114,7 +128,7 @@ export default class CreateHackathon extends Component {
         // axios.defaults.withCredentials = true
         axios.post('http://localhost:8080/hackathons', data)
             .then(response => {
-                console.log(response.data.id)
+                console.log(" response " + response.data)
                 if (response.status === 200) {
                     this.setState({
                         successFlag: true
@@ -152,6 +166,14 @@ export default class CreateHackathon extends Component {
                                     </div>
                                     <div class="form-group">
                                         <input name="description" class="form-control" type="text" placeholder=" Description (10 chars)" onChange={this.descriptionHandler} required />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input name="startTime" class="form-control" type="text" placeholder="Start Date (mm:dd:yyyy)" onChange={this.startTimeHandler} required />
+                                    </div>
+
+                                      <div class="form-group">
+                                        <input name="endTime" class="form-control" type="text" placeholder="End Date (mm:dd:yyyy)" onChange={this.endTimeHandler} required />
                                     </div>
 
                                     <div class="form-group">
