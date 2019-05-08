@@ -10,4 +10,5 @@ public interface OrganizationService {
 	OrganizationDto updateOrganization(long id, OrganizationDto organizationDto);
 	ArrayList<OrganizationDto> getAllOrganisations();
 	OrganizationDto getMyOrganisations(long id);
+	void leaveOrganisation(long id);
 }

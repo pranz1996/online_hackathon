@@ -29,4 +29,9 @@ public interface OrganizationRepository extends CrudRepository< OrganizationEnti
 	@Transactional
 	@Query(value="delete FROM organization_join_request where organization_id =?1 and user_id = ?2", nativeQuery = true)
 	void denyRequest(long orgid, long userid);
+	
+	@Modifying
+	@Transactional
+	@Query(value="update users set organization_id = NULL where id = ?1", nativeQuery = true)
+	void leaveOrg(long userid);
 }

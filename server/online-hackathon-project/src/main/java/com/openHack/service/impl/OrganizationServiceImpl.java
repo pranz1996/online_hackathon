@@ -15,6 +15,7 @@ import com.openHack.io.entity.UserEntity;
 import com.openHack.io.repository.OrganizationRepository;
 import com.openHack.io.repository.UserRepository;
 import com.openHack.service.OrganizationService;
+import com.openHack.shared.dto.DenyRequestDto;
 import com.openHack.shared.dto.HackathonDto;
 import com.openHack.shared.dto.OrganizationDto;
 
@@ -145,6 +146,14 @@ public class OrganizationServiceImpl implements OrganizationService {
 		BeanUtils.copyProperties(orgEntity, returnValue);
 		
 		return returnValue;
+	}
+
+	// organization accept the join request of user
+	@Override
+	public void leaveOrganisation(long id) 
+	{		
+	 //remove entry from organization_join_request table
+		organizationRepository.leaveOrg(id);
 	}
 
 }

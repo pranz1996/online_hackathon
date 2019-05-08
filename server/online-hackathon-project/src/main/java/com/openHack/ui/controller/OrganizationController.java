@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.openHack.io.entity.UserEntity;
 import com.openHack.service.OrganizationService;
+import com.openHack.shared.dto.DenyRequestDto;
 import com.openHack.shared.dto.HackathonDto;
 import com.openHack.shared.dto.OrganizationDto;
+import com.openHack.ui.model.request.JoinRequestDetailsModel;
 import com.openHack.ui.model.request.OrganizationDetailsRequestModel;
 import com.openHack.ui.model.response.HackathonDetailsResposeModel;
 import com.openHack.ui.model.response.OrganizationDetailsResponseModel;
@@ -123,11 +125,9 @@ public class OrganizationController {
 	}
 
 	// get the organization that user is a part of
-	@RequestMapping(value = "/getMyOrganisation", method = RequestMethod.GET, produces = { "application/json", "application/xml" })
-	public OrganizationDetailsResponseModel getMyOrganistions(@RequestBody Map<String, Object> payload) 
+	@RequestMapping(path = "/getMyOrganisation/{id}", method = RequestMethod.GET, produces = { "application/json", "application/xml" })
+	public OrganizationDetailsResponseModel getMyOrganistions(@PathVariable long id) 
 	{
-		long id;
-		id = Long.parseLong(payload.get("id").toString());
 		OrganizationDetailsResponseModel myOrg = new OrganizationDetailsResponseModel();
 		OrganizationDto myOrgDto = new OrganizationDto();
 						
@@ -136,8 +136,11 @@ public class OrganizationController {
 		return myOrg;
 	}
 	
-	// delete any organization
-	public String deleteOrganization() {
-		return "delete organization was called";
+	// leave a organization
+	@RequestMapping(path = "/leaveOrganisation/{id}", method = RequestMethod.POST, produces = { "application/json", "application/xml" })
+	public String leaveOrganistions(@PathVariable long id) 
+	{					
+		organizationService.leaveOrganisation(id);
+		return "successfully left organisation";
 	}
 }
