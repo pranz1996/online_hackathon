@@ -45,11 +45,11 @@ public class OrganizationServiceImpl implements OrganizationService {
 		organizationEntity.setAddress(organizationDto.getAddress());
 		
 		// If owner has created any organization before
-		OrganizationEntity existingOrganizationWithSameOwnerID = organizationRepository.findByOwnerId(organizationDto.getUserEntity().getId());
+		//OrganizationEntity existingOrganizationWithSameOwnerID = organizationRepository.findByOwnerId(organizationDto.getUserEntity().getId());
 		
 		// To check if user is associated with any organization
-		if(existingOrganizationWithSameOwnerID != null)
-			throw new RuntimeException("User is owner of any other organization ... ");
+		//if(existingOrganizationWithSameOwnerID != null)
+			//throw new RuntimeException("User is owner of any other organization ... ");
 		
 		// Setting Owner
 		UserEntity userEntity = userRepository.findById(organizationDto.getUserEntity().getId());

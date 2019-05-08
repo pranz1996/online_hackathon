@@ -1,8 +1,15 @@
 package com.openHack.service.impl;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import javax.persistence.Column;
+
+import org.hibernate.annotations.Where;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import com.openHack.io.entity.OrganizationEntity;
@@ -10,7 +17,9 @@ import com.openHack.io.entity.UserEntity;
 import com.openHack.io.repository.OrganizationRepository;
 import com.openHack.io.repository.UserRepository;
 import com.openHack.service.JoinRequestService;
+import com.openHack.shared.dto.HackathonDto;
 import com.openHack.shared.dto.JoinRequestDto;
+import com.openHack.shared.dto.UserDto;
 
 @Service
 public class JoinRequestServiceImpl implements JoinRequestService{
@@ -84,13 +93,39 @@ public class JoinRequestServiceImpl implements JoinRequestService{
 	// show all request from users to any organization
 	// Get all the Users, by organization to check the request 
 	@Override
-	public List<UserEntity> getUsers(long id) {
+	public ArrayList<UserDto> getUsers(long id) {
+		ArrayList<OrganizationEntity> userOrganisations = new ArrayList<OrganizationEntity>(); 
+		OrganizationEntity singleOrganisation = new OrganizationEntity(); 
 		
-		// Fetch organization details
-		OrganizationEntity organizationEntity = organizationRepository.findById(id);
+		ArrayList<UserDto> allUserDtos = new ArrayList<UserDto>();
 		
+		ArrayList<Integer> userIds = new ArrayList<Integer>();
+		//get all organisation ids for the user
+		userOrganisations = organizationRepository.findByOwnerId(id);
+		Iterator iterator = userOrganisations.iterator(); 
+		
+		while(iterator.hasNext())
+		{
+			singleOrganisation = (OrganizationEntity) iterator.next();
+			userIds = organizationRepository.getUserIds(singleOrganisation.getId());
+			
+			if(userIds != null)
+			{
+				Iterator userIdIterator = userIds.iterator();
+				while(userIdIterator.hasNext())
+				{
+					UserEntity singleUserEntity ;
+					singleUserEntity = new UserEntity();
+					UserDto singleUserDto;
+					singleUserDto = new UserDto();
+					singleUserEntity = userRepository.findUserById((Integer) userIdIterator.next());
+					BeanUtils.copyProperties(singleUserEntity, singleUserDto);
+					allUserDtos.add(singleUserDto);
+				}
+			}
+		}
 		// return all the users from join table
-		return organizationEntity.getUsers();
+		return allUserDtos;
 	}
 	
 }

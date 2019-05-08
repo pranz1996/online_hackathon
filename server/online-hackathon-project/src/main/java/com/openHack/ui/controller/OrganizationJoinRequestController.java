@@ -1,6 +1,7 @@
 package com.openHack.ui.controller;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -16,7 +17,11 @@ import com.openHack.io.entity.OrganizationEntity;
 import com.openHack.io.entity.UserEntity;
 import com.openHack.service.JoinRequestService;
 import com.openHack.shared.dto.JoinRequestDto;
+import com.openHack.shared.dto.OrganizationDto;
+import com.openHack.shared.dto.UserDto;
 import com.openHack.ui.model.request.JoinRequestDetailsModel;
+import com.openHack.ui.model.response.OrganizationDetailsResponseModel;
+import com.openHack.ui.model.response.UserDetailsResponseModel;
 
 @RestController
 @RequestMapping("joinrequest")	// http://localhost:8080/joinrequest
@@ -74,21 +79,23 @@ public class OrganizationJoinRequestController {
 	}
 	
 	// show all request from users to any organization
-	@GetMapping(path = "/have/{id}") 
-	public List<String> hasJoinRequest(@PathVariable long id) {
-		
+	@GetMapping(path = "/getRequestsForMyOrganisation/{id}") 
+	public ArrayList<UserDetailsResponseModel> hasJoinRequest(@PathVariable long id) {
 		// Service method Call to get All user details 
-		List<UserEntity> returnValue = joinRequestService.getUsers(id);
+		ArrayList<UserDto> returnValue = joinRequestService.getUsers(id);
 		
-		// System.out.println(returnValue);
-		
-		// Temporary users' data
-		List<String> users = new ArrayList<>();
-		for(UserEntity entity : returnValue) {
-			users.add(entity.getUserName());
+		ArrayList<UserDetailsResponseModel> listOfUsers = new ArrayList<UserDetailsResponseModel>();
+		UserDetailsResponseModel singleResponseModel;
+			
+		Iterator dtoIterator = returnValue.iterator(); 
+			
+		while(dtoIterator.hasNext())
+		{
+			singleResponseModel = new UserDetailsResponseModel();
+			BeanUtils.copyProperties(dtoIterator.next(), singleResponseModel);
+			listOfUsers.add(singleResponseModel);
 		}
-		
-		return users;
+		return listOfUsers;
 	}
 	
 	// join request deny by any organization
