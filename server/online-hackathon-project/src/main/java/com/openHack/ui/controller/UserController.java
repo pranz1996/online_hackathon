@@ -2,13 +2,15 @@ package com.openHack.ui.controller;
 
 import java.util.Map;
 
+import javax.json.JsonObject;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+//import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,17 +19,25 @@ import org.springframework.web.bind.annotation.RestController;
 import com.openHack.service.UserService;
 import com.openHack.shared.dto.UserDto;
 import com.openHack.ui.model.request.UserDetailsRequestModel;
+import com.openHack.ui.model.request.UserLoginRequestModel;
 import com.openHack.ui.model.response.UserDetailsResponseModel;
 
+@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("users")
 @RestController
 public class UserController {
 	
 	@Autowired
 	UserService userService;
 	
-	@Autowired
-	BCryptPasswordEncoder bCryptPasswordEncoder;
-	
+	@PostMapping(value = "/login")
+	public String login(@RequestBody UserLoginRequestModel userLoginRequestModel) {
+		
+		JsonObject createUser = userService.loginUser(userLoginRequestModel);
+		
+		return createUser.toString();
+	}
+		
 	// create and add new user
 	@PostMapping
 	public UserDetailsResponseModel signUp(@RequestBody UserDetailsRequestModel userDetailsRequestModel) {
@@ -37,7 +47,7 @@ public class UserController {
 		// response model to send data to UI
 		UserDetailsResponseModel returnModel = new UserDetailsResponseModel();
 		
-		userDetailsRequestModel.setPassword(bCryptPasswordEncoder.encode(userDetailsRequestModel.getPassword()));
+		userDetailsRequestModel.setPassword(userDetailsRequestModel.getPassword());
 		
 		// DTO object to hold the input request data
 		UserDto userDto = new UserDto();
@@ -53,7 +63,7 @@ public class UserController {
 	}
 	
 	// get any user by id
-	@GetMapping(path= "/{id}")
+	@GetMapping(path="/{id}")
 	public UserDetailsResponseModel getUser(@PathVariable long id) {
 		
 		// response model to send data to UI
@@ -68,8 +78,12 @@ public class UserController {
 	}
 	
 	// update any user
-	@PutMapping(path="/{id}")
+	@PostMapping(path="/{id}")
 	public UserDetailsResponseModel updateUser(@PathVariable long id, @RequestBody UserDetailsRequestModel userDetailsRequestModel) {
+		
+		System.out.println("id : " + id);
+		
+		System.out.println(" update user ... ");
 		
 		// UserDetailsRequestModel object: contains input request data
 		

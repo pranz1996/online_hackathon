@@ -16,7 +16,7 @@ export default class Header extends Component {
     
     logoutHandler = () => {
         localStorage.removeItem('token')
-        localStorage.removeItem('email')
+        localStorage.removeItem('userId')
     }
 
     render() {

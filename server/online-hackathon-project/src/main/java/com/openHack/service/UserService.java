@@ -1,12 +1,14 @@
 package com.openHack.service;
 
-import org.springframework.security.core.userdetails.UserDetailsService;
+import javax.json.JsonObject;
 
 import com.openHack.shared.dto.UserDto;
+import com.openHack.ui.model.request.UserLoginRequestModel;
 
-public interface UserService extends UserDetailsService{
-	UserDto createUser(UserDto userDto);
-	UserDto getUserById(long id);
-	UserDto updateUser(long id, UserDto userDto);
-	UserDto getUser(String email);
+public interface UserService {
+	public UserDto createUser(UserDto userDto);
+	public UserDto getUserById(long id);
+	public UserDto getUser(String email);	
+	public UserDto updateUser(long id, UserDto userDto);
+	public JsonObject loginUser(UserLoginRequestModel userLoginRequestModel);
 }

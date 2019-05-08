@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -16,7 +15,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
-import com.openHack.embeddedEntity.Address;
 import com.openHack.io.entity.OrganizationEntity;
 
 @Entity(name = "users")
@@ -60,9 +58,13 @@ public class UserEntity implements Serializable{
 	@Column(columnDefinition = "boolean default false")
 	private boolean adminCheck;
 	
-	@Column
-	@Embedded
-	private Address address;
+	private String street; 
+    
+	private String city;
+    
+	private String state;
+    
+	private String zip;
 	
 	@ManyToMany(fetch = FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
 	@JoinTable(name="organization_join_request", joinColumns = @JoinColumn(name="user_id"), 
@@ -130,15 +132,39 @@ public class UserEntity implements Serializable{
 	public void setAbout(String about) {
 		this.about = about;
 	}
-
-	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
 	
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getZip() {
+		return zip;
+	}
+
+	public void setZip(String zip) {
+		this.zip = zip;
+	}
+
 	public OrganizationEntity getOrganizationEntity() {
 		return organizationEntity;
 	}
@@ -186,10 +212,13 @@ public class UserEntity implements Serializable{
 
 	@Override
 	public String toString() {
-		return "UserEntity [userName=" + userName + ", email=" + email + ", password=" + password + ", portraitUrl="
-				+ portraitUrl + ", organizationEntity=" + organizationEntity + ", title=" + title + ", about=" + about
-				+ ", address=" + address + "]";
+		return "UserEntity [id=" + id + ", userName=" + userName + ", email=" + email + ", password=" + password
+				+ ", portraitUrl=" + portraitUrl + ", isEmailVerfied=" + isEmailVerfied + ", organizationEntity="
+				+ organizationEntity + ", title=" + title + ", about=" + about + ", adminCheck=" + adminCheck
+				+ ", street=" + street + ", city=" + city + ", state=" + state + ", zip=" + zip + ", organizations="
+				+ organizations + ", hackathons=" + hackathons + "]";
 	}
+
 	
 	
 }

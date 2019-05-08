@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
-import CreateHackathon from './Hackathon/CreateHackathon'
+//import CreateHackathon from './Hackathon/CreateHackathon'
 import ViewHackathon from './Hackathon/ViewHackathon'
 import Login from './Login/Login';
 import Signup from './Login/Signup';
@@ -20,7 +20,7 @@ class RouteFile extends Component {
         return (
             <div>
                 <Route exact path="/" component={LandingPage} />
-                <Route path="/createHackathon" component={CreateHackathon} />
+                {/* <Route path="/createHackathon" component={CreateHackathon} /> */}
                 <Route path="/hackathonDetails" component={ViewHackathon} />
                 <Route path="/login" component={Login} />
                 <Route path="/signup" component={Signup} />

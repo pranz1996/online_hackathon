@@ -53,8 +53,6 @@ export default class Login extends Component {
 
     submitHandler = (h) => {
         h.preventDefault()
-
-
         const data = {
             email: this.state.email,
             password: this.state.password
@@ -62,50 +60,52 @@ export default class Login extends Component {
         }
 
         // axios.defaults.withCredentials = true
-        axios.post('http://localhost:8080/login', data)
+        axios.post('http://localhost:8080/users/login', data)
             .then(response => {
-                console.log(response)
-                console.log(response.status)
-                console.log(response.data.user)
-                console.log(response.data.token)
-                localStorage.setItem('token', response.data.token)
-                localStorage.setItem('email', response.data.user)
+                console.log(" final response " + response)
+                console.log(" final response " + response.data)
+                // console.log(response.status)
+                // console.log(response.data.user)
+                // console.log(response.data.token)
+
                 if (response.status === 200) {
+                    localStorage.setItem('email', response.data.email)
+                    localStorage.setItem('token', response.data.token)
+                    localStorage.setItem('userId', response.data.user)
                     this.setState({
                         successFlag: true
                     })
-                }
+                } 
             })
 
 
-
-        var email = this.state.email;
-        var password = this.state.password;
-        console.log(email, password);
-        fire.auth().signInWithEmailAndPassword(email, password)
-            .then((user) => {
-                var check = fire.auth().currentUser.emailVerified;
-                console.log("check", check);
-                console.log("in login", user.user.email);
-                console.log("in login", user.user.emailVerified);
-                if (user.user.emailVerified == true) {
-                    this.props.history.push('/user');
-                    this.props.history.push(this.data, () => {
-                        this.props.history.push("/user");
-                    });
-                    // <a href="/signup"/>
-                } else {
-                    window.alert("Email not verified yet!")
-                    console.log("email not verified yet");
-                }
-            })
-            .catch(function (error) {
-                // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                // ...
-                console.log("error" + errorMessage);
-            });
+        // var email = this.state.email;
+        // var password = this.state.password;
+        // console.log(email, password);
+        // fire.auth().signInWithEmailAndPassword(email, password)
+        //     .then((user) => {
+        //         var check = fire.auth().currentUser.emailVerified;
+        //         console.log("check", check);
+        //         console.log("in login", user.user.email);
+        //         console.log("in login", user.user.emailVerified);
+        //         if (user.user.emailVerified == true) {
+        //             this.props.history.push('/user');
+        //             // this.props.history.push(this.data, () => {
+        //             //     this.props.history.push("/user");
+        //             // });
+        //             // <a href="/signup"/>
+        //         } else {
+        //             window.alert("Email not verified yet!")
+        //             console.log("email not verified yet");
+        //         }
+        //     })
+        //     .catch(function (error) {
+        //         // Handle Errors here.
+        //         var errorCode = error.code;
+        //         var errorMessage = error.message;
+        //         // ...
+        //         console.log("error" + errorMessage);
+        //     });
 
         // console.log("here");
         // var user = fire.auth().currentUser;
@@ -115,20 +115,17 @@ export default class Login extends Component {
         // console.log("in login",user.emailVerified);
 
 
-
-
-
     }
 
     render() {
-        // let redirectVar = null
-        // if(this.state.successFlag) {
-        //     redirectVar = <Redirect to='/user' />
-        // }
+        let redirectVar = null
+        if(this.state.successFlag) {
+            redirectVar = <Redirect to='/user' />
+        }
         const openhacklogo = require('../Miscellanous/openhack.png');
         return (
             <div style={{ backgroundColor: "#243e8c" }}>
-                {/* {redirectVar} */}
+                {redirectVar}
                 <div style={{ backgroundColor: "#243e8c" }}>
                     {/* <Header /> */}
                     <div style={{ backgroundColor: "#243e8c" }}>
@@ -146,7 +143,7 @@ export default class Login extends Component {
                                         <input type="password" class="form-control" name="password" placeholder="Password" onChange={this.passwordHandler} required />
                                     </div>
                                     <br />
-                                    <Route render={({ history }) => (
+                                    {/* <Route render={({ history }) => (
                                         <button type="submit" class="btn btn-secondary btn-lg btn-block"
                                             onClick={() => {
                                                 history.push({
@@ -158,9 +155,9 @@ export default class Login extends Component {
                                                 });
                                             }}>
                                             Login</button> 
-                                    )} />
+                                    )} /> */}
                                     <br />
-                                    {/* <button type="submit" class="btn btn-secondary btn-lg btn-block">Login</button><br /> */}
+                                    <button type="submit" class="btn btn-secondary btn-lg btn-block">Login</button><br />
                                     <div class="alert alert-info" role="alert">
                                         Create an account <a href="/signup">Sign up here</a>
                                     </div>

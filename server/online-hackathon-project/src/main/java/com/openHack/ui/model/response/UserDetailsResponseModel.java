@@ -1,7 +1,5 @@
 package com.openHack.ui.model.response;
 
-import com.openHack.embeddedEntity.Address;
-
 public class UserDetailsResponseModel {
 	private long id;
 	private String userName;
@@ -9,7 +7,13 @@ public class UserDetailsResponseModel {
 	private String portraitUrl;
 	private String title; // business title
 	private String about;
-	private Address address;
+	private String street; 
+    
+	private String city;
+    
+	private String state;
+    
+	private String zip;
 	private boolean isEmailVerfied;
 	
 	public boolean isEmailVerfied() {
@@ -54,18 +58,41 @@ public class UserDetailsResponseModel {
 	public void setAbout(String about) {
 		this.about = about;
 	}
-	public Address getAddress() {
-		return address;
-	}
-	public void setAddress(Address address) {
-		this.address = address;
-	}
 	
+	
+	public String getStreet() {
+		return street;
+	}
+	public void setStreet(String street) {
+		this.street = street;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	public String getZip() {
+		return zip;
+	}
+	public void setZip(String zip) {
+		this.zip = zip;
+	}
 	@Override
 	public String toString() {
-		return "UserDetailsResponseModel [userName=" + userName + ", email=" + email + ", portraitUrl=" + portraitUrl
-				+ ", title=" + title + ", about=" + about + ", address=" + address + "]";
+		return "UserDetailsResponseModel [id=" + id + ", userName=" + userName + ", email=" + email + ", portraitUrl="
+				+ portraitUrl + ", title=" + title + ", about=" + about + ", street=" + street + ", city=" + city
+				+ ", state=" + state + ", zip=" + zip + ", isEmailVerfied=" + isEmailVerfied + "]";
 	}
+	
+
+	
 	
 }
 
