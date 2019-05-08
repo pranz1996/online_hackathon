@@ -131,23 +131,6 @@ export default class Signup extends Component {
             //         console.log("error" + errorMessage);
             //     });
             // }
-
-            var email = this.state.email
-            var password = this.state.password
-            fire.auth().createUserWithEmailAndPassword(email, password)
-            .then(function () {
-                fire.auth().currentUser.sendEmailVerification().then(function () {
-                    console.log("email verification sent to " + email);
-                });
-            }).catch(function (error) {
-                // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                window.alert(errorCode + " " + errorMessage);
-                console.log("error" + errorMessage);
-            });
-
-            this.props.history.push('/showEmailSent');
     }
 
     render() {
