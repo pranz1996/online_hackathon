@@ -12,7 +12,9 @@ export default class SearchOrganization extends Component {
       org_list: [],
       successFlag: false,
       requestThrough: false,
-      routeCreateOrg: false
+      routeCreateOrg: false,
+      search: false,
+      searchKey: ""
     };
 
     this.eventNameHandler = this.eventNameHandler.bind(this);
@@ -22,6 +24,11 @@ export default class SearchOrganization extends Component {
     this.maxTeamSizeHandler = this.maxTeamSizeHandler.bind(this);
     this.requestFunc = this.requestFunc.bind(this);
     this.routeChange = this.routeChange.bind(this);
+    this.searchKeyChange = this.searchKeyChange.bind(this);
+  }
+
+  searchKeyChange(event) {
+    this.setState({ searchKey: event.target.searchKey });
   }
 
   componentDidMount() {
@@ -156,9 +163,12 @@ export default class SearchOrganization extends Component {
     // console.log(this.state.property_list.length)
     var elements = [];
     for (var i = 0; i < this.state.org_list.length; i++) {
+      var name = arr3[i].name;
+      // if (name.includes(this.state.searchKey)) {
       elements.push(
         <OrganizationCard key={i} props={arr3[i]} func={this.requestFunc} />
       );
+      // }
     }
 
     var page = null;
@@ -186,12 +196,15 @@ export default class SearchOrganization extends Component {
                   placeholder="Organization Name"
                   aria-label="Recipient's username"
                   aria-describedby="button-addon2"
+                  value={this.state.searchKey}
+                  onChange={this.searchKeyChange}
                 />
                 <div class="input-group-append">
                   <button
                     class="btn btn-outline-primary"
                     type="button"
                     id="button-addon2"
+                    onClick={this.search}
                   >
                     Search
                   </button>
