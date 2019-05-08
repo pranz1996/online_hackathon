@@ -1,122 +1,63 @@
-import React, { Component } from 'react'
-import axios from 'axios'
-import { Redirect } from 'react-router'
-import Header from '../Miscellanous/Header';
-import Footer from '../Miscellanous/Footer';
+import React, { Component } from "react";
+import axios from "axios";
+import { Redirect } from "react-router";
+import Header from "../Miscellanous/Header";
+import Footer from "../Miscellanous/Footer";
 
 export default class SearchOrganization extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
+  constructor(props) {
+    super(props);
+    this.state = {
+      orgName: "",
+      orgDescription: "",
+      ordID: "",
+      userID: "",
+      successFlag: false
+    };
+  }
 
-        }
+  buttonHandler = h => {
+    //h.preventDefault();
 
-    }
+    var item = {
+      user_id: 5,
+      organization_id: 1
+    };
+    this.props.func(item);
+  };
 
-    submitHandler = (h) => {
-        h.preventDefault()
-        const data = {
+  componentDidMount() {
+    // alert(this.props.props.id);
+    // alert("local: " + localStorage.getItem("email"));
+    //this.state.orgID:
+  }
 
-        }
-        // axios.defaults.withCredentials = true
-        axios.post('http://localhost:8080/hackathons', data)
-            .then(response => {
-
-                console.log(response.data.id)
-                if (response.status === 200) {
-                    this.setState({
-                        successFlag: true
-                    })
-                }
-            })
-    }
-
-    render() {
-
-        return (
-            <div>
-                <div class="form-group">
-                    <div class="card" >
-                        <div class="card-body">
-                            <h6 class="card-title"> Organization Name<span class="tab"/><button type="button" class="btn btn-outline-success btn-sm">Request to Join</button></h6>
-                            <h6 class="card-subtitle mb-2 text-muted"> Subtitle</h6>
-                            <p class="card-text">something</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="card" >
-                        <div class="card-body">
-                            <h6 class="card-title"> Organization Name<span class="tab"/><button type="button" class="btn btn-outline-success btn-sm">Request to Join</button></h6>
-                            <h6 class="card-subtitle mb-2 text-muted"> Subtitle</h6>
-                            <p class="card-text">something</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="card" >
-                        <div class="card-body">
-                            <h6 class="card-title"> Organization Name<span class="tab"/><button type="button" class="btn btn-outline-success btn-sm">Request to Join</button></h6>
-                            <h6 class="card-subtitle mb-2 text-muted"> Subtitle</h6>
-                            <p class="card-text">something</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="card" >
-                        <div class="card-body">
-                            <h6 class="card-title"> Organization Name<span class="tab"/><button type="button" class="btn btn-outline-success btn-sm">Request to Join</button></h6>
-                            <h6 class="card-subtitle mb-2 text-muted"> Subtitle</h6>
-                            <p class="card-text">something</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="card" >
-                        <div class="card-body">
-                            <h6 class="card-title"> Organization Name<span class="tab"/><button type="button" class="btn btn-outline-success btn-sm">Request to Join</button></h6>
-                            <h6 class="card-subtitle mb-2 text-muted"> Subtitle</h6>
-                            <p class="card-text">something</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="card" >
-                        <div class="card-body">
-                            <h6 class="card-title"> Organization Name<span class="tab"/><button type="button" class="btn btn-outline-success btn-sm">Request to Join</button></h6>
-                            <h6 class="card-subtitle mb-2 text-muted"> Subtitle</h6>
-                            <p class="card-text">something</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="card" >
-                        <div class="card-body">
-                            <h6 class="card-title"> Organization Name<span class="tab"/><button type="button" class="btn btn-outline-success btn-sm">Request to Join</button></h6>
-                            <h6 class="card-subtitle mb-2 text-muted"> Subtitle</h6>
-                            <p class="card-text">something</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="card" >
-                        <div class="card-body">
-                            <h6 class="card-title"> Organization Name<span class="tab"/><button type="button" class="btn btn-outline-success btn-sm">Request to Join</button></h6>
-                            <h6 class="card-subtitle mb-2 text-muted"> Subtitle</h6>
-                            <p class="card-text">something</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="card" >
-                        <div class="card-body">
-                            <h6 class="card-title"> Organization Name<span class="tab"/><button type="button" class="btn btn-outline-success btn-sm">Request to Join</button></h6>
-                            <h6 class="card-subtitle mb-2 text-muted"> Subtitle</h6>
-                            <p class="card-text">something</p>
-                        </div>
-                    </div>
-                </div>
+  render() {
+    return (
+      <div>
+        <div class="form-group">
+          <div class="card">
+            <div class="card-body">
+              <h6 class="card-title">
+                {" "}
+                {this.props.props.name}
+                <span class="tab" />
+                <h6 class="card-subtitle mb-2 text-muted">
+                  {" "}
+                  {this.props.props.description}
+                </h6>
+                <button
+                  type="button"
+                  class="btn btn-outline-success btn-sm"
+                  onClick={this.buttonHandler}
+                >
+                  Request to Join
+                </button>
+              </h6>
             </div>
-        )
-    }
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
