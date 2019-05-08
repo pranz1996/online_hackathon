@@ -1,6 +1,11 @@
 package com.openHack.ui.controller;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
+
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,12 +15,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.openHack.io.entity.HackathonEntity;
 import com.openHack.service.HackathonService;
 import com.openHack.shared.dto.HackathonDto;
 import com.openHack.ui.model.request.HackathonDetailsRequestModel;
 import com.openHack.ui.model.response.HackathonDetailsResposeModel;
+import com.openHack.ui.model.response.UserDetailsResponseModel;
 
 
 @RestController
@@ -42,11 +50,25 @@ public class HackathonController {
 		
 		return returnModel;
 	}
-	
+			
 	// get all the hackathons 
-	@GetMapping
-	public String getHackathons() {
-		return "get all Hackathon method was called";
+	@RequestMapping(value = "/getAllHackathons", method = RequestMethod.GET, produces = { "application/json", "application/xml" })
+	public ArrayList<HackathonDetailsResposeModel> getAllHackathons() 
+	{	
+		ArrayList<HackathonDetailsResposeModel> listOfHackathons = new ArrayList<HackathonDetailsResposeModel>();
+		HackathonDetailsResposeModel singleResponseModel;
+		ArrayList<HackathonDto> hackathonDtoList = new ArrayList<HackathonDto>();
+		
+		hackathonDtoList = hackathonService.getAllHackathon();
+		Iterator dtoIterator = hackathonDtoList.iterator(); 
+		
+		while(dtoIterator.hasNext())
+		{
+			singleResponseModel = new HackathonDetailsResposeModel();
+			BeanUtils.copyProperties(dtoIterator.next(), singleResponseModel);
+			listOfHackathons.add(singleResponseModel);
+		}
+		return listOfHackathons;
 	}
 	
 	// create and add new hackathon

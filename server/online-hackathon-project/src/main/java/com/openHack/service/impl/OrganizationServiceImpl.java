@@ -1,16 +1,21 @@
 package com.openHack.service.impl;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openHack.embeddedEntity.Address;
+import com.openHack.io.entity.HackathonEntity;
 import com.openHack.io.entity.OrganizationEntity;
 import com.openHack.io.entity.UserEntity;
 import com.openHack.io.repository.OrganizationRepository;
 import com.openHack.io.repository.UserRepository;
 import com.openHack.service.OrganizationService;
+import com.openHack.shared.dto.HackathonDto;
 import com.openHack.shared.dto.OrganizationDto;
 
 @Service
@@ -106,6 +111,24 @@ public class OrganizationServiceImpl implements OrganizationService {
 		returnValue = mapper.convertValue(updatedOrganization, OrganizationDto.class);
 		
 		return returnValue;
+	}
+
+	@Override
+	public ArrayList<OrganizationDto> getAllOrganisations() {
+		ArrayList<OrganizationEntity> allOrganisationsEntity = new ArrayList<OrganizationEntity>();
+		ArrayList<OrganizationDto> allOrganisationsDto = new ArrayList<OrganizationDto>();
+		OrganizationDto singleOrganisationDto;
+		
+		allOrganisationsEntity = (ArrayList<OrganizationEntity>) organizationRepository.findAll();
+		Iterator iterator = allOrganisationsEntity.iterator(); 
+		
+		while(iterator.hasNext())
+		{
+			singleOrganisationDto = new OrganizationDto();
+			BeanUtils.copyProperties(iterator.next(), singleOrganisationDto);
+			allOrganisationsDto.add(singleOrganisationDto);
+		}
+		return allOrganisationsDto;
 	}
 
 }

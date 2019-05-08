@@ -1,5 +1,8 @@
 package com.openHack.ui.controller;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -9,12 +12,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openHack.io.entity.UserEntity;
 import com.openHack.service.OrganizationService;
+import com.openHack.shared.dto.HackathonDto;
 import com.openHack.shared.dto.OrganizationDto;
 import com.openHack.ui.model.request.OrganizationDetailsRequestModel;
+import com.openHack.ui.model.response.HackathonDetailsResposeModel;
 import com.openHack.ui.model.response.OrganizationDetailsResponseModel;
 
 @RestController
@@ -94,6 +100,27 @@ public class OrganizationController {
 		
 		return returnModel;
 	}
+	
+	// get all the organisations 
+	@RequestMapping(value = "/getAllOrganistions", method = RequestMethod.GET, produces = { "application/json", "application/xml" })
+	public ArrayList<OrganizationDetailsResponseModel> getAllOrganisations() 
+	{	
+		ArrayList<OrganizationDetailsResponseModel> listOfOrganisations = new ArrayList<OrganizationDetailsResponseModel>();
+		OrganizationDetailsResponseModel singleResponseModel;
+		ArrayList<OrganizationDto> OrganizationDtoList = new ArrayList<OrganizationDto>();
+			
+		OrganizationDtoList = organizationService.getAllOrganisations();
+		Iterator dtoIterator = OrganizationDtoList.iterator(); 
+			
+		while(dtoIterator.hasNext())
+		{
+			singleResponseModel = new OrganizationDetailsResponseModel();
+			BeanUtils.copyProperties(dtoIterator.next(), singleResponseModel);
+			listOfOrganisations.add(singleResponseModel);
+		}
+		return listOfOrganisations;
+	}
+
 	
 	// delete any organization
 	public String deleteOrganization() {

@@ -2,6 +2,7 @@ package com.openHack.service.impl;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -156,4 +157,21 @@ public class HackathonServiceImpl implements HackathonService {
 		return returnValue;
 	}
 
+	@Override
+	public ArrayList<HackathonDto> getAllHackathon() {
+		ArrayList<HackathonEntity> allHackthonsEntity = new ArrayList<HackathonEntity>();
+		ArrayList<HackathonDto> allHackathonDto = new ArrayList<HackathonDto>();
+		HackathonDto signleHackDto;
+		
+		allHackthonsEntity = (ArrayList<HackathonEntity>) hackathonRepository.findAll();
+		Iterator iterator = allHackthonsEntity.iterator(); 
+		
+		while(iterator.hasNext())
+		{
+			signleHackDto = new HackathonDto();
+			BeanUtils.copyProperties(iterator.next(), signleHackDto);
+			allHackathonDto.add(signleHackDto);
+		}
+		return allHackathonDto;
+	}
 }
