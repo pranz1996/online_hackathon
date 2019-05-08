@@ -9,6 +9,7 @@ export default class CreateHackathon extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      hackathonId : 1,
       teamName: "",
       team: "",
       teamMembers : []
@@ -54,22 +55,28 @@ export default class CreateHackathon extends Component {
         
       //   document.getElementById("demo").innerHTML =
       //     "Ur email address is successfully submitted";
-      this.setState({
-        teamMembers : emailList
-      })
-      return true;
+      console.log(" yes ... ", emailList)
+        for(var i = 0 ; i < emailList.length; i++) {
+            this.state.teamMembers.push({
+                "userId" : emailList[i],
+                "role" : "programmer"
+            })
+        }
+        console.log(this.state.teamMembers)
+
     }
 
-    console.log(this.satet.eamMembers)
+    console.log(this.state.teamMembers)
     const data = {
+      hackathonId : this.state.hackathonId,
       teamName: this.state.teamName,
-      team: this.state.team
+      teamSize : this.state.teamMembers.length + 1,
+      userId : localStorage.getItem('email'),
+       teamMembers : this.state.teamMembers
     };
-
-    axios.defaults.withCredentials = true;
-    axios.post("http://localhost:8080/teamMembers", data).then(response => {
-      console.log(response.data.id);
-      if (response.status === 200) {
+    axios.post("http://localhost:8080/teams", data).then(response => {
+        console.log(' response from server : ', response.data)
+        if (response.status === 200) {
         this.setState({
           successFlag: true
         });
