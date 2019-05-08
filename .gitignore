@@ -82,3 +82,4 @@ typings/
 *.cfs
 .metadata/.plugins/org.eclipse.m2e.core/nexus/830bc118332e77292949ed1e6d2fabe0/segments_2
 .metadata/.plugins/org.eclipse.m2e.core/nexus/a2238c07637c0599bed46d7935199460/segments_2
+/.metadata/

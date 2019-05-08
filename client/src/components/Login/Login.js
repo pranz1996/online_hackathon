@@ -1,140 +1,177 @@
-import React, { Component } from "react";
-import axios from "axios";
-import { Redirect } from "react-router";
-import Header from "../Miscellanous/Header";
-import Footer from "../Miscellanous/Footer";
+import React, { Component } from 'react'
+import axios from 'axios'
+import { Redirect } from 'react-router'
+import { Route } from 'react-router-dom';
+import Header from '../Miscellanous/Header';
+import Footer from '../Miscellanous/Footer';
+import fire from '../../fire';
+import { Link } from 'react-router';
+import seeFirebaseDetails from './helperFunctions';
+import UserProfile from '../User/UserProfile';
 
 export default class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: "",
-      password: "",
-      successFlag: "",
-      emailVerified: false
-    };
-
-    this.emailHandler = this.emailHandler.bind(this);
-    this.passwordHandler = this.passwordHandler.bind(this);
-  }
-
-  componentWillMount() {
-    this.setState({
-      successFlag: false
-    });
-  }
-
-  emailHandler = h => {
-    this.setState({
-      email: h.target.value
-    });
-  };
-
-  passwordHandler = h => {
-    this.setState({
-      password: h.target.value
-    });
-  };
-
-  submitHandler = h => {
-    h.preventDefault();
-    const data = {
-      email: this.state.email,
-      password: this.state.password
-    };
-    // axios.defaults.withCredentials = true
-    axios.post("http://localhost:8080/login", data).then(response => {
-      console.log(response);
-      console.log(response.status);
-      console.log(response.data.user);
-      console.log(response.data.token);
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("email", response.data.user);
-      console.log("message: " + JSON.stringify(response));
-      if (response.data.Message === "false") {
-        alert(
-          "Email verification is pending, Please verify your email to continue.."
-        );
-        this.setState({
-          successFlag: false
-        });
-      } else {
-        if (response.status === 200) {
-          this.setState({
-            successFlag: true
-          });
+    constructor(props) {
+        super(props)
+        this.state = {
+            email: "",
+            password: "",
+            successFlag: ""
         }
-      }
-    });
-  };
 
-  render() {
-    let redirectVar = null;
-    if (this.state.successFlag) {
-      redirectVar = (
-        <Redirect
-          to={{
-            pathname: "/user",
-            state: { referrer: this.state.email }
-          }}
-        />
-      );
+        this.emailHandler = this.emailHandler.bind(this);
+        this.passwordHandler = this.passwordHandler.bind(this);
     }
-    const openhacklogo = require("../Miscellanous/openhack.png");
-    return (
-      <div style={{ backgroundColor: "#243e8c" }}>
-        {redirectVar}
-        <div style={{ backgroundColor: "#243e8c" }}>
-          <Header />
-          <div style={{ backgroundColor: "#243e8c" }}>
-            <div class="login-form">
-              <div class="main-div">
-                <div class="panel">
-                  <img src={openhacklogo} width="75px" height="75px" />
-                  <h2>OpenHack</h2>
-                  <br />
-                  <br />
-                </div>
-                <form onSubmit={this.submitHandler}>
-                  <div class="form-group">
-                    <input
-                      type="email"
-                      class="form-control"
-                      id="exampleInputEmail1"
-                      aria-describedby="emailHelp"
-                      placeholder="Email"
-                      onChange={this.emailHandler}
-                      required
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      type="password"
-                      class="form-control"
-                      name="password"
-                      placeholder="Password"
-                      onChange={this.passwordHandler}
-                      required
-                    />
-                  </div>
-                  <br />
-                  <button
-                    type="submit"
-                    class="btn btn-secondary btn-lg btn-block"
-                  >
-                    Login
-                  </button>
-                  <br />
-                  <div class="alert alert-info" role="alert">
-                    Create an account <a href="/signup">Sign up here</a>
-                  </div>
-                </form>
-              </div>
+
+    componentDidMount() {
+        console.log(this.props);
+    }
+
+    componentWillMount() {
+        this.setState({
+            successFlag: false
+        })
+    }
+
+    // componentDidMount(){
+
+    //     seeFirebaseDetails();
+    // }
+
+    emailHandler = (h) => {
+        this.setState({
+            email: h.target.value
+        })
+    }
+
+    passwordHandler = (h) => {
+        this.setState({
+            password: h.target.value
+        })
+    }
+
+
+
+    submitHandler = (h) => {
+        h.preventDefault()
+
+
+        const data = {
+            email: this.state.email,
+            password: this.state.password
+
+        }
+
+        // axios.defaults.withCredentials = true
+        axios.post('http://localhost:8080/login', data)
+            .then(response => {
+                console.log(response)
+                console.log(response.status)
+                console.log(response.data.user)
+                console.log(response.data.token)
+                localStorage.setItem('token', response.data.token)
+                localStorage.setItem('email', response.data.user)
+                if (response.status === 200) {
+                    this.setState({
+                        successFlag: true
+                    })
+                }
+            })
+
+
+
+        var email = this.state.email;
+        var password = this.state.password;
+        console.log(email, password);
+        fire.auth().signInWithEmailAndPassword(email, password)
+            .then((user) => {
+                var check = fire.auth().currentUser.emailVerified;
+                console.log("check", check);
+                console.log("in login", user.user.email);
+                console.log("in login", user.user.emailVerified);
+                if (user.user.emailVerified == true) {
+                    this.props.history.push('/user');
+                    this.props.history.push(this.data, () => {
+                        this.props.history.push("/user");
+                    });
+                    // <a href="/signup"/>
+                } else {
+                    window.alert("Email not verified yet!")
+                    console.log("email not verified yet");
+                }
+            })
+            .catch(function (error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                // ...
+                console.log("error" + errorMessage);
+            });
+
+        // console.log("here");
+        // var user = fire.auth().currentUser;
+        // console.log("in login",user);
+
+        // console.log("in login",user.email);
+        // console.log("in login",user.emailVerified);
+
+
+
+
+
+    }
+
+    render() {
+        // let redirectVar = null
+        // if(this.state.successFlag) {
+        //     redirectVar = <Redirect to='/user' />
+        // }
+        const openhacklogo = require('../Miscellanous/openhack.png');
+        return (
+            <div style={{ backgroundColor: "#243e8c" }}>
+                {/* {redirectVar} */}
+                <div style={{ backgroundColor: "#243e8c" }}>
+                    {/* <Header /> */}
+                    <div style={{ backgroundColor: "#243e8c" }}>
+                        <div class="login-form">
+                            <div class="main-div">
+                                <div class="panel">
+                                    <img src={openhacklogo} width="75px" height="75px" />
+                                    <h2>OpenHack</h2><br /><br />
+                                </div>
+                                <form onSubmit={this.submitHandler}>
+                                    <div class="form-group">
+                                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email" onChange={this.emailHandler} required />
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" class="form-control" name="password" placeholder="Password" onChange={this.passwordHandler} required />
+                                    </div>
+                                    <br />
+                                    <Route render={({ history }) => (
+                                        <button type="submit" class="btn btn-secondary btn-lg btn-block"
+                                            onClick={() => {
+                                                history.push({
+                                                    pathname: "/user",
+                                                    state: {
+                                                        email: this.state.email,
+                                                        password: this.state.password
+                                                    }
+                                                });
+                                            }}>
+                                            Login</button> 
+                                    )} />
+                                    <br />
+                                    {/* <button type="submit" class="btn btn-secondary btn-lg btn-block">Login</button><br /> */}
+                                    <div class="alert alert-info" role="alert">
+                                        Create an account <a href="/signup">Sign up here</a>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <Footer />
+                </div >
             </div>
-          </div>
-          <Footer />
-        </div>
-      </div>
-    );
-  }
+        )
+    }
 }

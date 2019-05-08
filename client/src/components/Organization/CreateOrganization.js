@@ -66,6 +66,7 @@ export default class CreateOrganization extends Component {
             minTeamSize: this.state.minTeamSize,
             maxTeamSize: this.state.maxTeamSize
         }
+        console.log(data);
         // axios.defaults.withCredentials = true
         axios.post('http://localhost:8080/hackathons', data)
             .then(response => {

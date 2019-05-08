@@ -84,7 +84,7 @@ export default class LandingPage extends Component {
         const openhacklogo = require('../Miscellanous/oh.png');
         return (
             <div style={{ backgroundColor: "#000000"}}>
-                <Header />
+                {/* <Header /> */}
                 <div style={{ backgroundColor: "#000000"}}>
                     <div style={{ backgroundColor: "#000000"}} class="container">
                         <div class="col-md-12">
@@ -93,7 +93,7 @@ export default class LandingPage extends Component {
                         </div>
                     </div>
                 </div>
-                <Footer />
+                {/* <Footer /> */}
             </div>
         )
     }

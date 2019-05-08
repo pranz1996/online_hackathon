@@ -130,7 +130,7 @@ justify-content: center;
   background: #ffffff none repeat scroll 0 0;
   border-radius: 2px;
   margin: 20px auto 0px;
-  max-width: 100%;
+  width: 60%;
   padding: 10px 30px 30px 30px;
   border: 2px solid #eceff1;
   overflow: hidden;
@@ -230,6 +230,10 @@ justify-content: center;
   display:inline-block; 
   margin-left: 250px; 
 }
+.judge-tab { 
+  display:inline-block; 
+  margin-left: 40px; 
+}
 .tabmini { 
   display:inline-block; 
   margin-left: 20px; 
@@ -273,4 +277,18 @@ justify-content: center;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.pcenter {text-align:center;}
+
+.hackathonscore-form-control {
+  background: #eceff1 none repeat scroll 0 0;
+  border: 1px solid #d4d4d4;
+  border-radius: 4px;
+  font-size: 14px;
+  height: 40px;
+  line-height: 50px;
+  overflow: hidden;
+  margin: 0 auto;
+  width: 50px;
 }
