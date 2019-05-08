@@ -20,7 +20,7 @@ export default class ShowEmailSent extends Component {
     render() {
         const openhacklogo = require('../Miscellanous/openhack.png');
         var user = fire.auth().currentUser;
-        seeFirebaseDetails(user);
+       // seeFirebaseDetails(user);
         return (
             <div style={{ backgroundColor: "#f2f2f2" }}>
                 {/* {redirectVar} */}

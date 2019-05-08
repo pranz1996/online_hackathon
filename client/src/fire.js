@@ -1,15 +1,17 @@
-import firebase from 'firebase';
-import { expression } from '@babel/template';
+// import firebase from 'firebase';
+// import { expression } from '@babel/template';
 
-var firebaseConfig = {
-    apiKey: "AIzaSyDza4B569Sr16p1KPZ83BmPcPhwdP6kJVs",
-    authDomain: "openhack-27508.firebaseapp.com",
-    databaseURL: "https://openhack-27508.firebaseio.com",
-    projectId: "openhack-27508",
-    storageBucket: "openhack-27508.appspot.com",
-    messagingSenderId: "724274765403",
-    appId: "1:724274765403:web:1bcbf8057ca381b0"
-  };
-  // Initialize Firebase
-const fire = firebase.initializeApp(firebaseConfig);
-export default fire;
+// var firebaseConfig = {
+//   apiKey: "AIzaSyCy2ORALc4jTx90qSa-0EUS6nOJQLCZZ_U",
+//   authDomain: "openhack-5bca3.firebaseapp.com",
+//   databaseURL: "https://openhack-5bca3.firebaseio.com",
+//   projectId: "openhack-5bca3",
+//   storageBucket: "openhack-5bca3.appspot.com",
+//   messagingSenderId: "1048548423850",
+//   appId: "1:1048548423850:web:f5ebcab1b41037d0"
+// };
+// // Initialize Firebase
+// const fire = firebase.initializeApp(firebaseConfig);
+
+
+// export default fire;

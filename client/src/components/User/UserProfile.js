@@ -148,7 +148,8 @@ export default class UserProfile extends Component {
                       {/* <div class="col-sm-10">
                                                 <input type="text" readonly class="form-control-plaintext" id="staticEmail" value={JSON.parse(JSON.stringify(emailfromprops)})/>
                                             </div> */}
-                      {/* <input type="email" class="form-control" id="inputEmail4" placeholder="Email" readonly></input> */}
+
+                      {/* <input type="email" class="form-control" id="inputEmail4" placeholder="Email" readonly></input>
                       <input
                         type="text"
                         readonly
@@ -180,9 +181,41 @@ export default class UserProfile extends Component {
                         onChange={this.businesstitleHandler}
                       />
                     </div>
-                  </div>
+                  </div> */}
 
-                  <div class="form-row">
+                                            {/* <input type="email" class="form-control" id="inputEmail4" placeholder="Email" readonly></input> */}
+                                            <input type="text" readonly class="form-control" id="staticEmail" value={this.state.email}></input>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="input">Username</label>
+                                            <input type="text" class="form-control" id="inputPassword4" value={this.state.userName} readOnly placeholder="Username" />
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="input">Business Title</label>
+                                            <input type="text" name="businesstitle" class="form-control" id="inputPassword4" placeholder="Business Title" value={this.state.businesstitle} onChange={this.businesstitleHandler} />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="inputstreet">street</label>
+                                            <input type="text" name="street" class="form-control" id="inputstreet" placeholder="1234 Main St" value={this.state.street} onChange={this.streetHandler} />
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="inputCity">City</label>
+                                            <input type="text" name="city" class="form-control" id="inputCity" value={this.state.city} onChange={this.cityHandler} />
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="inputCity">State</label>
+                                            <input type="text" name="state" class="form-control" id="inputState" value={this.state.state} onChange={this.stateHandler} />
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="inputZip">Zip</label>
+                                            <input type="text" name="zip" class="form-control" id="inputZip" value={this.state.zip} onChange={this.zipHandler} />
+                                        </div>
+                                    </div>
+
+                  {/* <div class="form-row">
                     <div class="form-group col-md-6">
                       <label for="inputstreet">street</label>
                       <input
@@ -240,7 +273,7 @@ export default class UserProfile extends Component {
                       value={this.state.aboutme}
                       onChange={this.aboutmeHandler}
                     />
-                  </div>
+                  </div> */}
                   <button
                     type="submit"
                     class="btn btn-primary btn-lg btn-block"
