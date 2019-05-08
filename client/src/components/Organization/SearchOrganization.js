@@ -11,7 +11,8 @@ export default class SearchOrganization extends Component {
     this.state = {
       org_list: [],
       successFlag: false,
-      requestThrough: false
+      requestThrough: false,
+      routeCreateOrg: false
     };
 
     this.eventNameHandler = this.eventNameHandler.bind(this);
@@ -20,14 +21,20 @@ export default class SearchOrganization extends Component {
     this.minTeamSizeHandler = this.minTeamSizeHandler.bind(this);
     this.maxTeamSizeHandler = this.maxTeamSizeHandler.bind(this);
     this.requestFunc = this.requestFunc.bind(this);
+    this.routeChange = this.routeChange.bind(this);
   }
 
   componentDidMount() {
     var self = this;
+    // var headers = {
+    //   Authorization:
+    //     "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyNUBnbWFpbC5jb20iLCJleHAiOjE1NTgxNjQ2OTd9.HBZDR9CURIkZ-7IkRLA5_-k0_XcceFo83q99wkTcjFK0B9XzK8PRFub23DmXQnZ-CVbPUcFfus73qg0fSvTTTQ"
+    // };
+
     var headers = {
-      Authorization:
-        "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyNUBnbWFpbC5jb20iLCJleHAiOjE1NTgxNjQ2OTd9.HBZDR9CURIkZ-7IkRLA5_-k0_XcceFo83q99wkTcjFK0B9XzK8PRFub23DmXQnZ-CVbPUcFfus73qg0fSvTTTQ"
+      Authorization: localStorage.getItem("token")
     };
+
     axios
       .get("http://localhost:8080/organizations/getAllOrganistions", {
         headers
@@ -84,6 +91,12 @@ export default class SearchOrganization extends Component {
     });
   };
 
+  routeChange() {
+    this.setState({
+      routeCreateOrg: true
+    });
+  }
+
   requestFunc = item => {
     //h.preventDefault();
 
@@ -93,10 +106,14 @@ export default class SearchOrganization extends Component {
       user_id: item.user_id,
       organization_id: item.organization_id
     };
+
     var headers = {
-      Authorization:
-        "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyNUBnbWFpbC5jb20iLCJleHAiOjE1NTgxNjQ2OTd9.HBZDR9CURIkZ-7IkRLA5_-k0_XcceFo83q99wkTcjFK0B9XzK8PRFub23DmXQnZ-CVbPUcFfus73qg0fSvTTTQ"
+      Authorization: localStorage.getItem("token")
     };
+    // var headers = {
+    //   Authorization:
+    //     "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyNUBnbWFpbC5jb20iLCJleHAiOjE1NTgxNjQ2OTd9.HBZDR9CURIkZ-7IkRLA5_-k0_XcceFo83q99wkTcjFK0B9XzK8PRFub23DmXQnZ-CVbPUcFfus73qg0fSvTTTQ"
+    // };
     axios
       .post("http://localhost:8080/joinrequest/send", data, {
         headers
@@ -126,6 +143,13 @@ export default class SearchOrganization extends Component {
       console.log("Inside");
       redirectVar = <Redirect to="/" />;
     }
+
+    let CreateOrg = null;
+    if (this.state.routeCreateOrg) {
+      console.log("Inside 1");
+      CreateOrg = <Redirect to="/createOrganization" />;
+    }
+
     console.log("rend: " + this.state.org_list);
     var arr3 = Object.values(this.state.org_list);
     console.log(arr3);
@@ -143,12 +167,13 @@ export default class SearchOrganization extends Component {
       page = (
         <div class="organization-main-div">
           {/* <img src={openhacklogo} width="75px" height="75px" /> */}
-          <h2>Thank you! The request is sent to the group!</h2>
+          <h2>Thank you! The request is sent to the Organization!</h2>
         </div>
       );
     } else {
       page = (
         <div class="organization-main-div">
+          {CreateOrg}
           <div class="organization-panel">
             {/* <img src={openhacklogo} width="75px" height="75px" /> */}
             <h2>Search an Organization to Join</h2>
@@ -171,7 +196,11 @@ export default class SearchOrganization extends Component {
                     Search
                   </button>
                   <span class="tabmini" />
-                  <button type="button" class="btn btn-outline-danger">
+                  <button
+                    type="button"
+                    class="btn btn-outline-danger"
+                    onClick={this.routeChange}
+                  >
                     + Create
                   </button>
                 </div>
