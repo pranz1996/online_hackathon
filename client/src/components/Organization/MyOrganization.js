@@ -35,10 +35,49 @@ export default class MyOrganization extends Component {
     //     }
     //   });
 
-    this.setState({
-      organization: "myOrg",
-      hasOrganization: false
-    });
+    console.log("did" + localStorage.getItem("userId"));
+
+    var self = this;
+
+    var data = {
+      id: 12
+    };
+
+    var headers = {
+      Authorization: localStorage.getItem("token")
+    };
+
+    axios
+      .get(
+        `http://localhost:8080/organizations/getMyOrganisation/${localStorage.getItem(
+          "userId"
+        )}`,
+        {
+          headers
+        }
+      )
+      .then(response => {
+        //resp = JSON.stringify(response);
+        console.log("hi");
+        alert("hi");
+
+        self.setState({
+          organization: response.data.name,
+          hasOrganization: true
+        });
+
+        alert("response " + response.data);
+
+        this.state.organization = response.data.name;
+        this.state.hasOrganization = true;
+
+        //console.log("hi" + resp);
+      })
+      .catch(function(error) {
+        // handle error
+        console.log("error: " + error);
+        alert("error: " + error);
+      });
   }
 
   componentWillMount() {
@@ -75,22 +114,31 @@ export default class MyOrganization extends Component {
 
   submitHandler = h => {
     h.preventDefault();
-    const data = {
-      eventName: this.state.eventName,
-      description: this.state.description,
-      fee: this.state.fee,
-      minTeamSize: this.state.minTeamSize,
-      maxTeamSize: this.state.maxTeamSize
+
+    alert("hi");
+
+    var headers = {
+      Authorization: localStorage.getItem("token")
     };
-    // axios.defaults.withCredentials = true
-    axios.post("http://localhost:8080/hackathons", data).then(response => {
-      console.log(response.data.id);
-      if (response.status === 200) {
-        this.setState({
-          successFlag: true
-        });
-      }
-    });
+
+    axios.defaults.withCredentials = true;
+    axios
+      .post(
+        `http://localhost:8080/organizations/leaveOrganisation/${localStorage.getItem(
+          "userId"
+        )}`
+      )
+      .then(response => {
+        console.log(response.data.id);
+        if (response.status === 200) {
+          this.setState({
+            successFlag: true
+          });
+
+          alert("Left");
+          console.log("Left");
+        }
+      });
   };
 
   render() {
@@ -99,8 +147,7 @@ export default class MyOrganization extends Component {
       redirectVar = (
         <Redirect
           to={{
-            pathname: "/hackathonDetails",
-            state: { id: this.state.passIdToProps }
+            pathname: "/user"
           }}
         />
       );
@@ -116,9 +163,15 @@ export default class MyOrganization extends Component {
           </h3>
           {/* <h6 class="card-subtitle mb-2 text-muted"> Subtitle</h6>
           <p class="card-text">something</p> */}
-          <button type="button" class="btn btn-danger btn-lg btn-block">
-            Leave
-          </button>
+          <form onSubmit={this.submitHandler}>
+            <button
+              type="button"
+              class="btn btn-danger btn-lg btn-block"
+              onclick={this.leaveHandler}
+            >
+              Leave
+            </button>
+          </form>
         </div>
       );
     } else {
@@ -142,21 +195,41 @@ export default class MyOrganization extends Component {
         <Header />
         <div>
           <div>
-            <div class="hackathon-login-form">
-              <div class="hackathon-main-div">
-                <div class="hackathon-panel">
-                  {/* <img src={openhacklogo} width="75px" height="75px" /> */}
-                  <h2>My Organization</h2>
+            <form onSubmit={this.submitHandler}>
+              <div class="hackathon-login-form">
+                <div class="hackathon-main-div">
+                  <div class="hackathon-panel">
+                    {/* <img src={openhacklogo} width="75px" height="75px" /> */}
+                    <h2>My Organization</h2>
 
-                  <br />
-                </div>
-                <div class="form-group">
-                  <div class="card">
-                    <div class="card-body">{orgUI}</div>
+                    <br />
+                  </div>
+                  <div class="form-group">
+                    <div class="card">
+                      <div class="card-body">
+                        <div>
+                          <h3 class="card-title">
+                            Organization Name: {this.state.organization}
+                            <span class="tab" />
+                          </h3>
+                          {/* <h6 class="card-subtitle mb-2 text-muted"> Subtitle</h6>
+          <p class="card-text">something</p> */}
+
+                          {console.log("jhgj")}
+                          <button
+                            type="submit"
+                            class="btn btn-danger btn-lg btn-block"
+                            //onclick={this.leaveHandler}
+                          >
+                            Leave
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </form>
           </div>
         </div>
         <Footer />
