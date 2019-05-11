@@ -19,6 +19,8 @@ export default class Header extends Component {
 
   render() {
     const openhacklogo = require("../Miscellanous/openhack.png");
+    // var email = localStorage.email;
+    // var check = email.includes("sjsu");
     return (
       <div>
         <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
@@ -71,7 +73,11 @@ export default class Header extends Component {
                     Search Hackathons
                   </a>
                   <div class="dropdown-divider" />
-                  <a class="dropdown-item" href="#">
+                  <a
+                    class="dropdown-item"
+                    href="/createHackathon"
+                    // style={{ display: check == "false" ? "none" : "block" }}
+                  >
                     Create Hackathons
                   </a>
                 </div>

@@ -15,7 +15,8 @@ export default class Login extends Component {
     this.state = {
       email: "",
       password: "",
-      successFlag: ""
+      successFlag: "",
+      isAdmin: false
     };
 
     this.emailHandler = this.emailHandler.bind(this);
@@ -50,6 +51,7 @@ export default class Login extends Component {
   };
 
   submitHandler = h => {
+    var self = this;
     h.preventDefault();
     const data = {
       email: this.state.email,
@@ -66,44 +68,53 @@ export default class Login extends Component {
 
       console.log(response.data.user);
       console.log(response.data.token);
+      console.log(" admin or not : ", response.data.admin);
 
       if (response.status === 200) {
         localStorage.setItem("email", response.data.email);
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userId", response.data.user);
-        this.setState({
-          successFlag: true
+        self.setState({
+          successFlag: true,
+          isAdmin: response.data.admin
         });
+
+        self.state.successFlag = true;
+        self.state.isAdmin = response.data.admin;
+        console.log(" after change : ", self.state.isAdmin);
+        alert(" after change : ", self.state.isAdmin);
       }
     });
 
-    // var email = this.state.email;
-    // var password = this.state.password;
+    var email = this.state.email;
+    var password = this.state.password;
     // console.log(email, password);
-    // fire.auth().signInWithEmailAndPassword(email, password)
-    //     .then((user) => {
-    //         var check = fire.auth().currentUser.emailVerified;
-    //         console.log("check", check);
-    //         console.log("in login", user.user.email);
-    //         console.log("in login", user.user.emailVerified);
-    //         if (user.user.emailVerified == true) {
-    //             this.props.history.push('/user');
-    //             // this.props.history.push(this.data, () => {
-    //             //     this.props.history.push("/user");
-    //             // });
-    //             // <a href="/signup"/>
-    //         } else {
-    //             window.alert("Email not verified yet!")
-    //             console.log("email not verified yet");
-    //         }
-    //     })
-    //     .catch(function (error) {
-    //         // Handle Errors here.
-    //         var errorCode = error.code;
-    //         var errorMessage = error.message;
-    //         // ...
-    //         console.log("error" + errorMessage);
-    //     });
+    fire
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(user => {
+        var check = fire.auth().currentUser.emailVerified;
+        console.log("check", check);
+        console.log("in login", user.user.email);
+        console.log("in login", user.user.emailVerified);
+        if (user.user.emailVerified == true) {
+          this.props.history.push("/user");
+          // this.props.history.push(this.data, () => {
+          //     this.props.history.push("/user");
+          // });
+          // <a href="/signup"/>
+        } else {
+          window.alert("Email not verified yet!");
+          console.log("email not verified yet");
+        }
+      })
+      .catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // ...
+        console.log("error" + errorMessage);
+      });
 
     // console.log("here");
     // var user = fire.auth().currentUser;
@@ -115,6 +126,10 @@ export default class Login extends Component {
 
   render() {
     let redirectVar = null;
+
+    // console.log(" render : ", this.state.isAdmin);
+    // alert(" render: ", this.state.isAdmin);
+
     if (this.state.successFlag) {
       redirectVar = <Redirect to="/user" />;
     }

@@ -4,15 +4,14 @@ import { Redirect } from "react-router";
 import Header from "../Miscellanous/Header";
 import Footer from "../Miscellanous/Footer";
 
-
-export default class CreateHackathon extends Component {
+export default class RegisterForHackathon extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      hackathonId : 1,
+      hackathonId: 1,
       teamName: "",
       team: "",
-      teamMembers : []
+      teamMembers: []
     };
 
     this.teamNameHandler = this.teamNameHandler.bind(this);
@@ -43,40 +42,39 @@ export default class CreateHackathon extends Component {
 
     var emailList = this.state.team.split(",");
     for (var i = 0; i < emailList.length; i++) {
-        var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
-        var result = regex.test(emailList[i]);
+      var result = regex.test(emailList[i]);
 
-        if (!result) {
-          alert("Invalid Email");
-          //document.getElementById("demo").innerHTML = "sorry enter a valid";
-          return false;
-        }
-        
+      if (!result) {
+        alert("Invalid Email");
+        //document.getElementById("demo").innerHTML = "sorry enter a valid";
+        return false;
+      }
+
       //   document.getElementById("demo").innerHTML =
       //     "Ur email address is successfully submitted";
-      console.log(" yes ... ", emailList)
-        for(var i = 0 ; i < emailList.length; i++) {
-            this.state.teamMembers.push({
-                "userId" : emailList[i],
-                "role" : "programmer"
-            })
-        }
-        console.log(this.state.teamMembers)
-
+      console.log(" yes ... ", emailList);
+      for (var i = 0; i < emailList.length; i++) {
+        this.state.teamMembers.push({
+          userId: emailList[i],
+          role: "programmer"
+        });
+      }
+      console.log(this.state.teamMembers);
     }
 
-    console.log(this.state.teamMembers)
+    console.log(this.state.teamMembers);
     const data = {
-      hackathonId : this.state.hackathonId,
+      hackathonId: this.state.hackathonId,
       teamName: this.state.teamName,
-      teamSize : this.state.teamMembers.length + 1,
-      userId : localStorage.getItem('email'),
-       teamMembers : this.state.teamMembers
+      teamSize: this.state.teamMembers.length + 1,
+      userId: localStorage.getItem("email"),
+      teamMembers: this.state.teamMembers
     };
     axios.post("http://localhost:8080/teams", data).then(response => {
-        console.log(' response from server : ', response.data)
-        if (response.status === 200) {
+      console.log(" response from server : ", response.data);
+      if (response.status === 200) {
         this.setState({
           successFlag: true
         });
@@ -90,7 +88,7 @@ export default class CreateHackathon extends Component {
       redirectVar = (
         <Redirect
           to={{
-            pathname: "/hackathonDetails",
+            pathname: "/user",
             state: { id: this.state.passIdToProps }
           }}
         />
