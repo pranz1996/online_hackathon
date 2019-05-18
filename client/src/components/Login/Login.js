@@ -15,7 +15,8 @@ export default class Login extends Component {
     this.state = {
       email: "",
       password: "",
-      successFlag: ""
+      successFlag: "",
+      isAdmin : false
     };
 
     this.emailHandler = this.emailHandler.bind(this);
@@ -67,12 +68,17 @@ export default class Login extends Component {
       console.log(response.data.user);
       console.log(response.data.token);
 
+      // console.log(' response for admin ', response.data.admin)
+      // console.log(' response status :' , response.data.status)
+
       if (response.status === 200) {
         localStorage.setItem("email", response.data.email);
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userId", response.data.user);
+        console.log(' amdin ' , response.data)
         this.setState({
-          successFlag: true
+          successFlag: true,
+          isAdmin : response.data.admin
         });
       }
     });
@@ -115,8 +121,10 @@ export default class Login extends Component {
 
   render() {
     let redirectVar = null;
-    if (this.state.successFlag) {
+    if (this.state.successFlag && !this.state.isAdmin) {
       redirectVar = <Redirect to="/user" />;
+    } else if (this.state.successFlag && this.state.isAdmin) {
+      redirectVar = <Redirect to="/createHackathon" />;
     }
     const openhacklogo = require("../Miscellanous/openhack.png");
     return (

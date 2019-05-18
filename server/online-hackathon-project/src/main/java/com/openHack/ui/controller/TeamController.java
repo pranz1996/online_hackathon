@@ -88,7 +88,7 @@ public class TeamController {
     }
     
     // submission for any hackathon by particular team
-    @PatchMapping(path = "/submission/{id}") 
+    @PostMapping(path = "/submission/{id}") 
     public String sumbission(@PathVariable long id, @RequestBody SubmissionDetailsRequestModel submission) {
     	
     	teamService.createSubmission(id, submission);
@@ -104,4 +104,6 @@ public class TeamController {
     	
     	return "successfully pay for the hackathon";
     }
+    
+
 }

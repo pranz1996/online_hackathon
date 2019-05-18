@@ -17,7 +17,7 @@ export default class SearchHackathon extends Component {
             passIdToProps: "",
             successFlag: false
         }
-
+        
         this.eventNameHandler = this.eventNameHandler.bind(this)
         this.descriptionHandler = this.descriptionHandler.bind(this)
         this.feeHandler = this.feeHandler.bind(this)
