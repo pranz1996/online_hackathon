@@ -1,7 +1,10 @@
 package com.openHack.shared.dto;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.openHack.embeddedEntity.Address;
+import com.openHack.io.entity.OrganizationEntity;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserDto {
@@ -17,7 +20,8 @@ public class UserDto {
     private String city;
     private String state;
     private String zip;
-	
+	private List<OrganizationEntity> organizationEntity;
+    
     private boolean adminCheck = false;
 	private boolean isEmailVerfied;
 	
@@ -103,6 +107,13 @@ public class UserDto {
 	public void setAdminCheck(boolean adminCheck) {
 		this.adminCheck = adminCheck;
 	}
+	
+	public List<OrganizationEntity> getOrganizationEntity() {
+		return organizationEntity;
+	}
+	public void setOrganizationEntity(List<OrganizationEntity> organizationEntity) {
+		this.organizationEntity = organizationEntity;
+	}
 	@Override
 	public String toString() {
 		return "UserDto [id=" + id + ", userName=" + userName + ", email=" + email + ", password=" + password
@@ -110,7 +121,6 @@ public class UserDto {
 				+ ", city=" + city + ", state=" + state + ", zip=" + zip + ", adminCheck=" + adminCheck
 				+ ", isEmailVerfied=" + isEmailVerfied + "]";
 	}
-	
 	
 	
 }

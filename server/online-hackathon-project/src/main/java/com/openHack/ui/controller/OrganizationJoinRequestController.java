@@ -36,6 +36,8 @@ public class OrganizationJoinRequestController {
 		
 		// JoinRequestDetailsModel object: input request data
 		
+		System.out.println(" Join Request: " + sendJoinRequestDetailsModel);
+		
 		JoinRequestDto joinRequestDto = new JoinRequestDto();
 		BeanUtils.copyProperties(sendJoinRequestDetailsModel, joinRequestDto);
 	
@@ -81,7 +83,7 @@ public class OrganizationJoinRequestController {
 	// show all request from users to any organization
 	@GetMapping(path = "/getRequestsForMyOrganisation/{id}") 
 	public ArrayList<UserDetailsResponseModel> hasJoinRequest(@PathVariable long id) {
-		// Service method Call to get All user details 
+		// Service method Call t                          o get All user details 
 		ArrayList<UserDto> returnValue = joinRequestService.getUsers(id);
 		
 		ArrayList<UserDetailsResponseModel> listOfUsers = new ArrayList<UserDetailsResponseModel>();

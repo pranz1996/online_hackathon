@@ -23,6 +23,7 @@ import com.openHack.io.entity.HackathonEntity;
 import com.openHack.service.HackathonService;
 import com.openHack.shared.dto.HackathonDto;
 import com.openHack.ui.model.request.HackathonDetailsRequestModel;
+import com.openHack.ui.model.request.JoinRequestDetailsModel;
 import com.openHack.ui.model.response.HackathonDetailsResposeModel;
 import com.openHack.ui.model.response.UserDetailsResponseModel;
 
@@ -127,5 +128,28 @@ public class HackathonController {
 	public String deleteHackathon() {
 		return "delete hackathon method was called";
 	}
+	
+	
+//	@RequestMapping(value = "/joinHackathon", method = RequestMethod.POST, produces = { "application/json", "application/xml" })
+//	public String joinHackathon(@RequestBody JoinRequestDetailsModel joinRequestDetailsModel) {
+//		
+//	
+//		HackathonDetailsResposeModel returnModel = new HackathonDetailsResposeModel();
+//		
+//		// DTO object to hold the input request data
+//		HackathonDto hackathonDto = new HackathonDto();
+//		// transferring input data to DTO object
+//		ModelMapper mapper = new ModelMapper();
+//		hackathonDto = mapper.map(hackathonDetailsRequestModel, HackathonDto.class);
+//		System.out.println(hackathonDto);
+//		// Service method Call to insert data
+//		HackathonDto createHacathon = hackathonService.createHackthon(hackathonDto);
+//		// Transferring DTO object data to response model
+//		mapper = new ModelMapper();
+//		returnModel = mapper.map(createHacathon, HackathonDetailsResposeModel.class);
+//	
+//		return returnModel;
+//	}
+	
 	
 }

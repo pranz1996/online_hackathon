@@ -34,5 +34,6 @@ public class TeamMemberDetailsResposeModel {
 	public String toString() {
 		return "TeamMemberDetailsResposeModel [id=" + id + ", userId=" + userId + ", role=" + role + ", paid=" + paid
 				+ "]";
-	}	
+	}
+	
 }
