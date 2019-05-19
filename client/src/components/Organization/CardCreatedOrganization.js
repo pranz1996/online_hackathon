@@ -4,7 +4,7 @@ import { Redirect } from "react-router";
 import Header from "../Miscellanous/Header";
 import Footer from "../Miscellanous/Footer";
 
-export default class SearchOrganization extends Component {
+export default class CardCreatedOrganization extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -48,12 +48,15 @@ export default class SearchOrganization extends Component {
                   {" "}
                   {this.props.props.description}
                 </h6>
+                <h6 class="card-subtitle mb-2 text-muted">
+                  {" "}
+                </h6>
                 <button
                   type="button"
                   class="btn btn-outline-success btn-sm"
                   onClick={this.buttonHandler} id={this.props.props.id} 
                 >
-                  Request to Join
+                  View Join Requests
                 </button>
               </h6>
             </div>

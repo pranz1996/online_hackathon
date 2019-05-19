@@ -74,6 +74,8 @@ public class UserController {
 		// transferring DTO object data to response model
 		BeanUtils.copyProperties(userDetails, returnModel);
 		
+		System.out.println(" The User : " + returnModel);
+		
 		return returnModel;
 	}
 	

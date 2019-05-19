@@ -1,5 +1,8 @@
 package com.openHack.ui.model.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserDetailsResponseModel {
 	private long id;
 	private String userName;
@@ -90,8 +93,6 @@ public class UserDetailsResponseModel {
 				+ portraitUrl + ", title=" + title + ", about=" + about + ", street=" + street + ", city=" + city
 				+ ", state=" + state + ", zip=" + zip + ", isEmailVerfied=" + isEmailVerfied + "]";
 	}
-	
-
 	
 	
 }

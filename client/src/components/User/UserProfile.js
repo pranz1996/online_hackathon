@@ -84,6 +84,12 @@ export default class UserProfile extends Component {
     });
   };
 
+  redirectToHome = h => {
+    this.props.history.push({
+      pathname:'/searchOrganization'
+  }) 
+  }
+
   submitHandler = h => {
     h.preventDefault();
 
@@ -100,28 +106,32 @@ export default class UserProfile extends Component {
 
     axios
       .post(
-        `http://localhost:8080/users/${localStorage.getItem("userId")}`,
+        `http://localhost:8080/users/${localStorage.getItem('userId')}`,
         data
       )
       .then(response => {
         console.log(" response : ", response);
         console.log(" response status : ", response.status);
         if (response.status === 200) {
-          this.setState({
-            successFlag: true
-          });
-        }
+          alert(' Account updated successfully ... ')
+          this.props.history.push({
+            pathname:'/profile'
+        }) 
+        } 
       });
-
-    alert(localStorage.getItem("email"));
-    console.log(localStorage.getItem("userId"));
   };
 
   render() {
+    //let redirectvar = null
+    // if(this.state.successFlag) {
+    //   //redirectvar = <Redirect to="/searchOrganization" />
+      
+    // }
     // var emailfromprops = this.props.location.state.email;
     // console.log(emailfromprops);
     return (
       <div style={{ backgroundColor: "#243e8c" }}>
+        {/* {redirectvar} */}
         <div style={{ backgroundColor: "#243e8c" }}>
           <Header />
           <div style={{ backgroundColor: "#243e8c" }}>
@@ -213,6 +223,11 @@ export default class UserProfile extends Component {
                                             <label for="inputZip">Zip</label>
                                             <input type="text" name="zip" class="form-control" id="inputZip" value={this.state.zip} onChange={this.zipHandler} />
                                         </div>
+                                        <br></br>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlTextarea1">About me</label>
+                                            <textarea name="aboutme" class="form-control" id="exampleFormControlTextarea1" value={this.state.aboutme} onChange={this.aboutmeHandler} />
+                                        </div>
                                     </div>
 
                   {/* <div class="form-row">
@@ -280,14 +295,14 @@ export default class UserProfile extends Component {
                   >
                     Update
                   </button>
-                  <button
+                  <br />
+                </form>
+                <button
                     type="submit"
-                    class="btn btn-primary btn-lg btn-block"
+                    class="btn btn-primary btn-lg btn-block" onClick={this.redirectToHome}
                   >
                     Later
                   </button>
-                  <br />
-                </form>
               </div>
             </div>
           </div>

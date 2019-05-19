@@ -98,7 +98,6 @@ export default class CreateOrganization extends Component {
     axios
       .post("http://localhost:8080/organizations", data, { headers })
       .then(response => {
-        console.log(response.data.id);
         if (response.status === 200) {
           this.setState({
             successFlag: true,
@@ -109,18 +108,17 @@ export default class CreateOrganization extends Component {
   };
 
   render() {
-    // let redirectVar = null;
-    // if (this.state.successFlag) {
-    //   redirectVar = (
-    //     <Redirect
-    //       to={{
-    //         pathname: "/user",
-    //         state: { id: this.state.passIdToProps }
-    //       }}
-    //     />
-    //   );
-    // }
-
+    let redirectVar = null;
+    if (this.state.successFlag) {
+      redirectVar = (
+        <Redirect
+          to={{
+            pathname: "/searchOrganization",
+            state: { id: this.state.passIdToProps }
+          }}
+        />
+      );
+    }
     var page = null;
     if (this.state.isCreated) {
       page = (
@@ -211,7 +209,7 @@ export default class CreateOrganization extends Component {
     }
     return (
       <div style={{ backgroundColor: "#f2f2f2" }}>
-        {/* {redirectVar} */}
+        {redirectVar}
         <Header />
         <div>
           <div>

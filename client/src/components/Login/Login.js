@@ -57,25 +57,26 @@ export default class Login extends Component {
       password: this.state.password
     };
 
-    console.log(" state email " + this.state.email);
-    alert(" state email " + this.state.email);
+    console.log(" The input email " + this.state.email);
+    // alert(" state email " + this.state.email);
 
     // axios.defaults.withCredentials = true
     axios.post("http://localhost:8080/users/login", data).then(response => {
       console.log(" final response " + JSON.stringify(response));
       //alert(" final response " + response.data);
 
-      console.log(response.data.user);
-      console.log(response.data.token);
+
 
       // console.log(' response for admin ', response.data.admin)
       // console.log(' response status :' , response.data.status)
 
       if (response.status === 200) {
-        localStorage.setItem("email", response.data.email);
         localStorage.setItem("token", response.data.token);
-        localStorage.setItem("userId", response.data.user);
-        console.log(' amdin ' , response.data)
+        localStorage.setItem("userId", response.data.id);
+        localStorage.setItem("email", response.data.email);
+        localStorage.setItem("isAdmin", response.data.admin)
+        localStorage.setItem("username", response.data.username)
+
         this.setState({
           successFlag: true,
           isAdmin : response.data.admin
@@ -122,7 +123,7 @@ export default class Login extends Component {
   render() {
     let redirectVar = null;
     if (this.state.successFlag && !this.state.isAdmin) {
-      redirectVar = <Redirect to="/user" />;
+      redirectVar = <Redirect to='/searchOrganization' />;
     } else if (this.state.successFlag && this.state.isAdmin) {
       redirectVar = <Redirect to="/createHackathon" />;
     }

@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.openHack.io.entity.OrganizationEntity;
@@ -76,6 +77,8 @@ public class UserEntity implements Serializable{
 												 inverseJoinColumns = @JoinColumn(name="hackathon_id"))
 	private List<HackathonEntity> hackathons;
 	
+	@OneToMany(mappedBy = "userEnity", fetch=FetchType.LAZY, cascade= {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+	private List<OrganizationEntity> organizationEntities;
 	
 	public long getId() {
 		return id;
@@ -209,14 +212,20 @@ public class UserEntity implements Serializable{
 			hackathons = new ArrayList<>();
 		hackathons.add(hackthon);
 	}
+	
+	public void addOrganizationOfUser(OrganizationEntity organizationEntity) {
+		if(organizationEntities == null)
+			organizationEntities = new ArrayList<>();
+		organizationEntities.add(organizationEntity);
+	}
+	    
 
-	@Override
-	public String toString() {
-		return "UserEntity [id=" + id + ", userName=" + userName + ", email=" + email + ", password=" + password
-				+ ", portraitUrl=" + portraitUrl + ", isEmailVerfied=" + isEmailVerfied + ", organizationEntity="
-				+ organizationEntity + ", title=" + title + ", about=" + about + ", adminCheck=" + adminCheck
-				+ ", street=" + street + ", city=" + city + ", state=" + state + ", zip=" + zip + ", organizations="
-				+ organizations + ", hackathons=" + hackathons + "]";
+	public List<OrganizationEntity> getOrganizationEntities() {
+		return organizationEntities;
+	}
+
+	public void setOrganizationEntities(List<OrganizationEntity> organizationEntities) {
+		this.organizationEntities = organizationEntities;
 	}
 
 	

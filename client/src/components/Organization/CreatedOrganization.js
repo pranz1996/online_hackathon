@@ -3,9 +3,9 @@ import axios from "axios";
 import { Redirect } from "react-router";
 import Header from "../Miscellanous/Header";
 import Footer from "../Miscellanous/Footer";
-import OrganizationCard from "../Organization/CardSearchOrganization";
+import OrganizationCard from "../Organization/CardCreatedOrganization";
 
-export default class SearchOrganization extends Component {
+export default class CreatedOrganization extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -38,14 +38,17 @@ export default class SearchOrganization extends Component {
     //     "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyNUBnbWFpbC5jb20iLCJleHAiOjE1NTgxNjQ2OTd9.HBZDR9CURIkZ-7IkRLA5_-k0_XcceFo83q99wkTcjFK0B9XzK8PRFub23DmXQnZ-CVbPUcFfus73qg0fSvTTTQ"
     // };
 
-    var headers = {
-      Authorization: localStorage.getItem("token")
-    };
+    // var headers = {
+    //   Authorization: localStorage.getItem("token")
+    // };
 
-    axios
-      .get("http://localhost:8080/organizations/getAllOrganistions", {
-        headers
-      })
+    // axiox.get("http://localhost:8080/organizations/getCreatedOrganistions", { headers },
+    // )
+
+    axios.get(`http://localhost:8080/organizations/getCreatedOrganizations/${localStorage.getItem('userId')}`, {
+      headers: { Authorization: localStorage.getItem('token')
+    }})
+    
       .then(response => {
         //resp = JSON.stringify(response);
 
@@ -107,40 +110,40 @@ export default class SearchOrganization extends Component {
   requestFunc = item => {
     //h.preventDefault();
 
-    console.log("submit: " + JSON.stringify(item));
-    var self = this;
-    var data = {
-      user_id: item.user_id,
-      organization_id: item.organization_id
-    };
-
-    var headers = {
-      Authorization: localStorage.getItem("token")
-    };
-    // var headers = {
-    //   Authorization:
-    //     "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyNUBnbWFpbC5jb20iLCJleHAiOjE1NTgxNjQ2OTd9.HBZDR9CURIkZ-7IkRLA5_-k0_XcceFo83q99wkTcjFK0B9XzK8PRFub23DmXQnZ-CVbPUcFfus73qg0fSvTTTQ"
+    // console.log("submit: " + JSON.stringify(item));
+    // var self = this;
+    // var data = {
+    //   user_id: item.user_id,
+    //   organization_id: item.organization_id
     // };
-    axios
-      .post("http://localhost:8080/joinrequest/send", data, {
-        headers
-      })
-      .then(response => {
-        //resp = JSON.stringify(response);
 
-        self.setState({
-          requestThrough: true
-        });
+    // var headers = {
+    //   Authorization: localStorage.getItem("token")
+    // };
+    // // var headers = {
+    // //   Authorization:
+    // //     "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyNUBnbWFpbC5jb20iLCJleHAiOjE1NTgxNjQ2OTd9.HBZDR9CURIkZ-7IkRLA5_-k0_XcceFo83q99wkTcjFK0B9XzK8PRFub23DmXQnZ-CVbPUcFfus73qg0fSvTTTQ"
+    // // };
+    // axios
+    //   .post("http://localhost:8080/joinrequest/send", data, {
+    //     headers
+    //   })
+    //   .then(response => {
+    //     //resp = JSON.stringify(response);
 
-        //alert("response " + response.data);
+    //     self.setState({
+    //       requestThrough: true
+    //     });
 
-        this.state.requestThrough = true;
-        //console.log("hi" + resp);
-      })
-      .catch(function(error) {
-        // handle error
-        console.log("error: " + error);
-      });
+    //     //alert("response " + response.data);
+
+    //     this.state.requestThrough = true;
+    //     //console.log("hi" + resp);
+    //   })
+    //   .catch(function(error) {
+    //     // handle error
+    //     console.log("error: " + error);
+    //   });
   };
 
   render() {
@@ -183,47 +186,51 @@ export default class SearchOrganization extends Component {
     } else {
       page = (
         <div class="organization-main-div">
-          {CreateOrg}
-          <div class="organization-panel">
-            {/* <img src={openhacklogo} width="75px" height="75px" /> */}
-            <h2>Search an Organization to Join</h2>
-            <br />
-            <div class="form-group">
-              <div class="input-group mb-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Organization Name"
-                  aria-label="Recipient's username"
-                  aria-describedby="button-addon2"
-                  value={this.state.searchKey}
-                  onChange={this.searchKeyChange}
-                />
-                <div class="input-group-append">
-                  <button
-                    class="btn btn-outline-primary"
-                    type="button"
-                    id="button-addon2"
-                    onClick={this.search}
-                  >
-                    Search
-                  </button>
-                  <span class="tabmini" />
-                  <button
-                    type="button"
-                    class="btn btn-outline-danger"
-                    onClick={this.routeChange}
-                  >
-                    + Create
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <form onSubmit={this.submitHandler} style={{ marginTop: "110px" }}>
-            {elements}
-          </form>
+          {elements}
         </div>
+       
+        // <div class="organization-main-div">
+        //   {CreateOrg}
+        //   <div class="organization-panel">
+        //     <h2>Search an Organization to Join</h2>
+        //     <br />
+        //     <div class="form-group">
+        //       <div class="input-group mb-3">
+        //         <input
+        //           type="text"
+        //           class="form-control"
+        //           placeholder="Organization Name"
+        //           aria-label="Recipient's username"
+        //           aria-describedby="button-addon2"
+        //           value={this.state.searchKey}
+        //           onChange={this.searchKeyChange}
+        //         />
+        //         <div class="input-group-append">
+        //           <button
+        //             class="btn btn-outline-primary"
+        //             type="button"
+        //             id="button-addon2"
+        //             onClick={this.search}
+        //           >
+        //             Search
+        //           </button>
+        //           <span class="tabmini" />
+        //           <button
+        //             type="button"
+        //             class="btn btn-outline-danger"
+        //             onClick={this.routeChange}
+        //           >
+        //             + Create
+        //           </button>
+        //         </div>
+        //       </div>
+        //     </div>
+        //   </div>
+        //   <form onSubmit={this.submitHandler} style={{ marginTop: "110px" }}>
+        //     {elements}
+        //   </form>
+        // </div>
+      
       );
     }
 
@@ -232,6 +239,9 @@ export default class SearchOrganization extends Component {
         {/* {redirectVar} */}
         <Header />
         <div>
+          <div>
+            <h1> Created Organization </h1>
+          </div>
           <div>
             <div class="organization-login-form">{page}</div> />
           </div>

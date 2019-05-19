@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
+import javax.json.JsonObject;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -36,13 +38,12 @@ public class OrganizationController {
 		
 	// create and add new organization
 	@PostMapping
-	public OrganizationDetailsResponseModel createOrganization(@RequestBody OrganizationDetailsRequestModel organizationRequestModel) {
+	public JsonObject createOrganization(@RequestBody OrganizationDetailsRequestModel organizationRequestModel) {
 		
 		// OrganizationRequestModel object: contains input request data
 		
-		// response model to send data to UI
-		OrganizationDetailsResponseModel returnModel = new OrganizationDetailsResponseModel();
-		
+		System.out.println(" input Request model : " + organizationRequestModel);
+				
 		// DTO object to hold the input request data
 		OrganizationDto organizationDto = new OrganizationDto();
 		
@@ -54,17 +55,12 @@ public class OrganizationController {
 		userEntity.setId(organizationRequestModel.getOwnerId());
 		organizationDto.setUserEntity(userEntity);
 		
+		BeanUtils.copyProperties(organizationRequestModel, organizationDto);
+				
 		// Service method Call to insert data
-		OrganizationDto createOrganization = organizationService.createOrganization(organizationDto);
-		// Transferring DTO object data to response model
+		JsonObject object = organizationService.createOrganization(organizationDto);
 		
-		returnModel.setId(createOrganization.getId());
-		returnModel.setName(createOrganization.getName());
-		returnModel.setDescription(createOrganization.getDescription());
-		returnModel.setAddress(createOrganization.getAddress());
-		returnModel.setOwnerId(createOrganization.getUserEntity().getId());
-	
-		return returnModel;
+		return object;
 	}
 	
 	// get any organization by id
@@ -104,7 +100,7 @@ public class OrganizationController {
 		return returnModel;
 	}
 	
-	// get all the organisations 
+	// get all the organizations 
 	@RequestMapping(value = "/getAllOrganistions", method = RequestMethod.GET, produces = { "application/json", "application/xml" })
 	public ArrayList<OrganizationDetailsResponseModel> getAllOrganisations() 
 	{	
@@ -123,6 +119,30 @@ public class OrganizationController {
 		}
 		return listOfOrganisations;
 	}
+	
+	// get all the created organizations by user
+		@RequestMapping(value = "/getCreatedOrganizations/{id}", method = RequestMethod.GET, produces = { "application/json", "application/xml" })
+		public ArrayList<OrganizationDetailsResponseModel> getAllCreatedOrganisations(@PathVariable long id) 
+		{	
+			
+			System.out.println(" Hit done ... ");
+			ArrayList<OrganizationDetailsResponseModel> listOfOrganisations = new ArrayList<OrganizationDetailsResponseModel>();
+			OrganizationDetailsResponseModel singleResponseModel;
+			ArrayList<OrganizationDto> OrganizationDtoList = new ArrayList<OrganizationDto>();
+				
+			OrganizationDtoList = organizationService.getCreatedOrganisations(id);
+			Iterator dtoIterator = OrganizationDtoList.iterator(); 
+				
+			while(dtoIterator.hasNext())
+			{
+				singleResponseModel = new OrganizationDetailsResponseModel();
+				BeanUtils.copyProperties(dtoIterator.next(), singleResponseModel);
+				listOfOrganisations.add(singleResponseModel);
+			}
+			
+			System.out.println(" the result " + listOfOrganisations);
+			return listOfOrganisations;
+		}
 
 	// get the organization that user is a part of
 	@RequestMapping(path = "/getMyOrganisation/{id}", method = RequestMethod.GET, produces = { "application/json", "application/xml" })

@@ -31,11 +31,7 @@ public class OrganizationEntity implements Serializable{
 	
 	@Column(nullable = false, unique = true)
 	private String name;
-	
-	@ManyToOne(fetch = FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-	@JoinColumn(name = "ownerId")
-	private UserEntity userEntity;
-	
+		
 	private String description;
 	
 	@Column
@@ -45,6 +41,10 @@ public class OrganizationEntity implements Serializable{
 	@ManyToMany(fetch = FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
 	@JoinTable(name="organization_join_request", joinColumns = @JoinColumn(name="organization_id"), inverseJoinColumns = @JoinColumn(name="user_id"))
 	private List<UserEntity> users;
+	
+	@ManyToOne(fetch = FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+	@JoinColumn(name = "ownerId")
+	private UserEntity userEnity;
 	
 	public long getId() {
 		return id;
@@ -62,13 +62,6 @@ public class OrganizationEntity implements Serializable{
 		this.name = name;
 	}
 
-	public UserEntity getUserEntity() {
-		return userEntity;
-	}
-
-	public void setUserEntity(UserEntity userEntity) {
-		this.userEntity = userEntity;
-	}
 
 	public String getDescription() {
 		return description;
@@ -99,10 +92,20 @@ public class OrganizationEntity implements Serializable{
 		users.add(userEntity);
 	}
 
+	public UserEntity getUserEnity() {
+		return userEnity;
+	}
+
+	public void setUserEnity(UserEntity userEnity) {
+		this.userEnity = userEnity;
+	}
+
 	@Override
 	public String toString() {
-		return "OrganizationEntity [id=" + id + ", name=" + name + ", userEntity=" + userEntity + ", description="
-				+ description + ", address=" + address + ", users=" + users + "]";
+		return "OrganizationEntity [id=" + id + ", name=" + name + ", description=" + description + ", address="
+				+ address + ", users=" + users + ", userEnity=" + userEnity + "]";
 	}
+
+	
 	
 }

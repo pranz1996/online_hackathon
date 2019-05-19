@@ -1,5 +1,9 @@
 package com.openHack.ui.model.request;
 
+import java.util.List;
+
+import com.openHack.io.entity.OrganizationEntity;
+
 public class UserDetailsRequestModel {
 	private String userName;
 	private String email;
@@ -7,14 +11,13 @@ public class UserDetailsRequestModel {
 	private String portraitUrl;
 	private String title;
 	private String about;
-	private String street; 
-    
+	private String street;
 	private String city;
-    
 	private String state;
-    
 	private String zip;
 	private boolean isEmailVerfied;
+	
+	private List<OrganizationEntity>  organizationsOfOwner;
 	
 	public boolean isEmailVerfied() {
 		return isEmailVerfied;
@@ -82,6 +85,20 @@ public class UserDetailsRequestModel {
 	}
 	public void setZip(String zip) {
 		this.zip = zip;
+	}
+	
+	
+	public List<OrganizationEntity> getOrganizationsOfOwner() {
+		return organizationsOfOwner;
+	}
+	public void setOrganizationsOfOwner(List<OrganizationEntity> organizationsOfOwner) {
+		this.organizationsOfOwner = organizationsOfOwner;
+	}
+	@Override
+	public String toString() {
+		return "UserDetailsRequestModel [userName=" + userName + ", email=" + email + ", password=" + password
+				+ ", portraitUrl=" + portraitUrl + ", title=" + title + ", about=" + about + ", street=" + street
+				+ ", city=" + city + ", state=" + state + ", zip=" + zip + ", isEmailVerfied=" + isEmailVerfied + "]";
 	}
 	
 }
