@@ -3,20 +3,24 @@ import axios from "axios";
 import { Redirect } from "react-router";
 import Header from "../Miscellanous/Header";
 import Footer from "../Miscellanous/Footer";
+import { Form, Select } from 'antd';
+
+const listOfUsers = [''];
+const dict = {}
 
 export default class RegisterForHackathon extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      hackathonId: 1,
+      hackathonId: this.props.match.params.id,
       teamName: "",
-      team: "",
-      teamMembers: []
+      fetchedUsers : [],
+      teamMembers: [],
+      successFlag : false
     };
 
     this.teamNameHandler = this.teamNameHandler.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
-    this.teamHandler = this.teamHandler.bind(this);
   }
 
   componentWillMount() {
@@ -25,53 +29,60 @@ export default class RegisterForHackathon extends Component {
     });
   }
 
+  componentDidMount() {
+    var headers = {
+      Authorization: localStorage.getItem("token")
+    };
+
+    axios
+      .get("http://localhost:8080/users/getAllUsers", {
+        headers
+      })
+      .then(response => {
+        console.log(" response " + JSON.stringify(response.data))
+        this.setState({
+          fetchedUsers : response.data
+        })
+        
+        for(var i = 0; i < this.state.fetchedUsers.length; i++) {
+            listOfUsers.push(this.state.fetchedUsers[i].email);
+            dict[this.state.fetchedUsers[i].email] = this.state.fetchedUsers[i].id;
+        }
+      })
+      .catch(function(error) {
+        console.log("error: " + error);
+      });
+
+  }
+
   teamNameHandler = h => {
     this.setState({
       teamName: h.target.value
     });
   };
 
-  teamHandler = h => {
-    this.setState({
-      team: h.target.value
-    });
+  handleOptionChange = teamMembers => {
+    this.setState({ teamMembers });
   };
 
   submitHandler = h => {
     h.preventDefault();
 
-    var emailList = this.state.team.split(",");
-    for (var i = 0; i < emailList.length; i++) {
-      var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-
-      var result = regex.test(emailList[i]);
-
-      if (!result) {
-        alert("Invalid Email");
-        //document.getElementById("demo").innerHTML = "sorry enter a valid";
-        return false;
-      }
-
-      //   document.getElementById("demo").innerHTML =
-      //     "Ur email address is successfully submitted";
-      console.log(" yes ... ", emailList);
-      for (var i = 0; i < emailList.length; i++) {
-        this.state.teamMembers.push({
-          userId: emailList[i],
-          role: "programmer"
-        });
-      }
-      console.log(this.state.teamMembers);
+    var members = []
+    for(var i = 0; i < this.state.teamMembers.length; i++) {
+      members.push({
+        userId : dict[this.state.teamMembers[i]]
+      })
     }
-
-    console.log(this.state.teamMembers);
     const data = {
       hackathonId: this.state.hackathonId,
       teamName: this.state.teamName,
-      teamSize: this.state.teamMembers.length + 1,
-      userId: localStorage.getItem("email"),
-      teamMembers: this.state.teamMembers
+      teamSize: this.state.teamMembers.length,
+      userId: localStorage.getItem('userId'),
+      teamMembers: members
     };
+
+    console.log(" data " + JSON.stringify(data) )
     axios.post("http://localhost:8080/teams", data).then(response => {
       console.log(" response from server : ", response.data);
       if (response.status === 200) {
@@ -83,13 +94,15 @@ export default class RegisterForHackathon extends Component {
   };
 
   render() {
+    console.log(listOfUsers)
+    const { teamMembers} = this.state
+    const filteredOptions = listOfUsers;
     let redirectVar = null;
     if (this.state.successFlag) {
       redirectVar = (
         <Redirect
           to={{
-            pathname: "/user",
-            state: { id: this.state.passIdToProps }
+            pathname: "/user"
           }}
         />
       );
@@ -118,16 +131,29 @@ export default class RegisterForHackathon extends Component {
                       required
                     />
                   </div>
-                  <div class="form-group">
-                    <input
-                      name="Team"
-                      class="form-control"
-                      type="text"
-                      placeholder="Enter Team Emails byseparator (,)"
-                      onChange={this.teamHandler}
-                      required
-                    />
-                  </div>
+                  
+                  <div className="App">
+                <div className="box effect1">
+                    <div className="contentClass">
+                        <Form.Item
+                            style={{ width: '100%' }}>
+                            <Select
+                                mode="multiple"
+                                placeholder="Choose team member(s)"
+                                value={teamMembers}
+                                onChange={this.handleOptionChange}
+                                style={{ width: '100%' }}>
+                                {filteredOptions.map(item => (
+                                    <Select.Option key={item} value={item}>
+                                        {item}
+                                    </Select.Option>
+                                ))}
+                            </Select>
+                        </Form.Item>
+                    </div>
+                </div>
+            </div >
+
                   <br />
 
                   <button

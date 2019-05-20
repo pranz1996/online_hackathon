@@ -19,7 +19,8 @@ export default class Signup extends Component {
       email: "",
       successFlag: "",
       isAdmin: "",
-      isloggedin: false
+      isloggedin: false, 
+      errMsg : null,
     };
 
     this.isAdmin = this.isAdminHandler.bind(this);
@@ -63,7 +64,15 @@ export default class Signup extends Component {
     //     console.log("admin email");
     //     isAdmin = 1;
     // }
-
+    if(this.state.password != this.state.repeatpassword){
+      this.setState({
+        errMsg : "Passwords do not match"
+      })
+    }else{
+      this.setState({
+        errMsg : null
+      })
+    }
     const data = {
       userName: this.state.username,
       email: this.state.email,
@@ -73,15 +82,18 @@ export default class Signup extends Component {
 
     console.log("signup: ", data);
     // axios.defaults.withCredentials = true
-    axios.post("http://localhost:8080/users", data).then(response => {
-      console.log(" response : ", response);
-      console.log(" response status : ", response.status);
-      if (response.status === 200) {
-        this.setState({
-          successFlag: true
-        });
-      }
-    });
+    if(this.state.password === this.state.repeatpassword){
+        axios.post("http://localhost:8080/users", data).then(response => {
+        console.log(" response : ", response);
+        console.log(" response status : ", response.status);
+        if (response.status === 200) {
+          this.setState({
+            successFlag: true
+          });
+        }
+      });
+    }
+    
 
     //firebase
 
@@ -144,6 +156,10 @@ export default class Signup extends Component {
 
   render() {
     let redirectVar = null;
+    let error = null;
+    if(this.state.errMsg != null){
+      error = <h4 style = {{color : "red"}}>{this.state.errMsg}</h4>
+    }
     if (this.state.successFlag) redirectVar = <Redirect to="/login" />;
     const openhacklogo = require("../Miscellanous/openhack.png");
     return (
@@ -179,6 +195,7 @@ export default class Signup extends Component {
                     required
                   />
                 </div>
+                
                 <div class="form-group">
                   <input
                     type="password"
@@ -189,6 +206,7 @@ export default class Signup extends Component {
                     required
                   />
                 </div>
+                {error}
                 <div class="form-group">
                   <input
                     type="email"

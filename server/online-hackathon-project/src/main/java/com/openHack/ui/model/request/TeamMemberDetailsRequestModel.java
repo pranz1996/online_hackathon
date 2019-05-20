@@ -3,7 +3,7 @@ package com.openHack.ui.model.request;
 public class TeamMemberDetailsRequestModel {
 
 	private long userId;
-	private String role;
+	private String role = "programmer";
 	private boolean paid = false;
 	public long getUserId() {
 		return userId;

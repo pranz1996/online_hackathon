@@ -23,7 +23,8 @@ export default class CreateHackathon extends Component {
     
       fetchedUsers : [],
       judges: [],
-      successFlag: false
+      successFlag: false,
+      errMsg : null
     };
 
     this.eventNameHandler = this.eventNameHandler.bind(this);
@@ -114,6 +115,10 @@ export default class CreateHackathon extends Component {
     this.setState({ judges });
   };
 
+  handleRedirect = (e) => {
+    document.getElementById("modelCloseBtn").click();
+    window.location.reload();
+  }
   submitHandler = h => {
     // h.preventDefault();
 
@@ -139,7 +144,11 @@ export default class CreateHackathon extends Component {
     //   }
     //   console.log(this.state.judges);
     // }
-
+    if(this.state.startTime > this.state.endTime){
+      this.setState({
+        errMsg : "Start Date cannot be after end Date"
+      })
+    }
     var theJudges = []
     for(var i = 0; i < this.state.judges.length; i++) {
       theJudges.push({
@@ -167,26 +176,31 @@ export default class CreateHackathon extends Component {
       // ]
     };
     console.log(" data " + data)
-    // alert(JSON.stringify(data))
-    // axios.defaults.withCredentials = true
-    axios.post("http://localhost:8080/hackathons", data).then(response => {
-      console.log(" response " + response.data);
-      if (response.status === 200) {
-        this.setState({
-          successFlag: true
-        });
-      }
-    });
+    if(this.state.startTime < this.state.endTime){
+      axios.post("http://localhost:8080/hackathons", data)
+      .then((response) => {
+        console.log(" response " + response.data);
+        if (response.status === 200) {
+          document.getElementById("createButton").click();
+          window.location.replace("http://localhost:3000/cardAdminHackathon");
+        }
+      });
+    }
+    
   };
 
   render() {
     console.log(listOfUsers)
     const { judges } = this.state
+    let error = null;
+    if(this.state.errMsg != null){
+      error = <h4 style = {{color : "red"}}>{this.state.errMsg}</h4>
+    }
     // const filteredOptions = listOfUsers.filter(o => !selectedItems.includes(o));
     const filteredOptions = listOfUsers;
     let redirectVar = null;
     if (this.state.successFlag) {
-      redirectVar = <Redirect to='/searchHackathon'/>
+      redirectVar = <Redirect to='/cardAdminHackathon'/>
     }
     return (
       <div style={{ backgroundColor: "#f2f2f2" }}>
@@ -244,7 +258,7 @@ export default class CreateHackathon extends Component {
                       required
                     />
                   </div>
-
+                  {error}
                   <div class="form-group">
                     <input
                       name="fee"
@@ -326,6 +340,26 @@ export default class CreateHackathon extends Component {
           </div>
         </div>
         <Footer />
+        <button id="createButton" href="#createModal" class="delete" data-toggle="modal" style={{display : "none"}} type="button" class="btn btn-success">
+                    Play
+                </button>
+                <div id="createModal" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form>
+                                <div class="modal-header">						
+                                    <h4 class="modal-title">Hackathon Created</h4>
+                                </div>
+                                <div class="modal-footer">
+                                    <input id="modelCloseBtn" onClick={this.handleRedirect} type="button" class="btn btn-default" data-dismiss="modal" value="Cancel"/>
+                                </div>
+                                {/* <div class="modal-footer">
+                                    <Link to = {`/admin/delete/`} data-dismiss="modal" class="btn btn-success" value="Cancel"></Link>
+                                </div> */}
+                            </form>
+                        </div>
+                    </div>
+                </div>
       </div>
     );
   }

@@ -8,7 +8,7 @@ public class TeamDto {
 	private long hackathonId;
 	private String teamName;
 	private String teamSize;
-	private String userId;
+	private long userId;
 	private String submissionLink;
 	
 	private List<TeamMemberDto> teamMembers;
@@ -36,10 +36,10 @@ public class TeamDto {
 	public void setTeamSize(String teamSize) {
 		this.teamSize = teamSize;
 	}
-	public String getUserId() {
+	public long getUserId() {
 		return userId;
 	}
-	public void setUserId(String userId) {
+	public void setUserId(long userId) {
 		this.userId = userId;
 	}
 	public List<TeamMemberDto> getTeamMembers() {
