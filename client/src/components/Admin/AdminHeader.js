@@ -64,11 +64,8 @@ export default class AdminHeader extends Component {
                   Hackathons
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="/hackathonDetails">
+                  <a class="dropdown-item" href="/cardAdminHackathon">
                     Manage My Hackathons
-                  </a>
-                  <a class="dropdown-item" href="#">
-                    Search Hackathons
                   </a>
                   <div class="dropdown-divider" />
                   <a class="dropdown-item" href="/createHackathon">

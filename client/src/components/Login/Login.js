@@ -16,7 +16,7 @@ export default class Login extends Component {
       email: "",
       password: "",
       successFlag: "",
-      isAdmin: false
+      isAdmin : false
     };
 
     this.emailHandler = this.emailHandler.bind(this);
@@ -51,70 +51,66 @@ export default class Login extends Component {
   };
 
   submitHandler = h => {
-    var self = this;
     h.preventDefault();
     const data = {
       email: this.state.email,
       password: this.state.password
     };
 
-    console.log(" state email " + this.state.email);
-    alert(" state email " + this.state.email);
+    console.log(" The input email " + this.state.email);
+    // alert(" state email " + this.state.email);
 
     // axios.defaults.withCredentials = true
     axios.post("http://localhost:8080/users/login", data).then(response => {
       console.log(" final response " + JSON.stringify(response));
       //alert(" final response " + response.data);
 
-      console.log(response.data.user);
-      console.log(response.data.token);
-      console.log(" admin or not : ", response.data.admin);
+
+
+      // console.log(' response for admin ', response.data.admin)
+      // console.log(' response status :' , response.data.status)
 
       if (response.status === 200) {
-        localStorage.setItem("email", response.data.email);
         localStorage.setItem("token", response.data.token);
-        localStorage.setItem("userId", response.data.user);
-        self.setState({
-          successFlag: true,
-          isAdmin: response.data.admin
-        });
+        localStorage.setItem("userId", response.data.id);
+        localStorage.setItem("email", response.data.email);
+        localStorage.setItem("isAdmin", response.data.admin)
+        localStorage.setItem("username", response.data.username)
 
-        self.state.successFlag = true;
-        self.state.isAdmin = response.data.admin;
-        console.log(" after change : ", self.state.isAdmin);
-        alert(" after change : ", self.state.isAdmin);
+        this.setState({
+          successFlag: true,
+          isAdmin : response.data.admin
+        });
       }
     });
 
-    var email = this.state.email;
-    var password = this.state.password;
+    // var email = this.state.email;
+    // var password = this.state.password;
     // console.log(email, password);
-    fire
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(user => {
-        var check = fire.auth().currentUser.emailVerified;
-        console.log("check", check);
-        console.log("in login", user.user.email);
-        console.log("in login", user.user.emailVerified);
-        if (user.user.emailVerified == true) {
-          this.props.history.push("/user");
-          // this.props.history.push(this.data, () => {
-          //     this.props.history.push("/user");
-          // });
-          // <a href="/signup"/>
-        } else {
-          window.alert("Email not verified yet!");
-          console.log("email not verified yet");
-        }
-      })
-      .catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // ...
-        console.log("error" + errorMessage);
-      });
+    // fire.auth().signInWithEmailAndPassword(email, password)
+    //     .then((user) => {
+    //         var check = fire.auth().currentUser.emailVerified;
+    //         console.log("check", check);
+    //         console.log("in login", user.user.email);
+    //         console.log("in login", user.user.emailVerified);
+    //         if (user.user.emailVerified == true) {
+    //             this.props.history.push('/user');
+    //             // this.props.history.push(this.data, () => {
+    //             //     this.props.history.push("/user");
+    //             // });
+    //             // <a href="/signup"/>
+    //         } else {
+    //             window.alert("Email not verified yet!")
+    //             console.log("email not verified yet");
+    //         }
+    //     })
+    //     .catch(function (error) {
+    //         // Handle Errors here.
+    //         var errorCode = error.code;
+    //         var errorMessage = error.message;
+    //         // ...
+    //         console.log("error" + errorMessage);
+    //     });
 
     // console.log("here");
     // var user = fire.auth().currentUser;
@@ -126,12 +122,10 @@ export default class Login extends Component {
 
   render() {
     let redirectVar = null;
-
-    // console.log(" render : ", this.state.isAdmin);
-    // alert(" render: ", this.state.isAdmin);
-
-    if (this.state.successFlag) {
-      redirectVar = <Redirect to="/user" />;
+    if (this.state.successFlag && !this.state.isAdmin) {
+      redirectVar = <Redirect to='/searchOrganization' />;
+    } else if (this.state.successFlag && this.state.isAdmin) {
+      redirectVar = <Redirect to="/createHackathon" />;
     }
     const openhacklogo = require("../Miscellanous/openhack.png");
     return (

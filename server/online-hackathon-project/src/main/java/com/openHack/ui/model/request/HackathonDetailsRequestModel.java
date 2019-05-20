@@ -14,6 +14,7 @@ public class HackathonDetailsRequestModel {
 	private String maxTeamSize;
 	private String createdBy;
 	private boolean hackatonWinner = false;
+	private String status;
 	private List<UserEntity> judges;
 	
 	public String getEventName() {
@@ -78,6 +79,13 @@ public class HackathonDetailsRequestModel {
 	}
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
+	}
+	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	@Override
 	public String toString() {

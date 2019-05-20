@@ -1,5 +1,7 @@
 package com.openHack.ui.controller;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.json.JsonObject;
@@ -16,10 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.openHack.io.repository.UserRepository;
 import com.openHack.service.UserService;
+import com.openHack.shared.dto.OrganizationDto;
 import com.openHack.shared.dto.UserDto;
 import com.openHack.ui.model.request.UserDetailsRequestModel;
 import com.openHack.ui.model.request.UserLoginRequestModel;
+import com.openHack.ui.model.response.OrganizationDetailsResponseModel;
 import com.openHack.ui.model.response.UserDetailsResponseModel;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -61,6 +66,32 @@ public class UserController {
 		
 		return returnModel;
 	}
+	
+	
+	// get all the Users for judge
+		@RequestMapping(value = "/getAllUsers", method = RequestMethod.GET, produces = { "application/json", "application/xml" })
+		public ArrayList<UserDetailsResponseModel> getAllUsersForJudge() 
+		{	
+			ArrayList<UserDetailsResponseModel> listOfUsers = new ArrayList<UserDetailsResponseModel>();
+			
+			UserDetailsResponseModel singleResponseModel;
+			ArrayList<UserDto> UserDtoList = new ArrayList<UserDto>();
+				
+			UserDtoList = userService.getAllUsers();
+			Iterator dtoIterator = UserDtoList.iterator(); 
+				
+			while(dtoIterator.hasNext())
+			{
+				singleResponseModel = new UserDetailsResponseModel();
+				BeanUtils.copyProperties(dtoIterator.next(), singleResponseModel);
+				listOfUsers.add(singleResponseModel);
+			}
+			
+			System.out.println(listOfUsers);
+			System.out.println(" done ... ");
+			
+			return listOfUsers;
+		}
 	
 	// get any user by id
 	@GetMapping(path="/{id}")

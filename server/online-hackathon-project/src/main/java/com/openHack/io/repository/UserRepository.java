@@ -1,5 +1,7 @@
 package com.openHack.io.repository;
 
+import java.util.ArrayList;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -17,4 +19,7 @@ public interface UserRepository extends CrudRepository<UserEntity, Long>{
 	
 	@Query(value="select * from users u where u.id=?1", nativeQuery = true)
 	UserEntity findUserById(Integer integer);
+	
+	@Query(value="select * from users u where u.admin_check=false", nativeQuery = true)
+	ArrayList<UserEntity> findAllUsers();
 }

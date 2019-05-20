@@ -18,6 +18,7 @@ import RegisterForHackathon from './Admin/RegisterForHackathon'
 import Payment from './Admin/Payment'
 import ConfirmEmail from './Admin/ConfirmEmail'
 import ConfirmEmailFinal from './Admin/ConfirmEmailFinal'
+import CardAdminHackathon from './Admin/CardAdminHackthon';
 
 require("dotenv").config();
 class RouteFile extends Component {
@@ -32,6 +33,9 @@ class RouteFile extends Component {
 
         <Route path="/createHackathon" component={CreateHackathon} />
         <Route path="/searchHackathon" component={SearchHackathon} />
+
+        <Route path="/cardAdminHackathon" component={CardAdminHackathon} />
+        
 
         <Route path="/hackathonDetails" component={ViewHackathon} />
         

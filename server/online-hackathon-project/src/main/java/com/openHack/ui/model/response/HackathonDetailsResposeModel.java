@@ -11,6 +11,7 @@ public class HackathonDetailsResposeModel {
 	private String maxTeamSize;
 	private String createdBy;
 	private boolean hackatonWinner;
+	private String status;
 	public long getId() {
 		return id;
 	}
@@ -71,6 +72,13 @@ public class HackathonDetailsResposeModel {
 	}
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	@Override
 	public String toString() {

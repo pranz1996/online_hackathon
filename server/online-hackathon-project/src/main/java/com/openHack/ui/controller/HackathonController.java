@@ -122,6 +122,16 @@ public class HackathonController {
 		return returnModel;
 	}
 	
+//	@PutMapping(path="/{id}")
+//	public HackathonDetailsResposeModel hackathonOpen(@PathVariable long id) {
+//		
+//		HackathonDetailsResposeModel returnModel = new HackathonDetailsResposeModel();
+//	
+//		
+//		
+//		
+//	}
+	
 	// delete any hackathon
 	@DeleteMapping(path="/{id}")
 	public String deleteHackathon() {

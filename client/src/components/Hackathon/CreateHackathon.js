@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Redirect } from "react-router";
-import Header from "../Miscellanous/Header";
+import Header from "../Admin/AdminHeader";
 import Footer from "../Miscellanous/Footer";
+import { Form, Select } from 'antd';
+
+const listOfUsers = [''];
 
 export default class CreateHackathon extends Component {
   constructor(props) {
@@ -17,6 +20,8 @@ export default class CreateHackathon extends Component {
       maxTeamSize: "",
       passIdToProps: "",
       tempJudge: "",
+    
+      fetchedUsers : [],
       judges: [],
       successFlag: false
     };
@@ -27,16 +32,42 @@ export default class CreateHackathon extends Component {
     this.minTeamSizeHandler = this.minTeamSizeHandler.bind(this);
     this.maxTeamSizeHandler = this.maxTeamSizeHandler.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
-    this.judgeHandler = this.judgeHandler.bind(this);
+    // this.judgeHandler = this.judgeHandler.bind(this);
     this.startTimeHandler = this.startTimeHandler.bind(this);
     this.endTimeHandler = this.endTimeHandler.bind(this);
   }
-
   componentWillMount() {
     this.setState({
       successFlag: false
     });
   }
+
+  componentDidMount() {
+    var headers = {
+      Authorization: localStorage.getItem("token")
+    };
+
+    axios
+      .get("http://localhost:8080/users/getAllUsers", {
+        headers
+      })
+      .then(response => {
+        console.log(" response " + JSON.stringify(response.data))
+        this.setState({
+          fetchedUsers : response.data
+        })
+        console.log(" Judges :", this.state.fetchedUsers.length)
+
+        for(var i = 0; i < this.state.fetchedUsers.length; i++) {
+            listOfUsers.push(this.state.fetchedUsers[i].email)
+        }
+      })
+      .catch(function(error) {
+        console.log("error: " + error);
+      });
+
+  }
+
 
   eventNameHandler = h => {
     this.setState({
@@ -63,11 +94,11 @@ export default class CreateHackathon extends Component {
       maxTeamSize: h.target.value
     });
   };
-  judgeHandler = h => {
-    this.setState({
-      tempJudge: h.target.value
-    });
-  };
+  // judgeHandler = h => {
+  //   this.setState({
+  //     tempJudge: h.target.value
+  //   });
+  // };
   startTimeHandler = h => {
     this.setState({
       startTime: h.target.value
@@ -79,30 +110,41 @@ export default class CreateHackathon extends Component {
     });
   };
 
+  handleOptionChange = judges => {
+    this.setState({ judges });
+  };
+
   submitHandler = h => {
-    h.preventDefault();
+    // h.preventDefault();
 
-    var emailList = this.state.tempJudge.split(",");
-    for (var i = 0; i < emailList.length; i++) {
-      var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    // var emailList = this.state.tempJudge.split(",");
+    // for (var i = 0; i < emailList.length; i++) {
+    //   var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
-      var result = regex.test(emailList[i]);
+    //   var result = regex.test(emailList[i]);
 
-      if (!result) {
-        alert("Invalid Email");
-        //document.getElementById("demo").innerHTML = "sorry enter a valid";
-        return false;
-      }
+    //   if (!result) {
+    //     alert("Invalid Email");
+    //     //document.getElementById("demo").innerHTML = "sorry enter a valid";
+    //     return false;
+    //   }
 
-      //   document.getElementById("demo").innerHTML =
-      //     "Ur email address is successfully submitted";
-      console.log(" yes ... ", emailList);
-      for (var i = 0; i < emailList.length; i++) {
-        this.state.judges.push({
-          email: emailList[i]
-        });
-      }
-      console.log(this.state.judges);
+    //   //   document.getElementById("demo").innerHTML =
+    //   //     "Ur email address is successfully submitted";
+    //   console.log(" yes ... ", emailList);
+    //   for (var i = 0; i < emailList.length; i++) {
+    //     this.state.judges.push({
+    //       email: emailList[i]
+    //     });
+    //   }
+    //   console.log(this.state.judges);
+    // }
+
+    var theJudges = []
+    for(var i = 0; i < this.state.judges.length; i++) {
+      theJudges.push({
+        'email' : this.state.judges[i]
+      })
     }
 
     const data = {
@@ -114,7 +156,7 @@ export default class CreateHackathon extends Component {
       minTeamSize: this.state.minTeamSize,
       maxTeamSize: this.state.maxTeamSize,
       createdBy: localStorage.getItem("email"),
-      judges: this.state.judges
+      judges: theJudges
       // judges : [
       //     {
       //         "email": "123@gmail.com"
@@ -124,6 +166,8 @@ export default class CreateHackathon extends Component {
       //     }
       // ]
     };
+    console.log(" data " + data)
+    // alert(JSON.stringify(data))
     // axios.defaults.withCredentials = true
     axios.post("http://localhost:8080/hackathons", data).then(response => {
       console.log(" response " + response.data);
@@ -136,13 +180,13 @@ export default class CreateHackathon extends Component {
   };
 
   render() {
+    console.log(listOfUsers)
+    const { judges } = this.state
+    // const filteredOptions = listOfUsers.filter(o => !selectedItems.includes(o));
+    const filteredOptions = listOfUsers;
     let redirectVar = null;
     if (this.state.successFlag) {
-      // redirectVar = <Redirect to={{
-      //     pathname: '/searchHackathon',
-      //     state: { id: this.state.passIdToProps }
-      // }} />
-      redirectVar = <Redirect to="/user" />;
+      redirectVar = <Redirect to='/searchHackathon'/>
     }
     return (
       <div style={{ backgroundColor: "#f2f2f2" }}>
@@ -183,8 +227,8 @@ export default class CreateHackathon extends Component {
                     <input
                       name="startTime"
                       class="form-control"
-                      type="text"
-                      placeholder="Start Date (mm:dd:yyyy)"
+                      type='Date'
+                      placeholder="Start Date"
                       onChange={this.startTimeHandler}
                       required
                     />
@@ -194,8 +238,8 @@ export default class CreateHackathon extends Component {
                     <input
                       name="endTime"
                       class="form-control"
-                      type="text"
-                      placeholder="End Date (mm:dd:yyyy)"
+                      type="Date"
+                      placeholder="End Date"
                       onChange={this.endTimeHandler}
                       required
                     />
@@ -232,7 +276,32 @@ export default class CreateHackathon extends Component {
                     />
                   </div>
 
-                  <div class="form-group">
+
+                <div className="App">
+                <div className="box effect1">
+                    <div className="contentClass">
+                        <Form.Item
+                            
+                            style={{ width: '100%' }}>
+                            <Select
+                                mode="multiple"
+                                placeholder="Choose judge(s)"
+                                value={judges}
+                                onChange={this.handleOptionChange}
+                                style={{ width: '100%' }}>
+                                {filteredOptions.map(item => (
+                                    <Select.Option key={item} value={item}>
+                                        {item}
+                                    </Select.Option>
+                                ))}
+                            </Select>
+                        </Form.Item>
+                    </div>
+                </div>
+            </div >
+
+
+                  {/* <div class="form-group">
                     <input
                       name="team"
                       class="form-control"
@@ -241,7 +310,7 @@ export default class CreateHackathon extends Component {
                       onChange={this.judgeHandler}
                       required
                     />
-                  </div>
+                  </div> */}
 
                   <br />
                   <button

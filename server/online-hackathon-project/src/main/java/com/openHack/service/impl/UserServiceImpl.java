@@ -1,7 +1,9 @@
 package com.openHack.service.impl;
 
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -13,9 +15,11 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openHack.SecurityConstants;
 import com.openHack.embeddedEntity.Address;
+import com.openHack.io.entity.OrganizationEntity;
 import com.openHack.io.entity.UserEntity;
 import com.openHack.io.repository.UserRepository;
 import com.openHack.service.UserService;
+import com.openHack.shared.dto.OrganizationDto;
 import com.openHack.shared.dto.UserDto;
 import com.openHack.ui.model.request.UserLoginRequestModel;
 
@@ -166,6 +170,25 @@ public class UserServiceImpl implements UserService{
 		return object;
 		
 		
+	}
+
+
+	@Override
+	public ArrayList<UserDto> getAllUsers() {
+		ArrayList<UserEntity> allUsersEntity = new ArrayList<UserEntity>();
+		ArrayList<UserDto> allUsersDto = new ArrayList<UserDto>();
+		UserDto singleUserDto;
+		
+		allUsersEntity = userRepository.findAllUsers();
+		Iterator iterator = allUsersEntity.iterator(); 
+		
+		while(iterator.hasNext())
+		{
+			singleUserDto = new UserDto();
+			BeanUtils.copyProperties(iterator.next(), singleUserDto);
+			allUsersDto.add(singleUserDto);
+		}
+		return allUsersDto;
 	}
 
 }

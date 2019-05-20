@@ -3,13 +3,13 @@ import axios from "axios";
 import { Redirect } from "react-router";
 import Header from "../Miscellanous/Header";
 import Footer from "../Miscellanous/Footer";
-import OrganizationCard from "../Organization/CardSearchOrganization";
+import HackathonCard from "../Hackathon/CardSearchHackathon";
 
 export default class SearchHackathon extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      org_list: [],
+      hackathon_list: [],
       successFlag: false,
       requestThrough: false,
       routeCreateOrg: false,
@@ -19,14 +19,14 @@ export default class SearchHackathon extends Component {
       alice: false
     };
 
-    this.eventNameHandler = this.eventNameHandler.bind(this);
-    this.descriptionHandler = this.descriptionHandler.bind(this);
-    this.feeHandler = this.feeHandler.bind(this);
-    this.minTeamSizeHandler = this.minTeamSizeHandler.bind(this);
-    this.maxTeamSizeHandler = this.maxTeamSizeHandler.bind(this);
-    this.requestFunc = this.requestFunc.bind(this);
-    this.routeChange = this.routeChange.bind(this);
-    this.searchKeyChange = this.searchKeyChange.bind(this);
+    // this.eventNameHandler = this.eventNameHandler.bind(this);
+    // this.descriptionHandler = this.descriptionHandler.bind(this);
+    // this.feeHandler = this.feeHandler.bind(this);
+    // this.minTeamSizeHandler = this.minTeamSizeHandler.bind(this);
+    // this.maxTeamSizeHandler = this.maxTeamSizeHandler.bind(this);
+    // this.requestFunc = this.requestFunc.bind(this);
+    // this.routeChange = this.routeChange.bind(this);
+    // this.searchKeyChange = this.searchKeyChange.bind(this);
   }
 
   searchKeyChange(event) {
@@ -35,20 +35,20 @@ export default class SearchHackathon extends Component {
 
   componentDidMount() {
     console.log(localStorage.getItem("userId"));
-    alert(localStorage.getItem("userId"));
-    if (localStorage.getItem("userId") === 19) {
-      console.log("alice");
-      alert("alice");
+    // alert(localStorage.getItem("userId"));
+    // if (localStorage.getItem("userId") === 19) {
+    //   console.log("alice");
+    //   // alert("alice");
 
-      this.setState({
-        alice: true
-      });
+    //   this.setState({
+    //     alice: true
+    //   });
 
-      this.state.alice = true;
+    //   this.state.alice = true;
 
-      console.log("alice" + this.state.alice);
-      alert("alice" + this.state.alice);
-    }
+    //   console.log("alice" + this.state.alice);
+    //   // alert("alice" + this.state.alice);
+    // }
 
     var self = this;
     // var headers = {
@@ -61,19 +61,20 @@ export default class SearchHackathon extends Component {
     };
 
     axios
-      .get("http://localhost:8080/hackathons/getAllHackathons", {
+      .get('http://localhost:8080/hackathons/getAllHackathons', {
         headers
       })
       .then(response => {
+        console.log('the hackathons : ' + JSON.stringify(response.data))
         //resp = JSON.stringify(response);
 
         self.setState({
-          org_list: response.data
+          hackathon_list: response.data
         });
 
-        alert("response " + response.data);
+        // alert("response " + response.data);
 
-        this.state.org_list = this.state.property_list.concat(response.data);
+       // this.state.org_list = this.state.property_list.concat(response.data);
         //console.log("hi" + resp);
       })
       .catch(function(error) {
@@ -81,7 +82,7 @@ export default class SearchHackathon extends Component {
         console.log("error: " + error);
       });
 
-    console.log("out resp " + JSON.stringify(this.state.org_list));
+    console.log("out resp " + JSON.stringify(this.state.hackathon_list));
   }
 
   componentWillMount() {
@@ -126,16 +127,16 @@ export default class SearchHackathon extends Component {
     //h.preventDefault();
 
     console.log("button: ");
-    alert("button: ");
+    // alert("button: ");
     // var self = this;
     // var data = {
     //   user_id: item.user_id,
     //   organization_id: item.organization_id
     // };
 
-    this.setState({
-      join: true
-    });
+    // this.setState({
+    //   join: true
+    // });
 
     // var headers = {
     //   Authorization: localStorage.getItem("token")
@@ -177,14 +178,14 @@ export default class SearchHackathon extends Component {
     let temp = null;
     if (this.state.join) {
       console.log("joining");
-      alert("joining");
+      // alert("joining");
       temp = <Redirect to="/registerForHackathon" />;
     }
 
     let tem = null;
     if (this.state.alice) {
       console.log("alice");
-      alert("alice");
+      // alert("alice");
       temp = <h3>Alice here</h3>;
     }
 
@@ -194,16 +195,16 @@ export default class SearchHackathon extends Component {
       CreateOrg = <Redirect to="/createOrganization" />;
     }
 
-    console.log("rend: " + this.state.org_list);
-    var arr3 = Object.values(this.state.org_list);
+    console.log("rend: " + this.state.hackathon_list);
+    var arr3 = Object.values(this.state.hackathon_list);
     console.log(arr3);
     // console.log(this.state.property_list.length)
     var elements = [];
-    for (var i = 0; i < this.state.org_list.length; i++) {
+    for (var i = 0; i < this.state.hackathon_list.length; i++) {
       var name = arr3[i].name;
       // if (name.includes(this.state.searchKey)) {
       elements.push(
-        <OrganizationCard key={i} props={arr3[i]} func={this.requestFunc} />
+        <HackathonCard key={i} props={arr3[i]} func={this.requestFunc} />
       );
       // }
     }
@@ -224,7 +225,7 @@ export default class SearchHackathon extends Component {
           {temp}
           <div class="organization-panel">
             {/* <img src={openhacklogo} width="75px" height="75px" /> */}
-            <h2>Search an Hackathon to Join{tem}</h2>
+            <h2>Search an Hackathon to Join {tem}</h2>
 
             <br />
             <div class="form-group">

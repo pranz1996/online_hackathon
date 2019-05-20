@@ -57,6 +57,7 @@ public class HackathonServiceImpl implements HackathonService {
 		hackathonEntity.setMaxTeamSize(hackathonDto.getMaxTeamSize());
 		hackathonEntity.setJudges(hackathonDto.getJudges());
 		hackathonEntity.setCreatedBy(hackathonDto.getCreatedBy());
+		hackathonEntity.setStatus("created");
 		
 		hackathonEntity.setStartTime(hackathonDto.getStartTime());
 		hackathonEntity.setEndTime(hackathonDto.getEndTime());
@@ -69,10 +70,10 @@ public class HackathonServiceImpl implements HackathonService {
 		hackathonEntity.setJudges(null);
 		for(int i = 0; i < judges.size(); i++) {
 			UserEntity user =  userRepository.findByEmail(judges.get(i));
-			System.out.println(" user " + user);
+			//System.out.println(" user " + user);
 			hackathonEntity.addJudge(user);
 		}
-		System.out.println(hackathonEntity.getJudges());
+		//System.out.println(hackathonEntity.getJudges());
 		
 		// Repository method (save) to save HackathonEntity object to table hackathons
 		HackathonEntity storedHackathonDetails = hackathonRepository.save(hackathonEntity);
