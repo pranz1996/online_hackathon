@@ -93,7 +93,7 @@ public class TeamController {
     	
     	teamService.createSubmission(id, submission);
     	 	
-    	return "you have submitted for hackathon";
+    	return "you have submitted git repository link for hackathon";
     }
     
     // payment by any team member for a hackathon
@@ -104,6 +104,4 @@ public class TeamController {
     	
     	return "successfully pay for the hackathon";
     }
-    
-
 }

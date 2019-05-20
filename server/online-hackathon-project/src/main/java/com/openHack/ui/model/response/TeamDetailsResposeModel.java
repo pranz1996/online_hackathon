@@ -14,7 +14,7 @@ public class TeamDetailsResposeModel {
 	private String userId;
 	private String submissionLink;
 	
-	private List<TeamDetailsResposeModel> teamMembers;
+	private List<TeamMemberDetailsResposeModel> teamMembers;
 	public long getId() {
 		return id;
 	}
@@ -45,13 +45,13 @@ public class TeamDetailsResposeModel {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public List<TeamDetailsResposeModel> getTeamMembers() {
+	
+	public List<TeamMemberDetailsResposeModel> getTeamMembers() {
 		return teamMembers;
 	}
-	public void setTeamMembers(List<TeamDetailsResposeModel> teamMembers) {
+	public void setTeamMembers(List<TeamMemberDetailsResposeModel> teamMembers) {
 		this.teamMembers = teamMembers;
 	}
-	
 	public String getSubmissionLink() {
 		return submissionLink;
 	}

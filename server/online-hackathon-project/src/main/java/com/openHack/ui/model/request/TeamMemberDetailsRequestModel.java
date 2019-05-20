@@ -2,13 +2,13 @@ package com.openHack.ui.model.request;
 
 public class TeamMemberDetailsRequestModel {
 
-	private String userId;
+	private long userId;
 	private String role;
 	private boolean paid = false;
-	public String getUserId() {
+	public long getUserId() {
 		return userId;
 	}
-	public void setUserId(String userId) {
+	public void setUserId(long userId) {
 		this.userId = userId;
 	}
 	public String getRole() {
