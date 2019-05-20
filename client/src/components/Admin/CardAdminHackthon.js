@@ -3,7 +3,7 @@ import axios from "axios";
 import { Redirect } from "react-router";
 import Header from "../Miscellanous/Header";
 import Footer from "../Miscellanous/Footer";
-import AdminHeader from "./AdminHeader";
+import AdminHeader from "../Admin/AdminHeader";
 
 export default class CardAdminHackathon extends Component {
   constructor(props) {
@@ -71,6 +71,7 @@ export default class CardAdminHackathon extends Component {
     }
     return(
       <div>
+        <AdminHeader />
       {hackathon}
       </div>
     )

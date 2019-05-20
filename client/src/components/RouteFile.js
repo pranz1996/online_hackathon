@@ -1,26 +1,8 @@
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
-import CreateHackathon from './Hackathon/CreateHackathon'
-import ViewHackathon from './Hackathon/ViewHackathon'
-import Login from './Login/Login';
-import Signup from './Login/Signup';
-import LandingPage from './Login/LandingPage';
-import UserProfile from './User/UserProfile';
-import SearchOrganization from './Organization/SearchOrganization';
-import CreateOrganization from './Organization/CreateOrganization';
-import MyOrganization from './Organization/MyOrganization';
-import SearchHackathon from './Hackathon/SearchHackathon';
-import MyHackathon from './Hackathon/MyHackathon';
-import JudgeHackathon from './Judge/JudgeHackathon';
-import ShowEmailSent from './Login/ShowEmailSent';
-import AdminHome from './Admin/AdminHome'
-import RegisterForHackathon from './Admin/RegisterForHackathon'
-import Payment from './Admin/Payment'
-import ConfirmEmail from './Admin/ConfirmEmail'
-import ConfirmEmailFinal from './Admin/ConfirmEmailFinal'
+
 import CardAdminHackathon from './Admin/CardAdminHackthon';
-import React, { Component } from "react";
-import { Route } from "react-router-dom";
+
 import CreateHackathon from "./Hackathon/CreateHackathon";
 import ViewHackathon from "./Hackathon/ViewHackathon";
 import Login from "./Login/Login";
