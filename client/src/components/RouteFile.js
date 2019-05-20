@@ -40,8 +40,8 @@ class RouteFile extends Component {
         <Route path="/cardAdminHackathon" component={CardAdminHackathon} />
         
 
-        <Route path="/hackathonDetails" component={ViewHackathon} />
-
+        <Route path="/viewHackathon" component={ViewHackathon} />
+      
         <Route path="/searchOrganization" component={SearchOrganization} />
         <Route path="/createOrganization" component={CreateOrganization} />
         <Route path="/myOrganization" component={MyOrganization} />
@@ -50,7 +50,7 @@ class RouteFile extends Component {
         <Route path="/judgeHackathon" component={JudgeHackathon} />
         <Route path="/showEmailSent" component={ShowEmailSent} />
         <Route path="/adminHome" component={AdminHome} />
-        <Route path="/registerForHackathon" component={RegisterForHackathon} />
+        <Route path="/registerForHackathon/:id" component={RegisterForHackathon} />
         <Route path="/payment" component={Payment} />
         <Route path="/confirmEmail" component={ConfirmEmail} />
         <Route path="/confirmEmailFinal" component={ConfirmEmailFinal} />

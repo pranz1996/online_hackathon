@@ -25,7 +25,7 @@ public class TeamEntity implements Serializable{
 	private String teamSize;
 	
 	@Column(nullable = false)
-	private String userId;
+	private long userId;
 	
 	private String submissionLink;
 	
@@ -78,11 +78,11 @@ public class TeamEntity implements Serializable{
 		this.teamSize = teamSize;
 	}
 
-	public String getUserId() {
+	public long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(long userId) {
 		this.userId = userId;
 	}
 

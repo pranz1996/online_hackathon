@@ -67,15 +67,8 @@ export default class Header extends Component {
                   Hackathons
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#">
-                    Manage My Hackathons
-                  </a>
-                  <a class="dropdown-item" href="#">
-                    Search Hackathons
-                  </a>
-                  <div class="dropdown-divider" />
-                  <a class="dropdown-item" href="#">
-                    Create Hackathons
+                  <a class="dropdown-item" href="/viewHackathon">
+                    Join any Hackathon
                   </a>
                 </div>
               </li>
@@ -106,11 +99,7 @@ export default class Header extends Component {
                   </a>
                 </div>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  Teams
-                </a>
-              </li>
+              
               <li class="nav-item dropdown">
                 <a
                   class="nav-link dropdown-toggle"

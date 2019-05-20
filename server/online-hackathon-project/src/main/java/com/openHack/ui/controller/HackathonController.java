@@ -68,6 +68,12 @@ public class HackathonController {
 		{
 			singleResponseModel = new HackathonDetailsResposeModel();
 			BeanUtils.copyProperties(dtoIterator.next(), singleResponseModel);
+			if(singleResponseModel.getStatus().equals("created"))
+				singleResponseModel.setStatus(" start the hackathon");
+			else if(singleResponseModel.getStatus().equals("start"))
+				singleResponseModel.setStatus(" close the hackathon");
+			else if(singleResponseModel.getStatus().equals("closed"))
+				singleResponseModel.setStatus(" Finalize the hackathon");
 			listOfHackathons.add(singleResponseModel);
 		}
 		return listOfHackathons;
@@ -123,20 +129,18 @@ public class HackathonController {
 		return returnModel;
 	}
 	
-//	@PutMapping(path="/{id}")
-//	public HackathonDetailsResposeModel hackathonOpen(@PathVariable long id) {
-//		
-//		HackathonDetailsResposeModel returnModel = new HackathonDetailsResposeModel();
-//	
-//		
-//		
-//		
-//	}
-	
-	// delete any hackathon
-	@DeleteMapping(path="/{id}")
-	public String deleteHackathon() {
-		return "delete hackathon method was called";
+	@PutMapping(path="updateStatus/{id}")
+	public HackathonDetailsResposeModel updateHackathonStatus(@PathVariable long id) {
+		
+		HackathonDetailsResposeModel returnModel = new HackathonDetailsResposeModel();
+							
+		HackathonDto hackathonDetails = hackathonService.updateStatus(id);
+				
+		ModelMapper mapper = new ModelMapper();
+		returnModel = mapper.map(hackathonDetails, HackathonDetailsResposeModel.class);
+				
+		return returnModel;
+		
 	}
 	
 	

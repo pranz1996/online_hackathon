@@ -1,7 +1,9 @@
 package com.openHack.service.impl;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -177,5 +179,34 @@ public class HackathonServiceImpl implements HackathonService {
 			allHackathonDto.add(signleHackDto);
 		}
 		return allHackathonDto;
+	}
+
+	@Override
+	public HackathonDto updateStatus(long id) {
+		
+		HackathonEntity hackathon = hackathonRepository.findById(id);
+		
+		HackathonDto returnValue = new HackathonDto();
+		
+		if(hackathon.getStatus().equals("created")) {
+			hackathon.setStatus("open");
+			
+			String pattern = "yyyy-mm-dd";
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+			String date = simpleDateFormat.format(new Date());
+			hackathon.setStartTime(date);
+			
+		} else if(hackathon.getStatus().equals("open")) {
+			hackathon.setStatus("closed");
+		} else if(hackathon.getStatus().equals("closed")) {
+			hackathon.setStatus("finalized");
+		}
+		
+		HackathonEntity updateHackathon = hackathonRepository.save(hackathon);
+		
+ 		BeanUtils.copyProperties(updateHackathon, returnValue);
+		
+		return returnValue;
 	}
 }

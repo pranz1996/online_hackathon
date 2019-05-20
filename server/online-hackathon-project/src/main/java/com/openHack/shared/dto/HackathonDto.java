@@ -15,12 +15,7 @@ public class HackathonDto {
 	private String maxTeamSize;
 	private String createdBy;
 	private String status;
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
+	
 	private boolean hackatonWinner = false;
 	private List<UserEntity> judges;
 	public long getId() {
@@ -91,13 +86,11 @@ public class HackathonDto {
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
-	@Override
-	public String toString() {
-		return "HackathonDto [id=" + id + ", eventName=" + eventName + ", startTime=" + startTime + ", endTime="
-				+ endTime + ", description=" + description + ", fee=" + fee + ", minTeamSize=" + minTeamSize
-				+ ", maxTeamSize=" + maxTeamSize + ", createdBy=" + createdBy + ", hackatonWinner=" + hackatonWinner
-				+ ", judges=" + judges + "]";
+	
+	public String getStatus() {
+		return status;
 	}
-
-
+	public void setStatus(String status) {
+		this.status = status;
+	}
 }

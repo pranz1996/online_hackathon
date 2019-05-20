@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Redirect } from "react-router";
 import Header from "../Miscellanous/Header";
+import AdminHeader from "../Admin/AdminHeader";
 import Footer from "../Miscellanous/Footer";
 
 export default class UserProfile extends Component {
@@ -120,10 +121,16 @@ export default class UserProfile extends Component {
   render() {
     // var emailfromprops = this.props.location.state.email;
     // console.log(emailfromprops);
+    let header = null;
+    if(localStorage.getItem("isAdmin") == "false"){
+      header = <Header/>
+    }else{
+      header = <AdminHeader/>
+    }
     return (
       <div style={{ backgroundColor: "#243e8c" }}>
         <div style={{ backgroundColor: "#243e8c" }}>
-          <Header />
+          {header}
           <div style={{ backgroundColor: "#243e8c" }}>
             <div class="login-form">
               <div class="user-div">
