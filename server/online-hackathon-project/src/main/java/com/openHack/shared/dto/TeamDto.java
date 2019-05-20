@@ -10,7 +10,14 @@ public class TeamDto {
 	private String teamSize;
 	private String userId;
 	private String submissionLink;
+	private double grade;
 	
+	public double getGrade() {
+		return grade;
+	}
+	public void setGrade(double grade) {
+		this.grade = grade;
+	}
 	private List<TeamMemberDto> teamMembers;
 	public long getId() {
 		return id;

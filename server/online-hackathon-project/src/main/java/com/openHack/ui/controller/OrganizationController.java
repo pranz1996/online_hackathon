@@ -78,6 +78,21 @@ public class OrganizationController {
 		return returnModel;
 	}
 	
+	// get any organization by name
+	@GetMapping(path = "/name")
+		public OrganizationDetailsResponseModel getOrganizationByName(@PathVariable String orgName) {
+			
+			// response model to send data to UI
+			OrganizationDetailsResponseModel returnModel = new OrganizationDetailsResponseModel();
+			
+			// Service method Call to get organization data based on id
+			OrganizationDto organizationDetails = organizationService.getOrganizationByName(orgName);
+			// transferring DTO object data to response model
+			BeanUtils.copyProperties(organizationDetails, returnModel);
+			
+			return returnModel;
+		}
+	
 	// update any organization
 	@PutMapping(path = "/{id}")
 	public OrganizationDetailsResponseModel updateOrganization(@PathVariable long id, @RequestBody OrganizationDetailsRequestModel organizationRequestModel) {

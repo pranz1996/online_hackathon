@@ -3,9 +3,14 @@ package com.openHack.ui.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openHack.service.TeamService;
 import com.openHack.shared.dto.TeamDto;
+import com.openHack.shared.dto.TeamsByJudgeDto;
 import com.openHack.ui.model.request.SubmissionDetailsRequestModel;
 import com.openHack.ui.model.request.TeamDetailsRequestModel;
+import com.openHack.ui.model.response.HackathonTeamsForJudgeResponseModel;
+import com.openHack.ui.model.response.OrganizationDetailsResponseModel;
 import com.openHack.ui.model.response.TeamDetailsResposeModel;
+
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -60,6 +65,23 @@ public class TeamController {
 
         return returnModel;
     }
+    
+    // get teams by user id
+    @GetMapping(path="getTeamsbyJudge/{id}")
+    public ArrayList<TeamsByJudgeDto> getTeamsbyJudge(@PathVariable long id) {
+
+        // response model to send data to UI
+    	HackathonTeamsForJudgeResponseModel returnModel = new HackathonTeamsForJudgeResponseModel();
+
+        // Service method Call to get team data based on id
+    	ArrayList<TeamsByJudgeDto> teamByJudge = teamService.getTeamByJudge(id);
+        
+        // transferring DTO object data to response model
+//        ObjectMapper mapper = new ObjectMapper();
+//        returnModel = mapper.convertValue(teamByJudge, HackathonTeamsForJudgeResponseModel.class);
+
+        return teamByJudge;
+    }
 
     // update any Team details
     @PutMapping(path="/{id}")
@@ -103,5 +125,12 @@ public class TeamController {
     	teamService.createPayment(id);
     	
     	return "successfully pay for the hackathon";
+    }
+    
+    // get teams by user id
+    @PostMapping(path="assignGrade/{id}")
+    public String assignGrade(@PathVariable long id, @RequestBody TeamDetailsRequestModel grade) {
+    	 teamService.gradeTeam(id, grade.getGrade());
+        return "Team has been graded";
     }
 }
