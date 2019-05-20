@@ -81,9 +81,9 @@ public class OrganizationJoinRequestController {
 	
 	// show all request from users to any organization
 	@GetMapping(path = "/getRequestsForMyOrganisation/{id}") 
-	public HashMap<Integer,ArrayList<UserDto>> hasJoinRequest(@PathVariable long id) {
+	public HashMap<String,ArrayList<UserDto>> hasJoinRequest(@PathVariable long id) {
 		// Service method Call to get All user details 
-		HashMap<Integer,ArrayList<UserDto>> returnValue = joinRequestService.getUsers(id);
+		HashMap<String,ArrayList<UserDto>> returnValue = joinRequestService.getUsers(id);
 		
 //		ArrayList<UserDetailsResponseModel> listOfUsers = new ArrayList<UserDetailsResponseModel>();
 //		UserDetailsResponseModel singleResponseModel;

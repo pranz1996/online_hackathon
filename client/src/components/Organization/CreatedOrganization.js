@@ -9,7 +9,7 @@ export default class CreatedOrganization extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      org_list: [],
+      org_list: {},
       successFlag: false,
       requestThrough: false,
       routeCreateOrg: false,
@@ -45,10 +45,16 @@ export default class CreatedOrganization extends Component {
     // axiox.get("http://localhost:8080/organizations/getCreatedOrganistions", { headers },
     // )
 
-    axios.get(`http://localhost:8080/organizations/getCreatedOrganizations/${localStorage.getItem('userId')}`, {
-      headers: { Authorization: localStorage.getItem('token')
-    }})
-    
+    axios
+      .get(
+        `http://localhost:8080/joinrequest/getRequestsForMyOrganisation/${localStorage.getItem(
+          "userId"
+        )}`,
+        {
+          headers: { Authorization: localStorage.getItem("token") }
+        }
+      )
+
       .then(response => {
         //resp = JSON.stringify(response);
 
@@ -56,10 +62,16 @@ export default class CreatedOrganization extends Component {
           org_list: response.data
         });
 
-        //alert("response " + response.data);
+        //lert("response " + response.data);
+        console.log("response : ", response.data);
 
-        this.state.org_list = this.state.property_list.concat(response.data);
-        //console.log("hi" + resp);
+        for (let k in response.data) {
+          console.log("Value : ", response.data[k][0]);
+        }
+        //this.state.org_list = this.state.property_list.concat(response.data);
+
+        this.state.org_list = response.data;
+        console.log("map " + this.state.org_list[13]);
       })
       .catch(function(error) {
         // handle error
@@ -110,7 +122,7 @@ export default class CreatedOrganization extends Component {
   requestFunc = item => {
     //h.preventDefault();
 
-    // console.log("submit: " + JSON.stringify(item));
+    console.log("submit: ");
     // var self = this;
     // var data = {
     //   user_id: item.user_id,
@@ -162,16 +174,38 @@ export default class CreatedOrganization extends Component {
 
     console.log("rend: " + this.state.org_list);
     var arr3 = Object.values(this.state.org_list);
-    console.log(arr3);
+    console.log(JSON.stringify(arr3));
     // console.log(this.state.property_list.length)
     var elements = [];
-    for (var i = 0; i < this.state.org_list.length; i++) {
-      var name = arr3[i].name;
-      // if (name.includes(this.state.searchKey)) {
-      elements.push(
-        <OrganizationCard key={i} props={arr3[i]} func={this.requestFunc} />
-      );
-      // }
+    // for (var i = 0; i < this.state.org_list.length; i++) {
+    //   //var name = arr3[i].name;
+    //   // if (name.includes(this.state.searchKey)) {
+
+    //   // for (var j = 0; j < this.state.org_list[i].length; i++) {
+    //   //   elements.push(
+    //   //     <OrganizationCard
+    //   //       key={j}
+    //   //       props={arr3[i][j]}
+    //   //       func={this.requestFunc}
+    //   //     />
+    //   //   );
+    //   // }
+    //   elements.push(
+    //     <OrganizationCard key={i} props={arr3[i]} func={this.requestFunc} />
+    //   );
+    // }
+
+    //response.data[k][0]
+    for (let k in this.state.org_list) {
+      for (var j = 0; j < this.state.org_list[k].length; j++) {
+        elements.push(
+          <OrganizationCard
+            k={k}
+            props={this.state.org_list[k][j]}
+            func={this.requestFunc}
+          />
+        );
+      }
     }
 
     var page = null;
@@ -185,10 +219,8 @@ export default class CreatedOrganization extends Component {
       );
     } else {
       page = (
-        <div class="organization-main-div">
-          {elements}
-        </div>
-       
+        <div class="organization-main-div">{elements}</div>
+
         // <div class="organization-main-div">
         //   {CreateOrg}
         //   <div class="organization-panel">
@@ -230,7 +262,6 @@ export default class CreatedOrganization extends Component {
         //     {elements}
         //   </form>
         // </div>
-      
       );
     }
 

@@ -13,5 +13,5 @@ public interface JoinRequestService {
 	void createRequest(JoinRequestDto joinRequestDto);
 	void acceptRequest(JoinRequestDto joinRequestDto);
 	List<OrganizationEntity> getOrganizations(long id);
-	HashMap<Integer,ArrayList<UserDto>> getUsers(long id);
+	HashMap<String,ArrayList<UserDto>> getUsers(long id);
 }
