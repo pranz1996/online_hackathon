@@ -15,14 +15,8 @@ public class HackathonDto {
 	private String maxTeamSize;
 	private String createdBy;
 	private String status;
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
+	
 	private boolean hackatonWinner = false;
-	private String status;
 	private List<UserEntity> judges;
 	public long getId() {
 		return id;
