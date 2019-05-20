@@ -9,6 +9,7 @@ import com.openHack.shared.dto.OrganizationDto;
 public interface OrganizationService {
 	JsonObject createOrganization(OrganizationDto organizationDto);
 	OrganizationDto getOrganizationById(long id);
+	OrganizationDto getOrganizationByName(String name);
 	OrganizationDto updateOrganization(long id, OrganizationDto organizationDto);
 	ArrayList<OrganizationDto> getAllOrganisations();
 	OrganizationDto getMyOrganisations(long id);

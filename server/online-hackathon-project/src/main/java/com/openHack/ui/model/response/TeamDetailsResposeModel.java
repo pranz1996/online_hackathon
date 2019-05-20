@@ -6,14 +6,20 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TeamDetailsResposeModel {
-	
 	private long id;
 	private long hackathonId;
 	private String teamName;
 	private String teamSize;
 	private long userId;
 	private String submissionLink;
+	private double grade;
 	
+	public double getGrade() {
+		return grade;
+	}
+	public void setGrade(double grade) {
+		this.grade = grade;
+	}
 	private List<TeamMemberDetailsResposeModel> teamMembers;
 	public long getId() {
 		return id;

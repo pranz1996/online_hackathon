@@ -29,9 +29,19 @@ public class TeamEntity implements Serializable{
 	
 	private String submissionLink;
 	
+	public double getGrade() {
+		return grade;
+	}
+
+	public void setGrade(double grade) {
+		this.grade = grade;
+	}
+
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "teamId")
 	private List<TeamMemberEntity> teamMembers;
+	
+	private double grade;
 
 //	@OneToMany(mappedBy = "team_id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //	private List<SubmissionEntity> hackathonAssociate;

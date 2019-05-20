@@ -3,14 +3,20 @@ package com.openHack.ui.model.request;
 import java.util.List;
 
 public class TeamDetailsRequestModel {
-	
 	private long hackathonId;
 	private String teamName;
 	private String teamSize;
 	private long userId;
 	private String submissionLink = null;
 	private List<TeamMemberDetailsRequestModel> teamMembers;
+	private double grade;
 	
+	public double getGrade() {
+		return grade;
+	}
+	public void setGrade(double grade) {
+		this.grade = grade;
+	}
 	public long getHackathonId() {
 		return hackathonId;
 	}

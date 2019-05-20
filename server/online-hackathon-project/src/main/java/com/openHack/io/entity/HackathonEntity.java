@@ -53,8 +53,17 @@ public class HackathonEntity implements Serializable{
 	@Column(nullable = false)
 	private String createdBy;
 	
+	@Column
 	private String status;
 	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	@ManyToMany(fetch = FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
 	@JoinTable(name="judges", joinColumns = @JoinColumn(name="hackathon_id"), inverseJoinColumns = @JoinColumn(name="judge_id"))
 	private List<UserEntity> judges;
@@ -148,6 +157,8 @@ public class HackathonEntity implements Serializable{
 		this.hackatonWinner = hackatonWinner;
 	}
 	
+	
+	
 //	public List<SubmissionEntity> getTeamAssociate() {
 //		return teamAssociate;
 //	}
@@ -162,14 +173,6 @@ public class HackathonEntity implements Serializable{
 //		teamAssociate.add(submission);
 //	}
 	
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
 	public String getCreatedBy() {
 		return createdBy;
 	}

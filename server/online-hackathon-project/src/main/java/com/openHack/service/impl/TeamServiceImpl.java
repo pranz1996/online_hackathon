@@ -1,16 +1,20 @@
 package com.openHack.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.openHack.io.entity.HackathonEntity;
 import com.openHack.io.entity.TeamEntity;
 import com.openHack.io.entity.TeamMemberEntity;
+import com.openHack.io.repository.HackathonRepository;
 import com.openHack.io.repository.TeamMemberRepository;
 import com.openHack.io.repository.TeamRepository;
 import com.openHack.service.TeamService;
 import com.openHack.shared.dto.TeamDto;
 import com.openHack.shared.dto.TeamMemberDto;
+import com.openHack.shared.dto.TeamsByJudgeDto;
 import com.openHack.ui.model.request.SubmissionDetailsRequestModel;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -25,6 +29,9 @@ public class TeamServiceImpl implements TeamService {
 	
 	@Autowired
 	TeamMemberRepository teamMemberRepository;
+	
+	@Autowired
+	HackathonRepository hackathonRepository;
 
 	// service method to store team details
 	@Override
@@ -139,6 +146,59 @@ public class TeamServiceImpl implements TeamService {
 		
 		// Saving the updated TeamMebmer Details
 		teamMemberRepository.save(teamMemberEntity);
+	}
+
+    //judges user id
+	@Override
+	public ArrayList<TeamsByJudgeDto> getTeamByJudge(long id) 
+	{
+		//things we need
+		//teamName, submissionLink, hackathonStatus, hackathonName
+		ArrayList<TeamsByJudgeDto> responseDtoArray = new ArrayList<TeamsByJudgeDto>();
+		TeamsByJudgeDto responseDto;
+		ArrayList<Long> hackthon_ids = new ArrayList<Long>();
+		HackathonEntity hackEnt;
+		ArrayList<TeamEntity> teamEntities;
+		ArrayList<String> teamWithSubmissionLinks;
+		
+		hackthon_ids = hackathonRepository.getHackathonIds(id);
+		
+		Iterator it = hackthon_ids.iterator();
+		
+		while(it.hasNext())
+		{
+			responseDto = new TeamsByJudgeDto();
+			hackEnt = new HackathonEntity();
+			hackEnt = hackathonRepository.findById(((Long) it.next()).longValue());
+			responseDto.setHackathonName(hackEnt.getEventName());
+			responseDto.setHackathonStatus(hackEnt.getStatus());
+			teamEntities = new ArrayList<TeamEntity>();
+			teamEntities = teamRepository.getTeamsByHackathonId(hackEnt.getId());
+			
+			teamWithSubmissionLinks = new ArrayList<String>();
+			for (TeamEntity element : teamEntities) 
+			{
+				String val = element.getTeamName() + " ";
+				if (element.getSubmissionLink() != null)
+				{
+					val = val + element.getSubmissionLink();
+				}
+				else
+				{
+					val = val + "No-submission";
+				}
+				teamWithSubmissionLinks.add(val);
+			}		
+			responseDto.setTeamWithSubmissionLinks(teamWithSubmissionLinks);
+			responseDtoArray.add(responseDto);
+		}
+		return responseDtoArray;
+	}
+
+
+	@Override
+	public void gradeTeam(long id, double grade) {
+		teamRepository.gradeTeam(grade, id);
 	}
 
 }
