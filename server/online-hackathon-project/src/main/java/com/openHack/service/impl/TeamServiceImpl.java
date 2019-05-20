@@ -11,6 +11,7 @@ import com.openHack.service.TeamService;
 import com.openHack.shared.dto.TeamDto;
 import com.openHack.shared.dto.TeamMemberDto;
 import com.openHack.shared.dto.TeamsByJudgeDto;
+import com.openHack.ui.model.request.GradeTeamsRequestModel;
 import com.openHack.ui.model.request.SubmissionDetailsRequestModel;
 
 import java.util.ArrayList;
@@ -199,6 +200,15 @@ public class TeamServiceImpl implements TeamService {
 	@Override
 	public void gradeTeam(long id, double grade) {
 		teamRepository.gradeTeam(grade, id);
+	}
+
+
+	@Override
+	public void gradeTeamWithName(GradeTeamsRequestModel gradeTeam) {
+		HackathonEntity hackEnt = new HackathonEntity();
+		hackEnt = hackathonRepository.findByEventName(gradeTeam.getHackathonName());
+		
+		teamRepository.gradeTeam(gradeTeam.getGrade(), gradeTeam.getTeamName(),hackEnt.getId());
 	}
 
 }

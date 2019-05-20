@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.openHack.shared.dto.TeamDto;
 import com.openHack.shared.dto.TeamsByJudgeDto;
+import com.openHack.ui.model.request.GradeTeamsRequestModel;
 import com.openHack.ui.model.request.SubmissionDetailsRequestModel;
 
 public interface TeamService {
@@ -14,4 +15,5 @@ public interface TeamService {
 	void createSubmission(long id, SubmissionDetailsRequestModel submission);
 	void createPayment(long id);
 	void gradeTeam(long id, double grade);
+	void gradeTeamWithName(GradeTeamsRequestModel gradeTeam);
 }

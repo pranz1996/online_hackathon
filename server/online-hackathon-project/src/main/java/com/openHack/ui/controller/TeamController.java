@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openHack.service.TeamService;
 import com.openHack.shared.dto.TeamDto;
 import com.openHack.shared.dto.TeamsByJudgeDto;
+import com.openHack.ui.model.request.GradeTeamsRequestModel;
 import com.openHack.ui.model.request.SubmissionDetailsRequestModel;
 import com.openHack.ui.model.request.TeamDetailsRequestModel;
 import com.openHack.ui.model.response.HackathonTeamsForJudgeResponseModel;
@@ -127,10 +128,16 @@ public class TeamController {
     	return "successfully pay for the hackathon";
     }
     
-    // get teams by user id
     @PostMapping(path="assignGrade/{id}")
     public String assignGrade(@PathVariable long id, @RequestBody TeamDetailsRequestModel grade) {
     	 teamService.gradeTeam(id, grade.getGrade());
         return "Team has been graded";
+    }
+    
+   
+    @PostMapping(path="gradeTeamsWithNames")
+    public String assignGrade(@RequestBody GradeTeamsRequestModel gradeTeam) {
+    	 teamService.gradeTeamWithName(gradeTeam);
+        return "Team for given name and hackathon has been graded";
     }
 }
