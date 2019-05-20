@@ -94,8 +94,8 @@ public class JoinRequestServiceImpl implements JoinRequestService{
 	// show all request from users to any organization
 	// Get all the Users, by organization to check the request 
 	@Override
-	public HashMap<Integer,ArrayList<UserDto>> getUsers(long id) {
-		HashMap<Integer,ArrayList<UserDto>> requestsForOrg =new HashMap<Integer,ArrayList<UserDto>>();
+	public HashMap<String,ArrayList<UserDto>> getUsers(long id) {
+		HashMap<String,ArrayList<UserDto>> requestsForOrg =new HashMap<String,ArrayList<UserDto>>();
 		
 		ArrayList<OrganizationEntity> userOrganisations = new ArrayList<OrganizationEntity>(); 
 		OrganizationEntity singleOrganisation = new OrganizationEntity(); 
@@ -128,7 +128,7 @@ public class JoinRequestServiceImpl implements JoinRequestService{
 			}
 			
 			//add value to org key
-			requestsForOrg.put((int)singleOrganisation.getId(),allUserDtos);
+			requestsForOrg.put(singleOrganisation.getName(),allUserDtos);
 		}
 		// return all the users from join table
 		return requestsForOrg;

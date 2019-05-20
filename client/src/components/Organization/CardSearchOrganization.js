@@ -12,7 +12,8 @@ export default class SearchOrganization extends Component {
       orgDescription: "",
       ordID: "",
       userID: "",
-      successFlag: false
+      successFlag: false,
+      sent: false
     };
   }
 
@@ -24,6 +25,7 @@ export default class SearchOrganization extends Component {
       organization_id: this.props.props.id
     };
     this.props.func(item);
+    this.state.sent = true;
   };
 
   componentDidMount() {
@@ -36,7 +38,12 @@ export default class SearchOrganization extends Component {
     return (
       <div>
         <div class="form-group">
-          <div class="card">
+          <div
+            class="card"
+            style={{
+              display: this.state.sent === true ? "none" : "block"
+            }}
+          >
             <div class="card-body">
               <h6 class="card-title">
                 {" "}
