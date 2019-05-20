@@ -20,15 +20,15 @@ export default class SearchOrganization extends Component {
     //h.preventDefault();
 
     var item = {
-      user_id: 5,
-      organization_id: 1
+      user_id: localStorage.getItem("userId"),
+      organization_id: this.props.props.id
     };
     this.props.func(item);
   };
 
   componentDidMount() {
     // alert(this.props.props.id);
-    // alert("local: " + localStorage.getItem("email"));
+    // alert("local: " + localStorage.getItem("userId"));
     //this.state.orgID:
   }
 

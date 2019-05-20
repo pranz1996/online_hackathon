@@ -132,10 +132,10 @@ export default class SearchOrganization extends Component {
           requestThrough: true
         });
 
-        //alert("response " + response.data);
+        alert("response " + response.data);
 
         this.state.requestThrough = true;
-        //console.log("hi" + resp);
+        console.log("response " + response.data);
       })
       .catch(function(error) {
         // handle error
