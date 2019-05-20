@@ -1,6 +1,7 @@
 package com.openHack.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.json.Json;
@@ -217,4 +218,26 @@ public class OrganizationServiceImpl implements OrganizationService {
 		return returnValue;
 	}
 
+	@Override
+	public HashMap<String, ArrayList<UserEntity>> getOrganisationRequests(long id) {
+		HashMap<String, ArrayList<UserEntity>> results = new HashMap<String, ArrayList<UserEntity>>();
+		ArrayList<OrganizationEntity> orgs = new ArrayList<OrganizationEntity>();
+		ArrayList<UserEntity> users;
+		ArrayList<Integer> userIds;  
+		
+		orgs = organizationRepository.findByOwnerId(id);
+		
+		for(OrganizationEntity org : orgs)
+		{
+			userIds = organizationRepository.getUserIds(org.getId());
+			users = new ArrayList<UserEntity>();
+			for(long userid : userIds)
+			{
+				users.add(userRepository.findById(userid));
+			}
+			
+			results.put(org.getName(),users);
+		}
+		return results;
+	}
 }

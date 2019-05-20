@@ -1,6 +1,7 @@
 package com.openHack.ui.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -23,6 +24,7 @@ import com.openHack.service.OrganizationService;
 import com.openHack.shared.dto.DenyRequestDto;
 import com.openHack.shared.dto.HackathonDto;
 import com.openHack.shared.dto.OrganizationDto;
+import com.openHack.shared.dto.UserDto;
 import com.openHack.ui.model.request.JoinRequestDetailsModel;
 import com.openHack.ui.model.request.OrganizationDetailsRequestModel;
 import com.openHack.ui.model.response.HackathonDetailsResposeModel;
@@ -177,5 +179,29 @@ public class OrganizationController {
 	{					
 		organizationService.leaveOrganisation(id);
 		return "successfully left organisation";
+	}
+	
+	// get all the users that sent request to organisation that this user is a owner of
+	@GetMapping(path = "/getOrganisationRequests/{id}")
+	public HashMap<String, ArrayList<UserDto>> getOrganisationRequests(@PathVariable long id) 
+	{
+		HashMap<String, ArrayList<UserEntity>> retrunedResults;
+		HashMap<String, ArrayList<UserDto>> results = new HashMap<String, ArrayList<UserDto>>();
+		ArrayList<UserDto> userDtos;
+		retrunedResults = organizationService.getOrganisationRequests(id);
+		
+		for (Map.Entry<String, ArrayList<UserEntity>> entry : retrunedResults.entrySet()) {
+		    String key = entry.getKey();
+		    ArrayList<UserEntity> value = (ArrayList<UserEntity>) entry.getValue();
+		    userDtos = new ArrayList<UserDto>(); 
+		    UserDto userDto = new UserDto();
+		    for(UserEntity user: value)
+		    {
+		    	BeanUtils.copyProperties(user, userDto);
+		    	userDtos.add(userDto);
+		    }
+		    results.put(key, userDtos);
+		}
+		return results;
 	}
 }

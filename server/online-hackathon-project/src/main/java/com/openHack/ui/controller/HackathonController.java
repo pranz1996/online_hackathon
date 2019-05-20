@@ -22,10 +22,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.openHack.io.entity.HackathonEntity;
 import com.openHack.service.HackathonService;
 import com.openHack.shared.dto.HackathonDto;
+import com.openHack.shared.dto.HackathonResultsDto;
 import com.openHack.ui.model.request.HackathonDetailsRequestModel;
 import com.openHack.ui.model.request.JoinRequestDetailsModel;
 import com.openHack.ui.model.response.HackathonDetailsResposeModel;
 import com.openHack.ui.model.response.UserDetailsResponseModel;
+import com.openHack.ui.model.response.hackathonResultsResponseModel;
 
 
 @RestController
@@ -140,6 +142,16 @@ public class HackathonController {
 		returnModel = mapper.map(hackathonDetails, HackathonDetailsResposeModel.class);
 				
 		return returnModel;
+		
+	}
+	
+	@GetMapping(path="hackathonResults/{name}")
+	public HackathonResultsDto getHackathonResults(@PathVariable String name) {
+		
+		HackathonResultsDto results = new HackathonResultsDto();
+				
+		
+		return results;
 		
 	}
 	
