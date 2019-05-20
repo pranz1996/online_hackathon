@@ -1,6 +1,7 @@
 package com.openHack.ui.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -80,22 +81,22 @@ public class OrganizationJoinRequestController {
 	
 	// show all request from users to any organization
 	@GetMapping(path = "/getRequestsForMyOrganisation/{id}") 
-	public ArrayList<UserDetailsResponseModel> hasJoinRequest(@PathVariable long id) {
+	public HashMap<Integer,ArrayList<UserDto>> hasJoinRequest(@PathVariable long id) {
 		// Service method Call to get All user details 
-		ArrayList<UserDto> returnValue = joinRequestService.getUsers(id);
+		HashMap<Integer,ArrayList<UserDto>> returnValue = joinRequestService.getUsers(id);
 		
-		ArrayList<UserDetailsResponseModel> listOfUsers = new ArrayList<UserDetailsResponseModel>();
-		UserDetailsResponseModel singleResponseModel;
-			
-		Iterator dtoIterator = returnValue.iterator(); 
-			
-		while(dtoIterator.hasNext())
-		{
-			singleResponseModel = new UserDetailsResponseModel();
-			BeanUtils.copyProperties(dtoIterator.next(), singleResponseModel);
-			listOfUsers.add(singleResponseModel);
-		}
-		return listOfUsers;
+//		ArrayList<UserDetailsResponseModel> listOfUsers = new ArrayList<UserDetailsResponseModel>();
+//		UserDetailsResponseModel singleResponseModel;
+//			
+//		Iterator dtoIterator = returnValue.iterator(); 
+//			
+//		while(dtoIterator.hasNext())
+//		{
+//			singleResponseModel = new UserDetailsResponseModel();
+//			BeanUtils.copyProperties(dtoIterator.next(), singleResponseModel);
+//			listOfUsers.add(singleResponseModel);
+//		}
+		return returnValue;
 	}
 	
 	// join request deny by any organization

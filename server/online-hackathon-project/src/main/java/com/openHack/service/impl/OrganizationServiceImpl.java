@@ -3,6 +3,9 @@ package com.openHack.service.impl;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +33,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	
 	// service method to store organization object to database
 	@Override
-	public OrganizationDto createOrganization(OrganizationDto organizationDto) {
+	public JsonObject createOrganization(OrganizationDto organizationDto) {
 		
 		// Converting DTO object to Entity object
 		OrganizationEntity organizationEntity = new OrganizationEntity();
@@ -53,16 +56,38 @@ public class OrganizationServiceImpl implements OrganizationService {
 			//throw new RuntimeException("User is owner of any other organization ... ");
 		
 		// Setting Owner
-		UserEntity userEntity = userRepository.findById(organizationDto.getUserEntity().getId());
-		organizationEntity.setUserEntity(userEntity);
-
-		// Repository method (save) to save OrganizationEntity object to table organizations
-		OrganizationEntity savedOrganization = organizationRepository.save(organizationEntity);
-					
-		OrganizationDto returnValue = new OrganizationDto();
-		BeanUtils.copyProperties(savedOrganization, returnValue);
 		
-		return returnValue;
+		System.out.println(organizationDto);
+		
+		System.out.println(" Demo ");
+		
+		System.out.println(" The owner id: " + organizationDto.getUserEntity());
+		
+		System.out.println(" demo done ... ");
+		
+		UserEntity userEntity = userRepository.findById(organizationDto.getUserEntity().getId());
+		organizationEntity.setUserEnity(userEntity);
+		
+		System.out.println(" Before saving : " + organizationEntity);
+		
+		System.out.println("Good or not ... ");
+		
+		
+		// saving UserEnity, which automatically save OrganizationEnity
+		OrganizationEntity savedOrganization = organizationRepository.save(organizationEntity);
+		
+		JsonObject object = null;
+		
+		if(savedOrganization != null) {
+			object = Json.createObjectBuilder()
+					.add("status", 200).build();
+		} else {
+			object = Json.createObjectBuilder()
+					.add("status", 400).build();
+		}
+		
+		
+		return object;
 	}
 	
 	// Service method to get any organization based on it's id(primary key)
@@ -154,6 +179,28 @@ public class OrganizationServiceImpl implements OrganizationService {
 	{		
 	 //remove entry from organization_join_request table
 		organizationRepository.leaveOrg(id);
+	}
+
+	@Override
+	public ArrayList<OrganizationDto> getCreatedOrganisations(long id) {
+		
+		ArrayList<OrganizationEntity> allOrganisationsEntity = new ArrayList<OrganizationEntity>();
+		ArrayList<OrganizationDto> allOrganisationsDto = new ArrayList<OrganizationDto>();
+		OrganizationDto singleOrganisationDto;
+		
+		allOrganisationsEntity = (ArrayList<OrganizationEntity>) organizationRepository.findByOwnerId(id);
+		
+		System.out.println(" what is my response : " + allOrganisationsEntity);
+		
+		Iterator iterator = allOrganisationsEntity.iterator(); 
+		
+		while(iterator.hasNext())
+		{
+			singleOrganisationDto = new OrganizationDto();
+			BeanUtils.copyProperties(iterator.next(), singleOrganisationDto);
+			allOrganisationsDto.add(singleOrganisationDto);
+		}
+		return allOrganisationsDto;
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.openHack.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -93,7 +94,9 @@ public class JoinRequestServiceImpl implements JoinRequestService{
 	// show all request from users to any organization
 	// Get all the Users, by organization to check the request 
 	@Override
-	public ArrayList<UserDto> getUsers(long id) {
+	public HashMap<Integer,ArrayList<UserDto>> getUsers(long id) {
+		HashMap<Integer,ArrayList<UserDto>> requestsForOrg =new HashMap<Integer,ArrayList<UserDto>>();
+		
 		ArrayList<OrganizationEntity> userOrganisations = new ArrayList<OrganizationEntity>(); 
 		OrganizationEntity singleOrganisation = new OrganizationEntity(); 
 		
@@ -123,9 +126,12 @@ public class JoinRequestServiceImpl implements JoinRequestService{
 					allUserDtos.add(singleUserDto);
 				}
 			}
+			
+			//add value to org key
+			requestsForOrg.put((int)singleOrganisation.getId(),allUserDtos);
 		}
 		// return all the users from join table
-		return allUserDtos;
+		return requestsForOrg;
 	}
 	
 }

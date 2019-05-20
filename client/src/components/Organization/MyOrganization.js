@@ -11,7 +11,8 @@ export default class MyOrganization extends Component {
       email: "",
       organization: "",
       hasOrganization: false,
-      successFlag: false
+      successFlag: false,
+      orgId: ""
     };
 
     this.eventNameHandler = this.eventNameHandler.bind(this);
@@ -75,6 +76,9 @@ export default class MyOrganization extends Component {
       })
       .catch(function(error) {
         // handle error
+        self.setState({
+          hasOrganization: false
+        });
         console.log("error: " + error);
         alert("error: " + error);
       });
@@ -113,7 +117,7 @@ export default class MyOrganization extends Component {
   };
 
   submitHandler = h => {
-    h.preventDefault();
+    //h.preventDefault();
 
     alert("hi");
 
@@ -135,6 +139,10 @@ export default class MyOrganization extends Component {
             successFlag: true
           });
 
+          this.state.successFlag = true;
+
+          window.location.reload();
+
           alert("Left");
           console.log("Left");
         }
@@ -153,8 +161,8 @@ export default class MyOrganization extends Component {
       );
     }
 
-    let orgUI = null;
-    if (this.state.hasOrganization) {
+    let orgUI;
+    if (this.state.hasOrganization === "") {
       orgUI = (
         <div>
           <h3 class="card-title">
@@ -208,18 +216,26 @@ export default class MyOrganization extends Component {
                     <div class="card">
                       <div class="card-body">
                         <div>
-                          <h3 class="card-title">
-                            Organization Name: {this.state.organization}
+                          <h5 class="card-title">
+                            Organization Name: <br />
+                            <br />
+                            {this.state.organization === ""
+                              ? "You are currently not enrolled in a Organization"
+                              : this.state.organization}
                             <span class="tab" />
-                          </h3>
+                          </h5>
                           {/* <h6 class="card-subtitle mb-2 text-muted"> Subtitle</h6>
           <p class="card-text">something</p> */}
 
-                          {console.log("jhgj")}
                           <button
                             type="submit"
                             class="btn btn-danger btn-lg btn-block"
-                            //onclick={this.leaveHandler}
+                            style={{
+                              display:
+                                this.state.organization === ""
+                                  ? "none"
+                                  : "block"
+                            }}
                           >
                             Leave
                           </button>

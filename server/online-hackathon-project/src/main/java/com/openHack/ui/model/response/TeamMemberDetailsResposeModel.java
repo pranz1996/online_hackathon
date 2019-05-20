@@ -2,7 +2,7 @@ package com.openHack.ui.model.response;
 
 public class TeamMemberDetailsResposeModel {
 	private long id;
-	private String userId;
+	private long userId;
 	private String role;
 	private boolean paid;
 	public long getId() {
@@ -11,10 +11,10 @@ public class TeamMemberDetailsResposeModel {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public String getUserId() {
+	public long getUserId() {
 		return userId;
 	}
-	public void setUserId(String userId) {
+	public void setUserId(long userId) {
 		this.userId = userId;
 	}
 	public String getRole() {

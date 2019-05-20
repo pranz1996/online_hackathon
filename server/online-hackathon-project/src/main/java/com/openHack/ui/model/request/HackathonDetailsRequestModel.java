@@ -94,6 +94,5 @@ public class HackathonDetailsRequestModel {
 				+ ", maxTeamSize=" + maxTeamSize + ", createdBy=" + createdBy + ", hackatonWinner=" + hackatonWinner
 				+ ", judges=" + judges + "]";
 	}
-	
-	
+		
 }

@@ -1,6 +1,7 @@
 package com.openHack.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.openHack.io.entity.OrganizationEntity;
@@ -12,5 +13,5 @@ public interface JoinRequestService {
 	void createRequest(JoinRequestDto joinRequestDto);
 	void acceptRequest(JoinRequestDto joinRequestDto);
 	List<OrganizationEntity> getOrganizations(long id);
-	ArrayList<UserDto> getUsers(long id);
+	HashMap<Integer,ArrayList<UserDto>> getUsers(long id);
 }

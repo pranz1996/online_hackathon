@@ -15,12 +15,13 @@ export default class Header extends Component {
   logoutHandler = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
+    localStorage.removeItem("email");
+    localStorage.removeItem("isAdmin");
+    localStorage.removeItem("username");
   };
 
   render() {
     const openhacklogo = require("../Miscellanous/openhack.png");
-    // var email = localStorage.email;
-    // var check = email.includes("sjsu");
     return (
       <div>
         <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
@@ -48,11 +49,11 @@ export default class Header extends Component {
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-              <li class="nav-item active">
+              {/* <li class="nav-item active">
                 <a class="nav-link" href="/user">
                   Profile <span class="sr-only">(current)</span>
                 </a>
-              </li>
+              </li> */}
               <li class="nav-item dropdown">
                 <a
                   class="nav-link dropdown-toggle"
@@ -73,11 +74,7 @@ export default class Header extends Component {
                     Search Hackathons
                   </a>
                   <div class="dropdown-divider" />
-                  <a
-                    class="dropdown-item"
-                    href="/createHackathon"
-                    // style={{ display: check == "false" ? "none" : "block" }}
-                  >
+                  <a class="dropdown-item" href="#">
                     Create Hackathons
                   </a>
                 </div>
@@ -95,15 +92,17 @@ export default class Header extends Component {
                   Organizations
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="/myOrganization">
+                  <a class="dropdown-item" href="/createdOrganization">
                     Manage My Organization
                   </a>
-                  <a class="dropdown-item" href="/searchOrganization">
-                    Join Organization
-                  </a>
+
                   <div class="dropdown-divider" />
+
+                  <a class="dropdown-item" href="/searchOrganization">
+                    Join any Organization
+                  </a>
                   <a class="dropdown-item" href="/createOrganization">
-                    Create Organizations
+                    Create an Organization
                   </a>
                 </div>
               </li>
@@ -112,14 +111,33 @@ export default class Header extends Component {
                   Teams
                 </a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item dropdown">
                 <a
-                  class="nav-link"
-                  href="/landingpage"
-                  onClick={this.logoutHandler}
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="navbarDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
                 >
-                  Logout{" "}
+                  Account
                 </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="/profile">
+                    Profile
+                  </a>
+                  <a class="dropdown-item" href="/myOrganization">
+                    Organization
+                  </a>
+                  <a
+                    class="dropdown-item"
+                    href="/landingpage"
+                    onClick={this.logoutHandler}
+                  >
+                    Logout
+                  </a>
+                </div>
               </li>
             </ul>
           </div>

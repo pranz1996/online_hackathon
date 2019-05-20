@@ -17,8 +17,16 @@ public class TeamMemberEntity implements Serializable{
 	private long id;
 	
 	@Column(nullable = false)
-	private String userId;
+	private long userId;
 	
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
 	@Column(nullable = false) 
 	private String role;
 
@@ -31,14 +39,6 @@ public class TeamMemberEntity implements Serializable{
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
 	}
 
 	public String getRole() {

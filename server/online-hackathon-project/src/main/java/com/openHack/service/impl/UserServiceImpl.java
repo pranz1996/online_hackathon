@@ -35,6 +35,7 @@ public class UserServiceImpl implements UserService{
 	// service method to store user object to database
 	public UserDto createUser(UserDto userDto) {
 		
+
 		// check for Admin or not -> email ends with @sjsu.edu 
 		String email = userDto.getEmail();
 		if(email.endsWith("@sjsu.edu"))
@@ -129,6 +130,8 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public JsonObject loginUser(UserLoginRequestModel userLoginRequestModel) {
 		
+		System.out.println(" The check for signup - " + userLoginRequestModel.toString());
+	
 		// check for Admin or not -> email ends with @sjsu.edu 
 		
 		
@@ -155,14 +158,20 @@ public class UserServiceImpl implements UserService{
 			
 			object =Json.createObjectBuilder().add("token", token)
 					.add("status", 200)
-					.add("user", user.getId())
+					.add("id", user.getId())
 					.add("email", user.getEmail())
-					.add("admin", user.isAdminCheck()).build();
+					.add("admin", user.isAdminCheck())
+					.add("username", user.getUserName()).build();
+			
+		
 			
 			System.out.println("object " + object);
 		}
 		
 		else {
+			
+			System.out.println(" Not a valid user ... ");
+			
 			object =Json.createObjectBuilder()
 					.add("status", 400).build();
 		}

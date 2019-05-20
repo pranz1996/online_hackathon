@@ -90,7 +90,6 @@ public class TeamEntity implements Serializable{
 		teamMembers.add(teamMember);
 	}
 	
-	
 //	public List<SubmissionEntity> getHackathonAssociate() {
 //		return hackathonAssociate;
 //	}

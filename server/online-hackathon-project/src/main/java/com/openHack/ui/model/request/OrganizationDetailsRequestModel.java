@@ -1,13 +1,14 @@
 package com.openHack.ui.model.request;
 
 import com.openHack.embeddedEntity.Address;
+import com.openHack.io.entity.UserEntity;
 
 
 public class OrganizationDetailsRequestModel {
 	private String name;
-	private long ownerId;
 	private String description;
 	private Address address;
+	private long ownerId;
 	
 	public String getName() {
 		return name;
@@ -15,6 +16,7 @@ public class OrganizationDetailsRequestModel {
 	public void setName(String name) {
 		this.name = name.toLowerCase();
 	}
+			
 	public long getOwnerId() {
 		return ownerId;
 	}
@@ -33,12 +35,10 @@ public class OrganizationDetailsRequestModel {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
-
 	@Override
 	public String toString() {
-		return "OrganizationDetailsRequestModel [name=" + name + ", ownerId=" + ownerId + ", description=" + description
-				+ ", address=" + address + "]";
+		return "OrganizationDetailsRequestModel [name=" + name + ", description=" + description + ", address=" + address
+				+ ", ownerId=" + ownerId + "]";
 	}
 	
-
 }

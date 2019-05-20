@@ -76,6 +76,8 @@ export default class Login extends Component {
         localStorage.setItem("email", response.data.email);
         localStorage.setItem("isAdmin", response.data.admin)
         localStorage.setItem("username", response.data.username)
+        localStorage.setItem("isAdmin", response.data.admin);
+        localStorage.setItem("username", response.data.username);
 
         this.setState({
           successFlag: true,
@@ -124,6 +126,7 @@ export default class Login extends Component {
     let redirectVar = null;
     if (this.state.successFlag && !this.state.isAdmin) {
       redirectVar = <Redirect to='/searchOrganization' />;
+      redirectVar = <Redirect to="/searchOrganization" />;
     } else if (this.state.successFlag && this.state.isAdmin) {
       redirectVar = <Redirect to="/createHackathon" />;
     }
