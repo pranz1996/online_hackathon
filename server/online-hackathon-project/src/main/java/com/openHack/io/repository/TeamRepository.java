@@ -30,5 +30,10 @@ public interface TeamRepository extends CrudRepository<TeamEntity, Long>{
 	@Transactional
 	@Query(value="Update teams set grade=?1 where team_name like ?2 and hackathon_id=?3", nativeQuery = true)
 	void gradeTeam(double grade, String teamName, long hackathonId);
-
+	
+	@Query(value="SELECT * FROM teams where hackathon_id =?1 order by grade desc limit 3", nativeQuery = true)
+	ArrayList<TeamEntity> getWinnerTeamsByHackathonId(long id);
+	
+	@Query(value="SELECT * FROM teams where hackathon_id =?1 order by grade desc limit 3, 9518676", nativeQuery = true)
+	ArrayList<TeamEntity> getParticipantTeamsByHackathonId(long id);
 }
