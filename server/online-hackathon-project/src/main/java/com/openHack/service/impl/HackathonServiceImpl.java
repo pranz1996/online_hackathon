@@ -1,19 +1,17 @@
 package com.openHack.service.impl;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-
-import org.apache.catalina.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.openHack.io.entity.HackathonEntity;
+import com.openHack.io.entity.TeamEntity;
 import com.openHack.io.entity.TeamMemberEntity;
 import com.openHack.io.entity.UserEntity;
 import com.openHack.io.repository.HackathonRepository;
@@ -22,6 +20,8 @@ import com.openHack.io.repository.TeamRepository;
 import com.openHack.io.repository.UserRepository;
 import com.openHack.service.HackathonService;
 import com.openHack.shared.dto.HackathonDto;
+import com.openHack.shared.dto.HackathonResultsDto;
+import com.openHack.shared.dto.UserDto;
 
 @Service
 public class HackathonServiceImpl implements HackathonService {
@@ -34,6 +34,9 @@ public class HackathonServiceImpl implements HackathonService {
 	
 	@Autowired
 	TeamMemberRepository teamMemberRepository;
+	
+	@Autowired
+	TeamRepository teamRepository;
 	
 	// Service method store hackathon object to database
 	@Override
