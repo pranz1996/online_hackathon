@@ -62,15 +62,16 @@ export default class Login extends Component {
 
     // axios.defaults.withCredentials = true
     axios.post("http://localhost:8080/users/login", data).then(response => {
-      console.log(" final response " + JSON.stringify(response));
+      console.log(" response " + JSON.stringify(response));
+      console.log(" response status " + response.data.status);
+      console.log(" response data " + response.data);
       //alert(" final response " + response.data);
-
-
 
       // console.log(' response for admin ', response.data.admin)
       // console.log(' response status :' , response.data.status)
 
-      if (response.status === 200) {
+      if (response.data.status === 200) {
+        console.log(" response after login: " + response)
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userId", response.data.id);
         localStorage.setItem("email", response.data.email);
@@ -83,6 +84,10 @@ export default class Login extends Component {
           successFlag: true,
           isAdmin : response.data.admin
         });
+      } else {
+        this.setState({
+          successFlag : false
+        }) 
       }
     });
 

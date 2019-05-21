@@ -103,7 +103,7 @@ export default class RegisterForHackathon extends Component {
       redirectVar = (
         <Redirect
           to={{
-            pathname: "/user"
+            pathname: "/myHackathon"
           }}
         />
       );

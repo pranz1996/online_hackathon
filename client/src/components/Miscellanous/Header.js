@@ -88,7 +88,8 @@ export default class Header extends Component {
                   Organizations
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="/createdOrganization">
+                  
+                  <a class="dropdown-item" href="/manageOrganization">
                     Manage My Organization
                   </a>
 
@@ -124,7 +125,7 @@ export default class Header extends Component {
                   </a>
                   <a
                     class="dropdown-item"
-                    href="/landingpage"
+                    href="/login"
                     onClick={this.logoutHandler}
                   >
                     Logout
