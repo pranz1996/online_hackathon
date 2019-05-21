@@ -197,7 +197,58 @@ public class HackathonController {
 //		System.out.println(" list of Hackathons : " + singleResponseModel);
 		return listOfHackathons;
 	}
+	@GetMapping(path="finaliseHackathon")
+	public HashMap<String, ArrayList<HackathonResultsDto>> getHackathonResults(@RequestBody HackathonDetailsRequestModel hack ) throws IOException {
+		HashMap<String, ArrayList<HackathonResultsDto>> results = new HashMap<String, ArrayList<HackathonResultsDto>>();
+		// DTO object to hold the input request data
+		HackathonDto hackathonDto = new HackathonDto();
+		// transferring input data to DTO object
+		ModelMapper mapper = new ModelMapper();
+		hackathonDto = mapper.map(hack, HackathonDto.class);
+		
+		results = hackathonService.finaliseHackathon(hackathonDto);
+		
+		return results;
+	}
 	
+	@PostMapping(path="sendEmailAfterHackFinalised")
+	public void sendEmailAfterHackFinalised(@RequestBody HackathonDetailsRequestModel hack ) throws IOException {
+		String messageForWinner = "Congratulations! Your team has won the hackathon. You can find the results of the hackathon here";
+		String messageRestOftheParticipants = "Thank you for participating. Result of the hackathon is out. You can find the results of the hackathon here";
+		
+		HashMap<String, ArrayList<HackathonResultsDto>> results = new HashMap<String, ArrayList<HackathonResultsDto>>();
+		// DTO object to hold the input request data
+		HackathonDto hackathonDto = new HackathonDto();
+		// transferring input data to DTO object
+		ModelMapper mapper = new ModelMapper();
+		hackathonDto = mapper.map(hack, HackathonDto.class);
+		
+		results = hackathonService.finaliseHackathon(hackathonDto);
+		
+		ArrayList<HackathonResultsDto> winners = new ArrayList<HackathonResultsDto>();
+		ArrayList<HackathonResultsDto> losers = new ArrayList<HackathonResultsDto>();
+		
+		winners = results.get("Winners");
+		losers = results.get("Others");
+		
+		SendEmailToUsers s = new SendEmailToUsers();
+		//send emails
+		for(HackathonResultsDto winner : winners)
+		{
+			for(UserDto teamMember: winner.getTeamMembers())
+			{
+				s.sendMail(teamMember.getEmail(), "Congratulations! You won!", messageForWinner);
+			}
+		}
+		
+		for(HackathonResultsDto loser : losers)
+		{
+			for(UserDto teamMember: loser.getTeamMembers())
+			{
+				s.sendMail(teamMember.getEmail(), "Hackathon results are out!", messageRestOftheParticipants);
+			}
+		}
+	}
 	
 //	@RequestMapping(value = "/joinHackathon", method = RequestMethod.POST, produces = { "application/json", "application/xml" })
 //	public String joinHackathon(@RequestBody JoinRequestDetailsModel joinRequestDetailsModel) {
