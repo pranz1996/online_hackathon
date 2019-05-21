@@ -1,9 +1,10 @@
 package com.openHack.ui.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +19,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.openHack.io.entity.HackathonEntity;
 import com.openHack.service.HackathonService;
 import com.openHack.shared.dto.HackathonDto;
-//import com.openHack.shared.dto.HackathonResultsDto;
+import com.openHack.shared.dto.HackathonResultsDto;
+import com.openHack.shared.dto.UserDto;
 import com.openHack.ui.model.request.HackathonDetailsRequestModel;
 import com.openHack.ui.model.request.JoinRequestDetailsModel;
 import com.openHack.ui.model.response.HackathonDetailsResposeModel;
 import com.openHack.ui.model.response.UserDetailsResponseModel;
-//import com.openHack.ui.model.response.hackathonResultsResponseModel;
 
 
 @RestController
