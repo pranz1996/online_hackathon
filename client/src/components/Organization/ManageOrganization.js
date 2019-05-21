@@ -4,6 +4,7 @@ import { Redirect } from "react-router";
 import Header from "../Miscellanous/Header";
 import Footer from "../Miscellanous/Footer";
 import OrganizationCard from "./CardCreatedOrganization";
+import {url} from '../Config_url'
 
 export default class ManageOrganization extends Component {
   constructor(props) {
@@ -43,12 +44,12 @@ export default class ManageOrganization extends Component {
     //   Authorization: localStorage.getItem("token")
     // };
 
-    // axiox.get("http://localhost:8080/organizations/getCreatedOrganistions", { headers },
+    // axiox.get(`${url}/organizations/getCreatedOrganistions`, { headers },
     // )
 
     axios
       .get(
-        `http://localhost:8080/organizations/getOrganisationRequests/${localStorage.getItem(
+        `${url}/organizations/getOrganisationRequests/${localStorage.getItem(
           "userId"
         )}`,
         {
@@ -134,7 +135,7 @@ export default class ManageOrganization extends Component {
     };
 
     axios
-      .get(`http://localhost:8080/organizations/name/${item.organization_id}`, {
+      .get(`${url}/organizations/name/${item.organization_id}`, {
         headers
       })
       .then(response => {
@@ -156,7 +157,7 @@ export default class ManageOrganization extends Component {
           // alert("in reject " + !item.accept);
           // alert("date reject " + JSON.stringify(data));
           axios
-            .post("http://localhost:8080/denyrequest/deny", data, {
+            .post('${url}/denyrequest/deny', data, {
               headers
             })
             .then(response => {
@@ -177,7 +178,7 @@ export default class ManageOrganization extends Component {
             });
         } else {
           axios
-            .post("http://localhost:8080/joinrequest/accept", data, {
+            .post(`${url}/joinrequest/accept`, data, {
               headers
             })
             .then(response => {
@@ -220,7 +221,7 @@ export default class ManageOrganization extends Component {
     };
 
     axios
-      .get("http://localhost:8080/organizations/name", data1, {
+      .get(`${url}/organizations/name`, data1, {
         headers
       })
       .then(response => {
@@ -270,7 +271,7 @@ export default class ManageOrganization extends Component {
     // //     "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyNUBnbWFpbC5jb20iLCJleHAiOjE1NTgxNjQ2OTd9.HBZDR9CURIkZ-7IkRLA5_-k0_XcceFo83q99wkTcjFK0B9XzK8PRFub23DmXQnZ-CVbPUcFfus73qg0fSvTTTQ"
     // // };
     // axios
-    //   .post("http://localhost:8080/joinrequest/send", data, {
+    //   .post(`${url}/joinrequest/send`, data, {
     //     headers
     //   })
     //   .then(response => {

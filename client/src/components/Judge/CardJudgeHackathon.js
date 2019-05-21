@@ -3,6 +3,7 @@ import axios from 'axios'
 import { Redirect } from 'react-router'
 import Header from '../Miscellanous/Header';
 import Footer from '../Miscellanous/Footer';
+import {url} from '../Config_url'
 
 export default class CardJudgeHackathon extends Component {
     constructor(props) {
@@ -19,7 +20,7 @@ export default class CardJudgeHackathon extends Component {
     componentDidMount() {
         
         // axios.defaults.withCredentials = true
-        axios.get(`http://localhost:8080/teams/evaluation/${this.state.hackathonId}`)
+        axios.get(`${url}/teams/evaluation/${this.state.hackathonId}`)
             .then(response => {
 
                 console.log(JSON.stringify(response.data))
@@ -52,7 +53,7 @@ export default class CardJudgeHackathon extends Component {
         // const data = {
         //     grade : parseFloat(this.state.grade)
         // }
-        axios.post(`http://localhost:8080/teams/assignGrade/${s.target.id}/${this.state.grade}`, {
+        axios.post(`${url}/teams/assignGrade/${s.target.id}/${this.state.grade}`, {
           headers
         }).then(response => {
           console.log(' the resposne :' + JSON.stringify(response.data))

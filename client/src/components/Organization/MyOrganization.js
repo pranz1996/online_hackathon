@@ -3,6 +3,7 @@ import axios from "axios";
 import { Redirect } from "react-router";
 import Header from "../Miscellanous/Header";
 import Footer from "../Miscellanous/Footer";
+import {url} from '../Config_url'
 
 export default class MyOrganization extends Component {
   constructor(props) {
@@ -25,7 +26,7 @@ export default class MyOrganization extends Component {
 
   componentDidMount() {
     // axios
-    //   .get(`http://localhost:8080/userOrganization/${this.state.email}`)
+    //   .get(`${url}/userOrganization/${this.state.email}`)
     //   .then(response => {
     //     console.log(response.data);
     //     if (response.status === 200) {
@@ -50,7 +51,7 @@ export default class MyOrganization extends Component {
 
     axios
       .get(
-        `http://localhost:8080/organizations/getMyOrganisation/${localStorage.getItem(
+        `${url}/organizations/getMyOrganisation/${localStorage.getItem(
           "userId"
         )}`,
         {
@@ -128,7 +129,7 @@ export default class MyOrganization extends Component {
     axios.defaults.withCredentials = true;
     axios
       .post(
-        `http://localhost:8080/organizations/leaveOrganisation/${localStorage.getItem(
+        `${url}/organizations/leaveOrganisation/${localStorage.getItem(
           "userId"
         )}`
       )

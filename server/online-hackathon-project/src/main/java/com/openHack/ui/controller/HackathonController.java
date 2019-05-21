@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.openHack.Config_url;
 import com.openHack.SendEmailToUsers;
 import com.openHack.io.entity.HackathonEntity;
 import com.openHack.service.HackathonService;
@@ -33,7 +35,7 @@ import com.openHack.ui.model.response.UserDetailsResponseModel;
 
 @RestController
 @RequestMapping("hackathons") // -> http://localhost:8080/hackathons
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = Config_url.url)
 public class HackathonController {
 	
 	@Autowired

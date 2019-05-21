@@ -5,6 +5,7 @@ import Header from "../Miscellanous/Header";
 import Footer from "../Miscellanous/Footer";
 import AdminHeader from "../Admin/AdminHeader";
 import {Link} from 'react-router-dom'
+import {url} from '../Config_url'
 
 export default class ViewHackathon extends Component {
   constructor(props) {
@@ -26,7 +27,7 @@ export default class ViewHackathon extends Component {
     var headers = {
       Authorization: localStorage.getItem("token")
     }; 
-    axios.get("http://localhost:8080/hackathons/getAllHackathons", {
+    axios.get(`${url}/hackathons/getAllHackathons`, {
       headers
     }).then(response => {
       console.log(' the resposne :' + JSON.stringify(response.data))
@@ -46,7 +47,7 @@ export default class ViewHackathon extends Component {
     changeHackathonHandler = (h) => {
       var id = h.target.id
       
-      axios.put(`http://localhost:8080/hackathons/updateStatus/${id}`).then(response => {
+      axios.put(`${url}/hackathons/updateStatus/${id}`).then(response => {
       console.log(" final response " + JSON.stringify(response));
       
       if (response.status === 200) {

@@ -4,6 +4,7 @@ import { Redirect } from "react-router";
 import Header from "../Miscellanous/Header";
 import Footer from "../Miscellanous/Footer";
 import OrganizationCard from "../Organization/CardSearchOrganization";
+import {url} from '../Config_url'
 
 export default class SearchOrganization extends Component {
   constructor(props) {
@@ -43,7 +44,7 @@ export default class SearchOrganization extends Component {
     };
 
     axios
-      .get("http://localhost:8080/organizations/getAllOrganistions", {
+      .get(`${url}/organizations/getAllOrganistions`, {
         headers
       })
       .then(response => {
@@ -122,7 +123,7 @@ export default class SearchOrganization extends Component {
     //     "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyNUBnbWFpbC5jb20iLCJleHAiOjE1NTgxNjQ2OTd9.HBZDR9CURIkZ-7IkRLA5_-k0_XcceFo83q99wkTcjFK0B9XzK8PRFub23DmXQnZ-CVbPUcFfus73qg0fSvTTTQ"
     // };
     axios
-      .post("http://localhost:8080/joinrequest/send", data, {
+      .post(`${url}/joinrequest/send`, data, {
         headers
       })
       .then(response => {
