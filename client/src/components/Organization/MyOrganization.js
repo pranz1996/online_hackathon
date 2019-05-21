@@ -80,7 +80,7 @@ export default class MyOrganization extends Component {
           hasOrganization: false
         });
         console.log("error: " + error);
-        alert("error: " + error);
+        // alert("error: " + error);
       });
   }
 
@@ -143,7 +143,7 @@ export default class MyOrganization extends Component {
 
           window.location.reload();
 
-          alert("Left");
+          // alert("Left");
           console.log("Left");
         }
       });

@@ -127,12 +127,12 @@ export default class SearchOrganization extends Component {
       })
       .then(response => {
         //resp = JSON.stringify(response);
-
+        console.log(" response after sending : " + response.status)
         self.setState({
           requestThrough: true
         });
 
-        alert("response " + response.data);
+        alert(response.data);
 
         this.state.requestThrough = true;
         console.log("response " + response.data);

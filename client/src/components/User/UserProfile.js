@@ -111,11 +111,10 @@ export default class UserProfile extends Component {
           this.setState({
             successFlag: true
           });
+        } else {
+          this.props.history.push('/')
         }
       });
-
-    alert(localStorage.getItem("email"));
-    console.log(localStorage.getItem("userId"));
   };
 
   render() {
@@ -127,8 +126,13 @@ export default class UserProfile extends Component {
     }else{
       header = <AdminHeader/>
     }
+    let redirectVar = null
+    if(this.state.successFlag) {
+        redirectVar = <Redirect to="/searchOrganization" />
+    }
     return (
       <div style={{ backgroundColor: "#243e8c" }}>
+      {redirectVar}
         <div style={{ backgroundColor: "#243e8c" }}>
           {header}
           <div style={{ backgroundColor: "#243e8c" }}>
@@ -287,14 +291,14 @@ export default class UserProfile extends Component {
                   >
                     Update
                   </button>
-                  <button
+                  <br />
+                </form>
+                {/* <button
                     type="submit"
                     class="btn btn-primary btn-lg btn-block"
                   >
                     Later
-                  </button>
-                  <br />
-                </form>
+                  </button> */}
               </div>
             </div>
           </div>
