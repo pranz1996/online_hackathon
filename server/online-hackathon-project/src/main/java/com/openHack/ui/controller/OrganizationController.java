@@ -198,8 +198,9 @@ public class OrganizationController {
 			String key = entry.getKey();
 			ArrayList<UserEntity> value = (ArrayList<UserEntity>) entry.getValue();
 			userDtos = new ArrayList<UserDto>();
-			UserDto userDto = new UserDto();
+			UserDto userDto;
 			for (UserEntity user : value) {
+				userDto = new UserDto();
 				BeanUtils.copyProperties(user, userDto);
 				userDtos.add(userDto);
 			}

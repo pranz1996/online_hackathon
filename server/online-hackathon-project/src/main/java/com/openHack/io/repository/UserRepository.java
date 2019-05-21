@@ -18,7 +18,7 @@ public interface UserRepository extends CrudRepository<UserEntity, Long>{
 	UserEntity findUserByEmail(String email);
 	
 	@Query(value="select * from users u where u.id=?1", nativeQuery = true)
-	UserEntity findUserById(Integer integer);
+	UserEntity findUserById(long userid);
 	
 	@Query(value="select * from users u where u.admin_check=false", nativeQuery = true)
 	ArrayList<UserEntity> findAllUsers();

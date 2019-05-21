@@ -98,37 +98,29 @@ public class JoinRequestServiceImpl implements JoinRequestService{
 		HashMap<String,ArrayList<UserDto>> requestsForOrg =new HashMap<String,ArrayList<UserDto>>();
 		
 		ArrayList<OrganizationEntity> userOrganisations = new ArrayList<OrganizationEntity>(); 
-		OrganizationEntity singleOrganisation = new OrganizationEntity(); 
-		
 		ArrayList<UserDto> allUserDtos = new ArrayList<UserDto>();
 		
 		ArrayList<Integer> userIds = new ArrayList<Integer>();
-		//get all organisation ids for the user
+
 		userOrganisations = organizationRepository.findByOwnerId(id);
-		Iterator iterator = userOrganisations.iterator(); 
 		
-		while(iterator.hasNext())
+		for(OrganizationEntity organisation: userOrganisations)
 		{
-			singleOrganisation = (OrganizationEntity) iterator.next();
-			userIds = organizationRepository.getUserIds(singleOrganisation.getId());
+			userIds = organizationRepository.getUserIds(organisation.getId());
 			
-			if(userIds != null)
-			{
-				Iterator userIdIterator = userIds.iterator();
-				while(userIdIterator.hasNext())
-				{
-					UserEntity singleUserEntity ;
+			UserEntity singleUserEntity ;
+			UserDto singleUserDto;
+			for(long userid: userIds)
+			{			
 					singleUserEntity = new UserEntity();
-					UserDto singleUserDto;
 					singleUserDto = new UserDto();
-					singleUserEntity = userRepository.findUserById((Integer) userIdIterator.next());
+					singleUserEntity = userRepository.findUserById(userid);
 					BeanUtils.copyProperties(singleUserEntity, singleUserDto);
 					allUserDtos.add(singleUserDto);
-				}
 			}
 			
 			//add value to org key
-			requestsForOrg.put(singleOrganisation.getName(),allUserDtos);
+			requestsForOrg.put(organisation.getName(),allUserDtos);
 		}
 		// return all the users from join table
 		return requestsForOrg;
