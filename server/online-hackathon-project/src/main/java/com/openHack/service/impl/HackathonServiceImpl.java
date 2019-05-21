@@ -299,4 +299,62 @@ public class HackathonServiceImpl implements HackathonService {
 	
 		return allHackathonDto;
 	}
+	
+	@Override
+	public HashMap<String, ArrayList<HackathonResultsDto>> finaliseHackathon(HackathonDto hackathonDto) {
+		HashMap<String, ArrayList<HackathonResultsDto>> finalResults = new HashMap<String, ArrayList<HackathonResultsDto>>();
+		
+		ArrayList<TeamEntity> winnerTeams;
+		ArrayList<TeamEntity> restOfTheTeams;
+		ArrayList<HackathonResultsDto> winners = new ArrayList<HackathonResultsDto>();
+		ArrayList<HackathonResultsDto> others = new ArrayList<HackathonResultsDto>();
+		
+		HackathonEntity hackEnt = hackathonRepository.findByEventName(hackathonDto.getEventName());
+		
+		//get winner teams for a hackathon
+		winnerTeams = teamRepository.getWinnerTeamsByHackathonId(hackEnt.getId());
+		restOfTheTeams = teamRepository.getParticipantTeamsByHackathonId(hackEnt.getId());
+				
+		HackathonResultsDto singleDto;
+		for(TeamEntity winnerTeam: winnerTeams)
+		{
+			singleDto = new HackathonResultsDto();
+			singleDto.setTeamName(winnerTeam.getTeamName());
+			singleDto.setTeamScore(winnerTeam.getGrade());
+			ArrayList<UserDto> usersDto = new ArrayList<UserDto>();
+			UserDto userSingleDto ;
+			//set team members
+			for(TeamMemberEntity teamMember : winnerTeam.getTeamMembers())
+			{
+				UserEntity user =  userRepository.findById(teamMember.getUserId());
+				userSingleDto = new UserDto();
+				BeanUtils.copyProperties(user, userSingleDto);
+				usersDto.add(userSingleDto);
+			}
+			singleDto.setTeamMembers(usersDto);
+			winners.add(singleDto);
+		}
+		finalResults.put("Winners",winners);
+		
+		for(TeamEntity restTeam: restOfTheTeams)
+		{
+			singleDto = new HackathonResultsDto();
+			singleDto.setTeamName(restTeam.getTeamName());
+			singleDto.setTeamScore(restTeam.getGrade());
+			ArrayList<UserDto> usersDto = new ArrayList<UserDto>();
+			UserDto userSingleDto ;
+			//set team members
+			for(TeamMemberEntity teamMember : restTeam.getTeamMembers())
+			{
+				UserEntity user =  userRepository.findById(teamMember.getUserId());
+				userSingleDto = new UserDto();
+				BeanUtils.copyProperties(user, userSingleDto);
+				usersDto.add(userSingleDto);
+			}
+			singleDto.setTeamMembers(usersDto);
+			others.add(singleDto);
+		}
+		finalResults.put("Others",others);
+		return finalResults;
+	}
 }
