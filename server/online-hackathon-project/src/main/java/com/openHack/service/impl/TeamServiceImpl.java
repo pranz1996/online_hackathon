@@ -4,20 +4,30 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openHack.io.entity.HackathonEntity;
 import com.openHack.io.entity.TeamEntity;
 import com.openHack.io.entity.TeamMemberEntity;
+import com.openHack.io.entity.TeamMembersTeam;
 import com.openHack.io.repository.HackathonRepository;
 import com.openHack.io.repository.TeamMemberRepository;
+import com.openHack.io.repository.TeamMembersTeamRepository;
 import com.openHack.io.repository.TeamRepository;
 import com.openHack.service.TeamService;
+import com.openHack.shared.dto.HackathonDto;
 import com.openHack.shared.dto.TeamDto;
 import com.openHack.shared.dto.TeamMemberDto;
 import com.openHack.shared.dto.TeamsByJudgeDto;
+import com.openHack.ui.model.request.GetTeamIdRequestModel;
 import com.openHack.ui.model.request.GradeTeamsRequestModel;
 import com.openHack.ui.model.request.SubmissionDetailsRequestModel;
+import com.openHack.ui.model.request.TeamDetailsRequestModel;
+import com.openHack.ui.model.response.TeamDetailsResposeModel;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+
+import org.hibernate.sql.Template;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +44,8 @@ public class TeamServiceImpl implements TeamService {
 	@Autowired
 	HackathonRepository hackathonRepository;
 
+	@Autowired
+	TeamMembersTeamRepository teamMembersTeamRepository;
 	// service method to store team details
 	@Override
 	public TeamDto createTeam(TeamDto teamDto) {
@@ -49,6 +61,19 @@ public class TeamServiceImpl implements TeamService {
 		
 		// Repository method to save TeamEntity
 		TeamEntity savedTeam = teamRepository.save(teamEntity);
+		
+		List<TeamMemberEntity> teamMembers = savedTeam.getTeamMembers();
+		
+		long teamId = savedTeam.getId();
+		
+		TeamMembersTeam t = null;
+		
+		for(int i = 0; i < teamMembers.size(); i++) {
+			t = new TeamMembersTeam();
+			t.setTeamId(teamId); 	t.setMemberId(teamMembers.get(i).getId());
+			teamMembersTeamRepository.save(t);
+		}
+		
 		
 		mapper = new ObjectMapper();
 		// Returning saved entity to Response Model
@@ -211,4 +236,42 @@ public class TeamServiceImpl implements TeamService {
 		teamRepository.gradeTeam(gradeTeam.getGrade(), gradeTeam.getTeamName(),hackEnt.getId());
 	}
 
+	@Override
+	public JsonObject getTeamId(GetTeamIdRequestModel getTeamId) {
+		
+		TeamMemberEntity teamMember = teamMemberRepository.findHackathonByUser(getTeamId.getUserId(), getTeamId.getHackathonId());
+		
+		long id = teamMember.getId();
+		
+		TeamMembersTeam teamId = teamMembersTeamRepository.findMemberId(id);
+		
+		HackathonEntity hackathon =  hackathonRepository.findById(teamMember.getHackathonId());
+		
+		
+		JsonObject object = Json.createObjectBuilder()
+				.add("status", hackathon.getStatus())
+				.add("team_id", String.valueOf(teamId.getTeamId()))
+				.build();
+		
+		return object;	
+	}
+
+	@Override
+	public ArrayList<TeamDto> getTeamsForEvaluation(long id) {
+		
+		ArrayList<TeamEntity> allTeams = teamRepository.getTeamsByHackathonId(id); 
+		
+		ArrayList<TeamDto> allTeamsDto = new ArrayList<>();
+		
+		Iterator iterator = allTeams.iterator();
+		
+		while(iterator.hasNext())
+		{
+			TeamDto team = new TeamDto();
+			BeanUtils.copyProperties(iterator.next(), team);
+			allTeamsDto.add(team);
+		}
+		
+		return allTeamsDto;
+	}
 }

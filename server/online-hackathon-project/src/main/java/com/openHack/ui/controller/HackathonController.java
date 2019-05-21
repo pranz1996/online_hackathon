@@ -81,6 +81,28 @@ public class HackathonController {
 		return listOfHackathons;
 	}
 	
+	@RequestMapping(value = "/getUserHackathons/{id}", method = RequestMethod.GET, produces = { "application/json", "application/xml" })
+	public ArrayList<HackathonDetailsResposeModel> getUserHackathons(@PathVariable long id) 
+	{	
+		ArrayList<HackathonDetailsResposeModel> listOfHackathons = new ArrayList<HackathonDetailsResposeModel>();
+		HackathonDetailsResposeModel singleResponseModel;
+		ArrayList<HackathonDto> hackathonDtoList = new ArrayList<HackathonDto>();
+		
+		hackathonDtoList = hackathonService.getMyHackathons(id);
+		Iterator dtoIterator = hackathonDtoList.iterator(); 
+		
+	
+		while(dtoIterator.hasNext())
+		{
+			singleResponseModel = new HackathonDetailsResposeModel();
+			BeanUtils.copyProperties(dtoIterator.next(), singleResponseModel);
+			listOfHackathons.add(singleResponseModel);
+		}
+		
+//		System.out.println(" list of Hackathons : " + singleResponseModel);
+		return listOfHackathons;
+	}
+	
 	// create and add new hackathon
 	@PostMapping
 	public HackathonDetailsResposeModel createHackathon(@RequestBody HackathonDetailsRequestModel hackathonDetailsRequestModel) {
@@ -154,6 +176,27 @@ public class HackathonController {
 //		return results;
 //		
 //	}
+	@RequestMapping(value = "/getHackathonsToJudge/{id}", method = RequestMethod.GET, produces = { "application/json", "application/xml" })
+	public ArrayList<HackathonDetailsResposeModel> getHackathonsToJudge(@PathVariable long id) 
+	{	
+		ArrayList<HackathonDetailsResposeModel> listOfHackathons = new ArrayList<HackathonDetailsResposeModel>();
+		HackathonDetailsResposeModel singleResponseModel;
+		ArrayList<HackathonDto> hackathonDtoList = new ArrayList<HackathonDto>();
+		
+		hackathonDtoList = hackathonService.getMyHackathonToJudge(id);
+		Iterator dtoIterator = hackathonDtoList.iterator(); 
+		
+	
+		while(dtoIterator.hasNext())
+		{
+			singleResponseModel = new HackathonDetailsResposeModel();
+			BeanUtils.copyProperties(dtoIterator.next(), singleResponseModel);
+			listOfHackathons.add(singleResponseModel);
+		}
+		
+//		System.out.println(" list of Hackathons : " + singleResponseModel);
+		return listOfHackathons;
+	}
 	
 	
 //	@RequestMapping(value = "/joinHackathon", method = RequestMethod.POST, produces = { "application/json", "application/xml" })

@@ -1,6 +1,8 @@
 package com.openHack.io.repository;
 
 import com.openHack.io.entity.TeamEntity;
+import com.openHack.io.entity.TeamMemberEntity;
+import com.openHack.ui.model.request.TeamDetailsRequestModel;
 
 import java.util.ArrayList;
 
@@ -28,4 +30,5 @@ public interface TeamRepository extends CrudRepository<TeamEntity, Long>{
 	@Transactional
 	@Query(value="Update teams set grade=?1 where team_name like ?2 and hackathon_id=?3", nativeQuery = true)
 	void gradeTeam(double grade, String teamName, long hackathonId);
+
 }

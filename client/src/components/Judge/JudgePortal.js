@@ -6,14 +6,13 @@ import Footer from "../Miscellanous/Footer";
 import AdminHeader from "../Admin/AdminHeader";
 import {Link} from 'react-router-dom'
 
-export default class MyHackathon extends Component {
+export default class JudgePortal extends Component {
   constructor(props) {
     super(props);
     this.state = {
       hackathons : [],
       successFlag : false
     }
-    this.changeHackathonHandler = this.changeHackathonHandler.bind(this) 
   }
   
   componentWillMount() {
@@ -26,10 +25,10 @@ export default class MyHackathon extends Component {
     var headers = {
       Authorization: localStorage.getItem("token")
     }; 
-    axios.get(`http://localhost:8080/hackathons/getUserHackathons/${localStorage.getItem('userId')}`, {
+    axios.get(`http://localhost:8080/hackathons/getHackathonsToJudge/${localStorage.getItem('userId')}`, {
       headers
     }).then(response => {
-      console.log(' the resposne :' + JSON.stringify(response))
+      console.log(' the resposne :' + JSON.stringify(response.data))
       if(response.status === 200){
         this.setState({
             successFlag : true,
@@ -42,20 +41,6 @@ export default class MyHackathon extends Component {
       }
     });
   }
-
-    changeHackathonHandler = (h) => {
-      var id = h.target.id
-      
-      axios.put(`http://localhost:8080/hackathons/updateStatus/${id}`).then(response => {
-      console.log(" final response " + JSON.stringify(response));
-      
-      if (response.status === 200) {
-        this.props.history.push({
-          pathname:'/cardAdminHackathon'
-      }) 
-      }
-    });
-    }
 
   render() {
     let header = null;
@@ -82,10 +67,10 @@ export default class MyHackathon extends Component {
                         Manage
                       </button> */}
                     </h6>
-                    <h6 class="card-subtitle"> {h.description}</h6>
+                    <h6 class="card-subtitle"> About : {h.description}</h6>
                     <p class="card-text">Start date: {h.startTime}, End time: {h.endTime}</p>
-                    
-                    <Link to={`/submission/${h.id}`}>  Submission Details
+
+                    <Link to={`/judgeHackathon/${h.id}`}>  Judge
                     </Link>
 
                   </div>

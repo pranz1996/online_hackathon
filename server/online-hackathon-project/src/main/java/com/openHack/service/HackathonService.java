@@ -10,5 +10,7 @@ public interface HackathonService {
 	HackathonDto updateHackathon(long id, HackathonDto hackathonDto);
 	ArrayList<HackathonDto> getAllHackathon();
 	HackathonDto updateStatus(long id);
+	ArrayList<HackathonDto> getMyHackathons(long id);
+	ArrayList<HackathonDto> getMyHackathonToJudge(long id);
 	
 }

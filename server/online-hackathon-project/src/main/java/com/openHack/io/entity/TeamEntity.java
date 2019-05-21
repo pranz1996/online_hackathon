@@ -26,8 +26,10 @@ public class TeamEntity implements Serializable{
 	
 	@Column(nullable = false)
 	private long userId;
-	
+		
 	private String submissionLink;
+	
+	private double grade;
 	
 	public double getGrade() {
 		return grade;
@@ -41,7 +43,6 @@ public class TeamEntity implements Serializable{
 	@JoinColumn(name = "teamId")
 	private List<TeamMemberEntity> teamMembers;
 	
-	private double grade;
 
 //	@OneToMany(mappedBy = "team_id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //	private List<SubmissionEntity> hackathonAssociate;

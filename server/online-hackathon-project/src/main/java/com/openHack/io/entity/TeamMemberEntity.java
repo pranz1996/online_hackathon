@@ -16,6 +16,8 @@ public class TeamMemberEntity implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
+	private long hackathonId;
+	
 	@Column(nullable = false)
 	private long userId;
 
@@ -61,9 +63,12 @@ public class TeamMemberEntity implements Serializable{
 		return serialVersionUID;
 	}
 
-	@Override
-	public String toString() {
-		return "TeamMemberEntity [id=" + id + ", userId=" + userId + ", role=" + role + ", paid=" + paid + "]";
+	public long getHackathonId() {
+		return hackathonId;
+	}
+
+	public void setHackathonId(long hackathonId) {
+		this.hackathonId = hackathonId;
 	}
 
 }

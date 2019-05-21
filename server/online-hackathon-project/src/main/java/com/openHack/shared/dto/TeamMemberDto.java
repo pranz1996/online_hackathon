@@ -5,6 +5,7 @@ public class TeamMemberDto {
 	private long userId;
 	private String role;
 	private boolean paid;
+	private long hackathonId;
 	public long getUserId() {
 		return userId;
 	}
@@ -29,6 +30,13 @@ public class TeamMemberDto {
 	public void setId(long id) {
 		this.id = id;
 	}
+	public long getHackathonId() {
+		return hackathonId;
+	}
+	public void setHackathonId(long hackathonId) {
+		this.hackathonId = hackathonId;
+	}
+	
 	
 	
 }
