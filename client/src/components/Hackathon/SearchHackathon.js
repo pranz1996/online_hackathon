@@ -4,6 +4,7 @@ import { Redirect } from "react-router";
 import Header from "../Miscellanous/Header";
 import Footer from "../Miscellanous/Footer";
 import HackathonCard from "../Hackathon/CardSearchHackathon";
+import {url} from '../Config_url'
 
 export default class SearchHackathon extends Component {
   constructor(props) {
@@ -61,7 +62,7 @@ export default class SearchHackathon extends Component {
     };
 
     axios
-      .get('http://localhost:8080/hackathons/getAllHackathons', {
+      .get(`${url}/hackathons/getAllHackathons`, {
         headers
       })
       .then(response => {

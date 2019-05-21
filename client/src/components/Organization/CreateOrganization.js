@@ -3,6 +3,7 @@ import axios from "axios";
 import { Redirect } from "react-router";
 import Header from "../Miscellanous/Header";
 import Footer from "../Miscellanous/Footer";
+import {url} from '../Config_url'
 
 export default class CreateOrganization extends Component {
   constructor(props) {
@@ -96,7 +97,7 @@ export default class CreateOrganization extends Component {
     console.log(data);
     // axios.defaults.withCredentials = true
     axios
-      .post("http://localhost:8080/organizations", data, { headers })
+      .post(`${url}/organizations`, data, { headers })
       .then(response => {
         console.log(response.data.id);
         if (response.status === 200) {

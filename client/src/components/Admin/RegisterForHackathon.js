@@ -4,6 +4,7 @@ import { Redirect } from "react-router";
 import Header from "../Miscellanous/Header";
 import Footer from "../Miscellanous/Footer";
 import { Form, Select } from 'antd';
+import {url} from '../Config_url'
 
 const listOfUsers = [''];
 const dict = {}
@@ -35,7 +36,7 @@ export default class RegisterForHackathon extends Component {
     };
 
     axios
-      .get("http://localhost:8080/users/getAllUsers", {
+      .get(`${url}/users/getAllUsers`, {
         headers
       })
       .then(response => {
@@ -84,7 +85,7 @@ export default class RegisterForHackathon extends Component {
     };
 
     console.log(" data " + JSON.stringify(data) )
-    axios.post("http://localhost:8080/teams", data).then(response => {
+    axios.post(`${url}/teams`, data).then(response => {
       console.log(" response from server : ", response.data);
       if (response.status === 200) {
         this.setState({

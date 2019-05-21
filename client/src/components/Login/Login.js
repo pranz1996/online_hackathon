@@ -8,6 +8,7 @@ import fire from "../../fire";
 import { Link } from "react-router";
 import seeFirebaseDetails from "./helperFunctions";
 import UserProfile from "../User/UserProfile";
+import {url} from '../Config_url'
 
 export default class Login extends Component {
   constructor(props) {
@@ -61,7 +62,7 @@ export default class Login extends Component {
     // alert(" state email " + this.state.email);
 
     // axios.defaults.withCredentials = true
-    axios.post("http://localhost:8080/users/login", data).then(response => {
+    axios.post(`${url}/users/login`, data).then(response => {
       console.log(" response " + JSON.stringify(response));
       console.log(" response status " + response.data.status);
       console.log(" response data " + response.data);

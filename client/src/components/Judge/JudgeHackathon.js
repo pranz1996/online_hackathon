@@ -4,6 +4,7 @@ import { Redirect } from 'react-router'
 import Header from '../Miscellanous/Header';
 import Footer from '../Miscellanous/Footer';
 import CardJudgeHackathon from '../Judge/CardJudgeHackathon';
+import {url} from '../Config_url'
 
 export default class JudgeHackathon extends Component {
     constructor(props) {
@@ -33,7 +34,7 @@ export default class JudgeHackathon extends Component {
         var headers = {
           Authorization: localStorage.getItem("token")
         }; 
-        axios.get(`http://localhost:8080/hackathons/${this.state.HackathonId}`, {
+        axios.get(`${url}/hackathons/${this.state.HackathonId}`, {
           headers
         }).then(response => {
           console.log(' the resposne :' + JSON.stringify(response.data))
@@ -90,7 +91,7 @@ export default class JudgeHackathon extends Component {
             maxTeamSize: this.state.maxTeamSize
         }
         // axios.defaults.withCredentials = true
-        axios.post('http://localhost:8080/hackathons', data)
+        axios.post('${url}/hackathons', data)
             .then(response => {
 
                 console.log(response.data.id)

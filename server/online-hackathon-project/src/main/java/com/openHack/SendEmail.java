@@ -12,7 +12,8 @@ public class SendEmail {
 	  listofemails.add("aakash.alurkar95@gmail.com");
 //	  listofemails.add("aakash.alurkar@sjsu.edu");
 	  
-	  String url = "http://localhost:3000/payment";
+//	  String url = "http://localhost:3000/payment";
+	  String url = Config_url.url + "/payment";
 	  
 	  for(String s : listofemails) {
 		    Email from = new Email("test@example.com");

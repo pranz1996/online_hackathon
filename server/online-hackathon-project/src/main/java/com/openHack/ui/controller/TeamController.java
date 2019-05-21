@@ -1,6 +1,7 @@
 package com.openHack.ui.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.openHack.Config_url;
 import com.openHack.io.entity.TeamMemberEntity;
 import com.openHack.io.entity.TeamMembersTeam;
 import com.openHack.io.repository.TeamRepository;
@@ -29,7 +30,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("teams") // -> http://localhost:8080/teams
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = Config_url.url)
 public class TeamController {
 
     @Autowired
