@@ -71,7 +71,8 @@ export default class RegisterForHackathon extends Component {
     var members = []
     for(var i = 0; i < this.state.teamMembers.length; i++) {
       members.push({
-        userId : dict[this.state.teamMembers[i]]
+        userId : dict[this.state.teamMembers[i]],
+        hackathonId : this.state.hackathonId
       })
     }
     const data = {

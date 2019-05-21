@@ -7,7 +7,7 @@ public class TeamDetailsRequestModel {
 	private String teamName;
 	private String teamSize;
 	private long userId;
-	private String submissionLink = null;
+	private String submissionLink;
 	private List<TeamMemberDetailsRequestModel> teamMembers;
 	private double grade;
 	
@@ -56,8 +56,10 @@ public class TeamDetailsRequestModel {
 	}
 	@Override
 	public String toString() {
-		return "TeamDetailsRequestModel [hackathonId=" + hackathonId + ", teamName=" + teamName + ", teamSize=" + teamSize
-				+ ", userId=" + userId + ", teamMembers=" + teamMembers + "]";
+		return "TeamDetailsRequestModel [hackathonId=" + hackathonId + ", teamName=" + teamName + ", teamSize="
+				+ teamSize + ", userId=" + userId + ", submissionLink=" + submissionLink + ", grade=" + grade + "]";
 	}
+	
+	
 	
 }

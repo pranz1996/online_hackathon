@@ -7,14 +7,18 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.catalina.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.openHack.io.entity.HackathonEntity;
+import com.openHack.io.entity.TeamMemberEntity;
 import com.openHack.io.entity.UserEntity;
 import com.openHack.io.repository.HackathonRepository;
+import com.openHack.io.repository.TeamMemberRepository;
+import com.openHack.io.repository.TeamRepository;
 import com.openHack.io.repository.UserRepository;
 import com.openHack.service.HackathonService;
 import com.openHack.shared.dto.HackathonDto;
@@ -27,6 +31,9 @@ public class HackathonServiceImpl implements HackathonService {
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	TeamMemberRepository teamMemberRepository;
 	
 	// Service method store hackathon object to database
 	@Override
@@ -208,5 +215,88 @@ public class HackathonServiceImpl implements HackathonService {
  		BeanUtils.copyProperties(updateHackathon, returnValue);
 		
 		return returnValue;
+	}
+
+	@Override
+	public ArrayList<HackathonDto> getMyHackathons(long id) {
+		
+		ArrayList<HackathonEntity> allHackthonsEntity = new ArrayList<HackathonEntity>();
+		ArrayList<HackathonDto> allHackathonDto = new ArrayList<HackathonDto>();
+		HackathonDto signleHackDto;
+		
+		List<TeamMemberEntity> teamMemberEntity = teamMemberRepository.findByUserId(id);
+		
+		List<Long> listOFHackathonsForUser = new ArrayList<Long>();
+		
+		for(int i = 0; i  < teamMemberEntity.size(); i++) {
+			listOFHackathonsForUser.add(teamMemberEntity.get(i).getHackathonId());
+		}
+		
+		System.out.println(" List of Hackathons : " + listOFHackathonsForUser);
+		
+		for(int i = 0; i < listOFHackathonsForUser.size(); i++) {
+			long theHackathoId = listOFHackathonsForUser.get(i);
+			
+			HackathonEntity hackathon = hackathonRepository.findById(theHackathoId);
+			
+			allHackthonsEntity.add(hackathon);
+		}
+		
+		System.out.println(" Found out " + allHackthonsEntity);
+		
+		Iterator iterator = allHackthonsEntity.iterator(); 
+		
+		while(iterator.hasNext())
+		{
+			signleHackDto = new HackathonDto();
+			BeanUtils.copyProperties(iterator.next(), signleHackDto);
+			allHackathonDto.add(signleHackDto);
+		}
+		return allHackathonDto;
+	}
+
+	@Override
+	public ArrayList<HackathonDto> getMyHackathonToJudge(long id) {
+		
+		ArrayList<HackathonEntity> allHackthonsEntity = new ArrayList<HackathonEntity>();
+		ArrayList<HackathonDto> allHackathonDto = new ArrayList<HackathonDto>();
+		HackathonDto signleHackDto;
+		
+		List<Long> numberOfHackathonsToJudge = new ArrayList<Long>();
+		
+		UserEntity judge = userRepository.findById(id);
+		
+		List<HackathonEntity> hackathons = judge.getHackathons();
+		
+		for(int i = 0; i < hackathons.size(); i++) {
+			List<UserEntity> userRealtedHackathons = hackathons.get(i).getJudges();
+			for(int j = 0; j < userRealtedHackathons.size(); j++) {
+				if(userRealtedHackathons.get(j).getId() == id)
+					numberOfHackathonsToJudge.add(hackathons.get(i).getId());
+			}
+		}
+		
+		for(int k = 0; k < numberOfHackathonsToJudge.size(); k++) {
+			
+			long theHackathoId = numberOfHackathonsToJudge.get(k);
+			
+			HackathonEntity hackathon = hackathonRepository.findById(theHackathoId);
+			
+			allHackthonsEntity.add(hackathon);
+			
+		}
+		
+		System.out.println(judge.getHackathons().get(0).getJudges());
+		
+		Iterator iterator = allHackthonsEntity.iterator(); 
+		
+		while(iterator.hasNext())
+		{
+			signleHackDto = new HackathonDto();
+			BeanUtils.copyProperties(iterator.next(), signleHackDto);
+			allHackathonDto.add(signleHackDto);
+		}
+	
+		return allHackathonDto;
 	}
 }

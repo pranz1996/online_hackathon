@@ -9,20 +9,17 @@ export default class JudgeHackathon extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            HackathonId : this.props.match.params.id,
             eventName: "",
             description: "",
-            fee: "",
-            minTeamSize: "",
-            maxTeamSize: "",
             passIdToProps: "",
+            startDate : "",
+            endDate : "",
             successFlag: false
         }
 
         this.eventNameHandler = this.eventNameHandler.bind(this)
         this.descriptionHandler = this.descriptionHandler.bind(this)
-        this.feeHandler = this.feeHandler.bind(this)
-        this.minTeamSizeHandler = this.minTeamSizeHandler.bind(this)
-        this.maxTeamSizeHandler = this.maxTeamSizeHandler.bind(this)
         this.submitHandler = this.submitHandler.bind(this)
     }
 
@@ -31,6 +28,31 @@ export default class JudgeHackathon extends Component {
             successFlag: false
         })
     }
+
+    componentDidMount() {
+        var headers = {
+          Authorization: localStorage.getItem("token")
+        }; 
+        axios.get(`http://localhost:8080/hackathons/${this.state.HackathonId}`, {
+          headers
+        }).then(response => {
+          console.log(' the resposne :' + JSON.stringify(response.data))
+          if(response.status === 200){
+            this.setState({
+                successFlag : true,
+                eventName : response.data.eventName,
+                description : response.data.description,
+                startDate : response.data.startTime,
+                endDate : response.data.endTime
+            })
+          } else{
+            this.setState({
+                successFlag : false
+            })
+          }
+        });
+      }
+
 
     eventNameHandler = (h) => {
         this.setState({
@@ -81,16 +103,16 @@ export default class JudgeHackathon extends Component {
     }
 
     render() {
-        let redirectVar = null
-        if (this.state.successFlag) {
-            redirectVar = <Redirect to={{
-                pathname: '/hackathonDetails',
-                state: { id: this.state.passIdToProps }
-            }} />
-        }
+        // let redirectVar = null
+        // if (this.state.successFlag) {
+        //     redirectVar = <Redirect to={{
+        //         pathname: '/hackathonDetails',
+        //         state: { id: this.state.passIdToProps }
+        //     }} />
+        // }
         return (
             <div style={{ backgroundColor: "#f2f2f2" }}>
-                {redirectVar}
+                {/* {redirectVar} */}
                 <Header />
                 <div>
 
@@ -101,8 +123,10 @@ export default class JudgeHackathon extends Component {
                                 <div class="organization-panel">
                                     {/* <img src={openhacklogo} width="75px" height="75px" /> */}
                                     <h5>Judge Hackathon</h5><br />
-                                    Hackathon Name:<br/>
-                                    Hackathon Description:<br/>
+                                    Hackathon Name: {this.state.eventName}<br/>
+                                    Hackathon Description: {this.state.description} <br/>
+                                    Start Date : {this.state.startDate} , End Date : {this.state.endDate} <br/>
+                                    
                                     {/* <div class="form-group">
                                         <div class="input-group mb-3">
                                             <input type="text" class="form-control" placeholder="Organization Name" aria-label="Recipient's username" aria-describedby="button-addon2" />
@@ -113,12 +137,7 @@ export default class JudgeHackathon extends Component {
                                     </div> */}
                                 </div>
                                 <form onSubmit={this.submitHandler} style={{marginTop: '110px'}} >
-                                <CardJudgeHackathon/>
-                                <CardJudgeHackathon/>
-                                <CardJudgeHackathon/>
-                                <CardJudgeHackathon/>
-                                <CardJudgeHackathon/>
-                                <CardJudgeHackathon/>
+                                <CardJudgeHackathon id={this.state.HackathonId}/>
                                 </form>
                             </div>
                         </div>

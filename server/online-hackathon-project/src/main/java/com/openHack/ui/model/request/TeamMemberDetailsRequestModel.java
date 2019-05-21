@@ -5,6 +5,7 @@ public class TeamMemberDetailsRequestModel {
 	private long userId;
 	private String role = "programmer";
 	private boolean paid = false;
+	private long hackathonId;
 	public long getUserId() {
 		return userId;
 	}
@@ -23,6 +24,13 @@ public class TeamMemberDetailsRequestModel {
 	}
 	public void setPaid(boolean paid) {
 		this.paid = paid;
+	}
+	
+	public long getHackathonId() {
+		return hackathonId;
+	}
+	public void setHackathonId(long hackathonId) {
+		this.hackathonId = hackathonId;
 	}
 	@Override
 	public String toString() {

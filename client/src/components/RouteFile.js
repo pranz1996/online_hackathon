@@ -22,6 +22,8 @@ import Payment from "./Admin/Payment";
 import ConfirmEmail from "./Admin/ConfirmEmail";
 import ConfirmEmailFinal from "./Admin/ConfirmEmailFinal";
 import CreatedOrganization from "./Organization/CreatedOrganization";
+import Submission from './Hackathon/Submission';
+import JudgePortal from './Judge/JudgePortal';
 
 require("dotenv").config();
 class RouteFile extends Component {
@@ -47,14 +49,19 @@ class RouteFile extends Component {
         <Route path="/myOrganization" component={MyOrganization} />
         <Route path="/searchHackathon" component={SearchHackathon} />
         <Route path="/myHackathon" component={MyHackathon} />
-        <Route path="/judgeHackathon" component={JudgeHackathon} />
+        <Route path="/judgeHackathon/:id" component={JudgeHackathon} />
         <Route path="/showEmailSent" component={ShowEmailSent} />
         <Route path="/adminHome" component={AdminHome} />
+
         <Route path="/registerForHackathon/:id" component={RegisterForHackathon} />
+        <Route path="/submission/:id" component={Submission} />
+
         <Route path="/payment" component={Payment} />
         <Route path="/confirmEmail" component={ConfirmEmail} />
         <Route path="/confirmEmailFinal" component={ConfirmEmailFinal} />
         <Route path="/createdOrganization" component={CreatedOrganization} />
+
+         <Route path="/judge" component={JudgePortal} />
       </div>
     );
   }
