@@ -14,7 +14,8 @@ export default class CreatedOrganization extends Component {
       requestThrough: false,
       routeCreateOrg: false,
       search: false,
-      searchKey: ""
+      searchKey: "",
+      orgIDState: ""
     };
 
     this.eventNameHandler = this.eventNameHandler.bind(this);
@@ -47,7 +48,7 @@ export default class CreatedOrganization extends Component {
 
     axios
       .get(
-        `http://localhost:8080/joinrequest/getRequestsForMyOrganisation/${localStorage.getItem(
+        `http://localhost:8080/organizations/getOrganisationRequests/${localStorage.getItem(
           "userId"
         )}`,
         {
@@ -118,6 +119,136 @@ export default class CreatedOrganization extends Component {
       routeCreateOrg: true
     });
   }
+
+  acceptFunc = item => {
+    console.log("acceptFunc: ");
+    var self = this;
+    let orgIDNew;
+
+    //get id from org name first
+    var body = {
+      orgName: item.organization_id
+    };
+    var headers = {
+      Authorization: localStorage.getItem("token")
+    };
+
+    axios
+      .get(`http://localhost:8080/organizations/name/${item.organization_id}`, {
+        headers
+      })
+      .then(response => {
+        console.log("Name response " + response.data.id);
+        orgIDNew = response.data.id;
+        self.state.orgIDState = response.data.id;
+        var data = {
+          user_id: item.user_id,
+          organization_id: self.state.orgIDState
+        };
+
+        // var headers = {
+        //   Authorization: localStorage.getItem("token")
+        // };
+
+        if (!item.accept) {
+          // alert("in reject " + !item.accept);
+          // alert("date reject " + JSON.stringify(data));
+          axios
+            .post("http://localhost:8080/denyrequest/deny", data, {
+              headers
+            })
+            .then(response => {
+              //resp = JSON.stringify(response);
+
+              // self.setState({
+              //   requestThrough: true
+              // });
+
+              alert("Accept response " + response.data);
+
+              //this.state.requestThrough = true;
+              //console.log("response " + response.data);
+            })
+            .catch(function(error) {
+              // handle error
+              alert("error: " + error);
+            });
+        } else {
+          axios
+            .post("http://localhost:8080/joinrequest/accept", data, {
+              headers
+            })
+            .then(response => {
+              //resp = JSON.stringify(response);
+
+              // self.setState({
+              //   requestThrough: true
+              // });
+
+              alert("Accept response " + response.data);
+
+              //this.state.requestThrough = true;
+              //console.log("response " + response.data);
+            })
+            .catch(function(error) {
+              // handle error
+              console.log("error: " + error);
+            });
+        }
+      })
+      .catch(function(error) {
+        // handle error
+        console.log("error: " + error);
+      });
+
+    // now post accept
+  };
+
+  denyFunc = item => {
+    console.log("acceptFunc: ");
+    var self = this;
+    var orgIDNew;
+
+    //get id from org name first
+    var data1 = {
+      orgName: item.organization_id
+    };
+    var headers = {
+      Authorization: localStorage.getItem("token")
+    };
+
+    axios
+      .get("http://localhost:8080/organizations/name", data1, {
+        headers
+      })
+      .then(response => {
+        //resp = JSON.stringify(response);
+
+        // self.setState({
+        //   requestThrough: true
+        // });
+
+        alert("Name response " + response.data.id);
+        orgIDNew = response.data.id;
+
+        //this.state.requestThrough = true;
+        //console.log("response " + response.data);
+      })
+      .catch(function(error) {
+        // handle error
+        console.log("error: " + error);
+      });
+
+    // now post accept
+    var data = {
+      user_id: item.user_id,
+      organization_id: orgIDNew
+    };
+
+    // var headers = {
+    //   Authorization: localStorage.getItem("token")
+    // };
+  };
 
   requestFunc = item => {
     //h.preventDefault();
@@ -202,7 +333,7 @@ export default class CreatedOrganization extends Component {
           <OrganizationCard
             k={k}
             props={this.state.org_list[k][j]}
-            func={this.requestFunc}
+            acceptFunc={this.acceptFunc}
           />
         );
       }

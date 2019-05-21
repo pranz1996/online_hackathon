@@ -140,6 +140,11 @@ export default class SearchOrganization extends Component {
       .catch(function(error) {
         // handle error
         console.log("error: " + error);
+        if (error == "Error: Request failed with status code 500") {
+          alert(
+            "User Already a Part of another Organization! Please leave your current Organization to join New"
+          );
+        }
       });
   };
 

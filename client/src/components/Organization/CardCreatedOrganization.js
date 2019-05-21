@@ -14,20 +14,40 @@ export default class CardCreatedOrganization extends Component {
       successFlag: false,
       done: false
     };
-    this.buttonHandler = this.buttonHandler.bind(this);
+    this.acceptHandler = this.acceptHandler.bind(this);
+    this.rejectHandler = this.rejectHandler.bind(this);
   }
 
-  buttonHandler = h => {
+  acceptHandler = h => {
     //h.preventDefault();
 
     console.log(" prop out");
 
     var item = {
-      user_id: localStorage.getItem("userId"),
-      organization_id: h.target.id
+      accept: true,
+      user_id: this.props.props.id,
+      organization_id: this.props.k
     };
-    this.props.func(item);
+
+    this.props.acceptFunc(item);
     this.state.done = true;
+    window.location.reload();
+  };
+
+  rejectHandler = h => {
+    //h.preventDefault();
+
+    console.log(" prop out");
+
+    var item = {
+      accept: false,
+      user_id: this.props.props.id,
+      organization_id: this.props.k
+    };
+
+    this.props.acceptFunc(item);
+    this.state.done = true;
+    window.location.reload();
   };
 
   componentDidMount() {
@@ -60,7 +80,7 @@ export default class CardCreatedOrganization extends Component {
                 <h6 class="card-subtitle mb-2 text-muted">
                   {" "}
                   <br />
-                  For Hackathon: {this.props.k}
+                  For Organization: {this.props.k}
                   <br />{" "}
                 </h6>
                 <h6 class="card-subtitle mb-2 text-muted"> </h6>
@@ -68,10 +88,19 @@ export default class CardCreatedOrganization extends Component {
                 <button
                   type="button"
                   class="btn btn-outline-success btn-sm"
-                  onClick={this.buttonHandler}
+                  onClick={this.acceptHandler}
                   //id={this.props.props.id}
                 >
-                  View Join Requests
+                  Accept
+                </button>
+                {"  "}
+                <button
+                  type="button"
+                  class="btn btn-outline-danger btn-sm"
+                  onClick={this.rejectHandler}
+                  //id={this.props.props.id}
+                >
+                  Reject
                 </button>
               </h6>
             </div>

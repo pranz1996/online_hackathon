@@ -60,14 +60,14 @@ export default class MyOrganization extends Component {
       .then(response => {
         //resp = JSON.stringify(response);
         console.log("hi");
-        alert("hi");
+        //alert("hi");
 
         self.setState({
           organization: response.data.name,
           hasOrganization: true
         });
 
-        alert("response " + response.data);
+        //alert("response " + response.data);
 
         this.state.organization = response.data.name;
         this.state.hasOrganization = true;
@@ -119,7 +119,7 @@ export default class MyOrganization extends Component {
   submitHandler = h => {
     //h.preventDefault();
 
-    alert("hi");
+    //alert("hi");
 
     var headers = {
       Authorization: localStorage.getItem("token")
