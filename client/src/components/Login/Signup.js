@@ -8,6 +8,7 @@ import fire from "../../fire";
 import sendemail from "./helperFunctions";
 import createUser from "./helper2";
 import { auth } from "firebase";
+import {url} from '../Config_url'
 
 export default class Signup extends Component {
   constructor(props) {
@@ -89,7 +90,7 @@ export default class Signup extends Component {
     console.log("signup: ", data);
     // axios.defaults.withCredentials = true
     if(this.state.password === this.state.repeatpassword){
-        axios.post("http://localhost:8080/users", data).then(response => {
+        axios.post(`${url}/users`, data).then(response => {
         console.log(" response : ", response);
         console.log(" response status : ", response.status);
         if (response.status === 200) {

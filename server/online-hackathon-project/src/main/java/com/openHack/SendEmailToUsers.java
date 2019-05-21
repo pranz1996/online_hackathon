@@ -9,7 +9,9 @@ public class SendEmailToUsers
 {
 	public boolean sendMail(String email, String subject, String body) throws IOException
 	{
-		String url = "http://localhost:3000/results";
+		//String url = "http://localhost:3000/results";
+		String url = Config_url.url + "/results";
+		
 		
 		Email from = new Email("results@hackathon.com");
 	    Email to = new Email(email);

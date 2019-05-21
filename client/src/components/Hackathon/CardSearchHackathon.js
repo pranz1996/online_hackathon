@@ -3,6 +3,7 @@ import axios from 'axios'
 import { Redirect } from 'react-router'
 import Header from '../Miscellanous/Header';
 import Footer from '../Miscellanous/Footer';
+import {url} from '../Config_url'
 
 export default class SearchOrganization extends Component {
     constructor(props) {
@@ -19,7 +20,7 @@ export default class SearchOrganization extends Component {
 
         }
         // axios.defaults.withCredentials = true
-        axios.post('http://localhost:8080/hackathons', data)
+        axios.post(`${url}/hackathons`, data)
             .then(response => {
 
                 console.log(response.data.id)

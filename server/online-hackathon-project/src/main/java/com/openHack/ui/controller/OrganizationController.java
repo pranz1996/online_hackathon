@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.openHack.Config_url;
 import com.openHack.io.entity.UserEntity;
 import com.openHack.service.OrganizationService;
 import com.openHack.shared.dto.DenyRequestDto;
@@ -34,7 +35,7 @@ import com.openHack.ui.model.response.OrganizationDetailsResponseModel;
 
 @RestController
 @RequestMapping("organizations") // http://localhost:8080/organizations
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = Config_url.url)
 public class OrganizationController {
 
 	@Autowired

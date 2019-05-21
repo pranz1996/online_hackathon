@@ -4,6 +4,7 @@ import { Redirect } from "react-router";
 import Header from "../Miscellanous/Header";
 import AdminHeader from "../Admin/AdminHeader";
 import Footer from "../Miscellanous/Footer";
+import {url} from '../Config_url'
 
 export default class UserProfile extends Component {
   constructor(props) {
@@ -30,7 +31,7 @@ export default class UserProfile extends Component {
 
   componentDidMount() {
     axios
-      .get(`http://localhost:8080/users/${localStorage.getItem("userId")}`)
+      .get(`${url}/users/${localStorage.getItem("userId")}`)
       .then(response => {
         console.log(" response from server: ", response.data);
         this.setState({
@@ -101,7 +102,7 @@ export default class UserProfile extends Component {
 
     axios
       .post(
-        `http://localhost:8080/users/${localStorage.getItem("userId")}`,
+        `${url}/users/${localStorage.getItem("userId")}`,
         data
       )
       .then(response => {

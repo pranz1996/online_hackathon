@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.openHack.Config_url;
 import com.openHack.io.repository.UserRepository;
 import com.openHack.service.UserService;
 import com.openHack.shared.dto.OrganizationDto;
@@ -27,7 +28,7 @@ import com.openHack.ui.model.request.UserLoginRequestModel;
 import com.openHack.ui.model.response.OrganizationDetailsResponseModel;
 import com.openHack.ui.model.response.UserDetailsResponseModel;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = Config_url.url)
 @RequestMapping("users")
 @RestController
 public class UserController {

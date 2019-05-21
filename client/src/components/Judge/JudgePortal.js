@@ -5,6 +5,7 @@ import Header from "../Miscellanous/Header";
 import Footer from "../Miscellanous/Footer";
 import AdminHeader from "../Admin/AdminHeader";
 import {Link} from 'react-router-dom'
+import {url} from '../Config_url'
 
 export default class JudgePortal extends Component {
   constructor(props) {
@@ -25,7 +26,7 @@ export default class JudgePortal extends Component {
     var headers = {
       Authorization: localStorage.getItem("token")
     }; 
-    axios.get(`http://localhost:8080/hackathons/getHackathonsToJudge/${localStorage.getItem('userId')}`, {
+    axios.get(`${url}/hackathons/getHackathonsToJudge/${localStorage.getItem('userId')}`, {
       headers
     }).then(response => {
       console.log(' the resposne :' + JSON.stringify(response.data))

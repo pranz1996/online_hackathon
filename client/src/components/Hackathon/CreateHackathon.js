@@ -4,6 +4,7 @@ import { Redirect } from "react-router";
 import Header from "../Admin/AdminHeader";
 import Footer from "../Miscellanous/Footer";
 import { Form, Select } from 'antd';
+import {url} from '../Config_url'
 
 const listOfUsers = [''];
 
@@ -49,7 +50,7 @@ export default class CreateHackathon extends Component {
     };
 
     axios
-      .get("http://localhost:8080/users/getAllUsers", {
+      .get(`${url}/users/getAllUsers`, {
         headers
       })
       .then(response => {
@@ -177,12 +178,12 @@ export default class CreateHackathon extends Component {
     };
     console.log(" data " + data)
     if(this.state.startTime < this.state.endTime){
-      axios.post("http://localhost:8080/hackathons", data)
+      axios.post(`${url}/hackathons`, data)
       .then((response) => {
         console.log(" response " + response.data);
         if (response.status === 200) {
           document.getElementById("createButton").click();
-          window.location.replace("http://localhost:3000/cardAdminHackathon");
+          window.location.replace(`${url}/cardAdminHackathon`);
         }
       });
     }

@@ -4,6 +4,7 @@ import { Redirect } from "react-router";
 import Header from "../Miscellanous/Header";
 import Footer from "../Miscellanous/Footer";
 import CardAdminHackthon from "./CardAdminHackthon";
+import {url} from '../Config_url'
 
 export default class SearchHackathon extends Component {
   constructor(props) {
@@ -68,7 +69,7 @@ export default class SearchHackathon extends Component {
       maxTeamSize: this.state.maxTeamSize
     };
     // axios.defaults.withCredentials = true
-    axios.post("http://localhost:8080/hackathons", data).then(response => {
+    axios.post(`${url}/hackathons`, data).then(response => {
       console.log(response.data.id);
       if (response.status === 200) {
         this.setState({
