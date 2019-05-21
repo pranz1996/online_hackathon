@@ -2,11 +2,13 @@ package com.openHack.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openHack.io.entity.HackathonEntity;
+import com.openHack.io.entity.OrganizationEntity;
 import com.openHack.io.entity.TeamEntity;
 import com.openHack.io.entity.TeamMemberEntity;
 import com.openHack.io.entity.TeamMembersTeam;
 import com.openHack.io.entity.UserEntity;
 import com.openHack.io.repository.HackathonRepository;
+import com.openHack.io.repository.OrganizationRepository;
 import com.openHack.io.repository.TeamMemberRepository;
 import com.openHack.io.repository.TeamMembersTeamRepository;
 import com.openHack.io.repository.TeamRepository;
@@ -20,11 +22,14 @@ import com.openHack.ui.model.request.GetTeamIdRequestModel;
 import com.openHack.ui.model.request.GradeTeamsRequestModel;
 import com.openHack.ui.model.request.SubmissionDetailsRequestModel;
 import com.openHack.ui.model.request.TeamDetailsRequestModel;
+import com.openHack.ui.model.request.teamMemberAmountToPayRequestModel;
 import com.openHack.ui.model.response.TeamDetailsResposeModel;
+import com.openHack.ui.model.response.TeamMemberAmountToPayWithDisReponseModel;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -50,7 +55,11 @@ public class TeamServiceImpl implements TeamService {
 	UserRepository userRepository;
 	
 	@Autowired
+	OrganizationRepository organisationRepository;
+	
+	@Autowired
 	TeamMembersTeamRepository teamMembersTeamRepository;
+	
 	// service method to store team details
 	@Override
 	public TeamDto createTeam(TeamDto teamDto) {
@@ -189,6 +198,46 @@ public class TeamServiceImpl implements TeamService {
 		
 		// Saving the updated TeamMebmer Details
 		teamMemberRepository.save(teamMemberEntity);
+	}
+	
+	// method for payment by any team member
+	@Override
+	public TeamMemberAmountToPayWithDisReponseModel getAmountToPay(teamMemberAmountToPayRequestModel user) {	
+		TeamMemberAmountToPayWithDisReponseModel details = new TeamMemberAmountToPayWithDisReponseModel();
+		
+		//get the user with email id
+		UserEntity userEntity = userRepository.findByEmail(user.getTeamMemberEmail());
+		
+		HackathonEntity hackathon = hackathonRepository.findByEventName(user.getHackthonName());
+		
+		//get the org that user is a part of
+		OrganizationEntity org = userEntity.getOrganizationEntity();
+		
+		//user is not a part of any org
+		if(org==null)
+		{
+			details.setAmountToPay(Double.parseDouble(hackathon.getFee()));
+			details.setDiscountPercentage(0);
+			return details;
+		}
+		
+		String orgName = org.getName();
+		String hackathonSponserors = hackathon.getSponsorers();
+		
+		boolean isApart = Pattern.compile(Pattern.quote(orgName), Pattern.CASE_INSENSITIVE).matcher(hackathonSponserors).find();
+		
+		//if user is a part of sponsrers org, apply discount
+		if(isApart)
+		{
+			details.setAmountToPay((Double.parseDouble(hackathon.getFee())*hackathon.getDiscount())/100);
+			details.setDiscountPercentage(hackathon.getDiscount());
+		}
+		else
+		{
+			details.setAmountToPay(Double.parseDouble(hackathon.getFee()));
+			details.setDiscountPercentage(0);
+		}
+		return details;
 	}
 
     //judges user id

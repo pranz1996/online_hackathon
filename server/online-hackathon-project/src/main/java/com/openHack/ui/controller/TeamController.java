@@ -11,10 +11,12 @@ import com.openHack.ui.model.request.GetTeamIdRequestModel;
 import com.openHack.ui.model.request.GradeTeamsRequestModel;
 import com.openHack.ui.model.request.SubmissionDetailsRequestModel;
 import com.openHack.ui.model.request.TeamDetailsRequestModel;
+import com.openHack.ui.model.request.teamMemberAmountToPayRequestModel;
 import com.openHack.ui.model.response.HackathonDetailsResposeModel;
 import com.openHack.ui.model.response.HackathonTeamsForJudgeResponseModel;
 import com.openHack.ui.model.response.OrganizationDetailsResponseModel;
 import com.openHack.ui.model.response.TeamDetailsResposeModel;
+import com.openHack.ui.model.response.TeamMemberAmountToPayWithDisReponseModel;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -110,6 +112,16 @@ public class TeamController {
     	}
     	
         return listOfTeams;
+    }
+    
+    // get teams by hackathon id
+    @GetMapping(path="/amountToPay")
+    public TeamMemberAmountToPayWithDisReponseModel amountToPay(@RequestBody teamMemberAmountToPayRequestModel user) {
+    	TeamMemberAmountToPayWithDisReponseModel amountDetails = new TeamMemberAmountToPayWithDisReponseModel();
+    	
+    	amountDetails = teamService.getAmountToPay(user);
+    	
+    	return amountDetails;
     }
 
     // update any Team details

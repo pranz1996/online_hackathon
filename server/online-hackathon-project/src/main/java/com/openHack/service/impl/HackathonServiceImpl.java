@@ -70,7 +70,8 @@ public class HackathonServiceImpl implements HackathonService {
 		hackathonEntity.setJudges(hackathonDto.getJudges());
 		hackathonEntity.setCreatedBy(hackathonDto.getCreatedBy());
 		hackathonEntity.setStatus("created");
-		
+		hackathonEntity.setDiscount(hackathonDto.getDiscount());
+		hackathonEntity.setSponsorers(hackathonDto.getSponsorers());
 		hackathonEntity.setStartTime(hackathonDto.getStartTime());
 		hackathonEntity.setEndTime(hackathonDto.getEndTime());
 		

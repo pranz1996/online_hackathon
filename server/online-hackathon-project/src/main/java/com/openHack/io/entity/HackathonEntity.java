@@ -56,6 +56,28 @@ public class HackathonEntity implements Serializable{
 	@Column
 	private String status;
 	
+	@Column
+	private String sponsorers;
+	
+	public String getSponsorers() {
+		return sponsorers;
+	}
+
+	public void setSponsorers(String sponsorers) {
+		this.sponsorers = sponsorers;
+	}
+
+	public double getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(double discount) {
+		this.discount = discount;
+	}
+
+	@Column
+	private double discount;
+	
 	public String getStatus() {
 		return status;
 	}

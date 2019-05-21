@@ -15,7 +15,21 @@ public class HackathonDto {
 	private String maxTeamSize;
 	private String createdBy;
 	private String status;
+	private String sponsorers;
+	private double discount;
 	
+	public String getSponsorers() {
+		return sponsorers;
+	}
+	public void setSponsorers(String sponsorers) {
+		this.sponsorers = sponsorers;
+	}
+	public double getDiscount() {
+		return discount;
+	}
+	public void setDiscount(double discount) {
+		this.discount = discount;
+	}
 	private boolean hackatonWinner = false;
 	private List<UserEntity> judges;
 	public long getId() {

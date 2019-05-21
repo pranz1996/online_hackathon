@@ -11,7 +11,9 @@ import com.openHack.shared.dto.TeamsByJudgeDto;
 import com.openHack.ui.model.request.GetTeamIdRequestModel;
 import com.openHack.ui.model.request.GradeTeamsRequestModel;
 import com.openHack.ui.model.request.SubmissionDetailsRequestModel;
+import com.openHack.ui.model.request.teamMemberAmountToPayRequestModel;
 import com.openHack.ui.model.response.TeamDetailsResposeModel;
+import com.openHack.ui.model.response.TeamMemberAmountToPayWithDisReponseModel;
 
 public interface TeamService {
 	TeamDto createTeam(TeamDto teamDto);
@@ -24,4 +26,5 @@ public interface TeamService {
 	void gradeTeamWithName(GradeTeamsRequestModel gradeTeam);
 	JsonObject getTeamId(GetTeamIdRequestModel getTeamId);
 	ArrayList<TeamDto> getTeamsForEvaluation(long id);
+	public TeamMemberAmountToPayWithDisReponseModel getAmountToPay(teamMemberAmountToPayRequestModel user);
 }

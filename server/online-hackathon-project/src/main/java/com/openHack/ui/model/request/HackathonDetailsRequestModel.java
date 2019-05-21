@@ -1,7 +1,6 @@
 package com.openHack.ui.model.request;
 
 import java.util.List;
-
 import com.openHack.io.entity.UserEntity;
 
 public class HackathonDetailsRequestModel {
@@ -16,9 +15,26 @@ public class HackathonDetailsRequestModel {
 	private boolean hackatonWinner = false;
 	private String status;
 	private List<UserEntity> judges;
+	private String sponsorers;
+	private double discount;
 	
 	public String getEventName() {
 		return eventName;
+	}
+	
+	public String getSponsorers() {
+		return sponsorers;
+	}
+
+	public void setSponsorers(String sponsorers) {
+		this.sponsorers = sponsorers;
+	}
+
+	public double getDiscount() {
+		return discount;
+	}
+	public void setDiscount(double discount) {
+		this.discount = discount;
 	}
 	public void setEventName(String eventName) {
 		this.eventName = eventName;
