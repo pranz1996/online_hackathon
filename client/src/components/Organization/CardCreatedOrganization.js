@@ -23,11 +23,13 @@ export default class CardCreatedOrganization extends Component {
 
     console.log(" prop out");
 
-    var item = {
+    const item = {
       accept: true,
       user_id: this.props.props.id,
       organization_id: this.props.k
     };
+
+    console.log(' item before seding : ' + item)
 
     this.props.acceptFunc(item);
     this.state.done = true;

@@ -81,7 +81,7 @@ export default class CreateOrganization extends Component {
     };
 
     console.log("userId: " + localStorage.getItem("token"));
-    alert("userId: " + localStorage.getItem("token"));
+    // alert("userId: " + localStorage.getItem("token"));
     const data = {
       name: this.state.name,
       ownerId: localStorage.getItem("userId"),

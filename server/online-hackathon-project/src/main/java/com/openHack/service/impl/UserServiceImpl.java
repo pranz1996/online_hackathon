@@ -145,6 +145,8 @@ public class UserServiceImpl implements UserService{
 		JsonObject object = null; 
 		
 		System.out.println(" outside ");
+		
+		System.out.println(" user password : " + user.getPassword());
 				
 		if(userLoginRequestModel.getPassword().equals(user.getPassword())) {
 			

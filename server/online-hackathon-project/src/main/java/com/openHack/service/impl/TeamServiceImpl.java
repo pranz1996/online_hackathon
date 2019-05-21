@@ -5,10 +5,12 @@ import com.openHack.io.entity.HackathonEntity;
 import com.openHack.io.entity.TeamEntity;
 import com.openHack.io.entity.TeamMemberEntity;
 import com.openHack.io.entity.TeamMembersTeam;
+import com.openHack.io.entity.UserEntity;
 import com.openHack.io.repository.HackathonRepository;
 import com.openHack.io.repository.TeamMemberRepository;
 import com.openHack.io.repository.TeamMembersTeamRepository;
 import com.openHack.io.repository.TeamRepository;
+import com.openHack.io.repository.UserRepository;
 import com.openHack.service.TeamService;
 import com.openHack.shared.dto.HackathonDto;
 import com.openHack.shared.dto.TeamDto;
@@ -45,6 +47,9 @@ public class TeamServiceImpl implements TeamService {
 	HackathonRepository hackathonRepository;
 
 	@Autowired
+	UserRepository userRepository;
+	
+	@Autowired
 	TeamMembersTeamRepository teamMembersTeamRepository;
 	// service method to store team details
 	@Override
@@ -63,6 +68,18 @@ public class TeamServiceImpl implements TeamService {
 		TeamEntity savedTeam = teamRepository.save(teamEntity);
 		
 		List<TeamMemberEntity> teamMembers = savedTeam.getTeamMembers();
+		
+		// creating list of team member to send email after registration for hackathon
+		List<String> listOfTeamMembers = new ArrayList<>();
+		
+		for(int i = 0; i < teamMembers.size(); i++) {
+			long memberId = teamMembers.get(i).getUserId();
+			UserEntity member = userRepository.findById(memberId);
+			listOfTeamMembers.add(member.getEmail());
+		}
+		System.out.println(" List of team member to send email :" + listOfTeamMembers);
+		
+		System.out.println(" email confirmation ... ");
 		
 		long teamId = savedTeam.getId();
 		

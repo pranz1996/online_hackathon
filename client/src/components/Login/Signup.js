@@ -68,11 +68,17 @@ export default class Signup extends Component {
       this.setState({
         errMsg : "Passwords do not match"
       })
+    }else if(this.state.password.length < 3){
+      this.setState({
+        errMsg : "Password must be atleast 3 characters long"
+      })
     }else{
       this.setState({
         errMsg : null
       })
     }
+
+
     const data = {
       userName: this.state.username,
       email: this.state.email,
@@ -87,9 +93,20 @@ export default class Signup extends Component {
         console.log(" response : ", response);
         console.log(" response status : ", response.status);
         if (response.status === 200) {
+
+          Auth(email, password, resp => {
+            if (resp == true) {
+              this.setState({ isloggedin: true });
+            } else {
+              alert(resp);
+            }
+          });
+
           this.setState({
             successFlag: true
           });
+        } else {
+          alert(' please try again ... ')
         }
       });
     }
@@ -144,14 +161,6 @@ export default class Signup extends Component {
     //         console.log("error" + errorMessage);
     //     });
     // }
-
-    Auth(email, password, resp => {
-      if (resp == true) {
-        this.setState({ isloggedin: true });
-      } else {
-        alert(resp);
-      }
-    });
   };
 
   render() {

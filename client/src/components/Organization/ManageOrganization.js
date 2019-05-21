@@ -3,9 +3,9 @@ import axios from "axios";
 import { Redirect } from "react-router";
 import Header from "../Miscellanous/Header";
 import Footer from "../Miscellanous/Footer";
-import OrganizationCard from "../Organization/CardCreatedOrganization";
+import OrganizationCard from "./CardCreatedOrganization";
 
-export default class CreatedOrganization extends Component {
+export default class ManageOrganization extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -145,6 +145,8 @@ export default class CreatedOrganization extends Component {
           user_id: item.user_id,
           organization_id: self.state.orgIDState
         };
+
+        console.log(' data before sending : ' + data)
 
         // var headers = {
         //   Authorization: localStorage.getItem("token")
