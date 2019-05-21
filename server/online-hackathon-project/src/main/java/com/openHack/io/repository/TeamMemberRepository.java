@@ -28,5 +28,8 @@ public interface TeamMemberRepository extends CrudRepository<TeamMemberEntity, L
 	
 	@Query(value="Select * from team_members where user_id=?1 and hackathon_id=?2", nativeQuery = true)
 	TeamMemberEntity findHackathonByUser(long userId, long hackathonId);
+	
+	@Query(value="Select team_id from team_members where user_id=?1", nativeQuery = true)
+	long getTeamId(long userId);
 
 }

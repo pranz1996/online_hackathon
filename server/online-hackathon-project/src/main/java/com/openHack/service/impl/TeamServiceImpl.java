@@ -3,12 +3,14 @@ package com.openHack.service.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openHack.io.entity.HackathonEntity;
 import com.openHack.io.entity.OrganizationEntity;
+import com.openHack.io.entity.PaymentDetailsEntity;
 import com.openHack.io.entity.TeamEntity;
 import com.openHack.io.entity.TeamMemberEntity;
 import com.openHack.io.entity.TeamMembersTeam;
 import com.openHack.io.entity.UserEntity;
 import com.openHack.io.repository.HackathonRepository;
 import com.openHack.io.repository.OrganizationRepository;
+import com.openHack.io.repository.PaymentDetailsRepository;
 import com.openHack.io.repository.TeamMemberRepository;
 import com.openHack.io.repository.TeamMembersTeamRepository;
 import com.openHack.io.repository.TeamRepository;
@@ -25,8 +27,10 @@ import com.openHack.ui.model.request.TeamDetailsRequestModel;
 import com.openHack.ui.model.request.teamMemberAmountToPayRequestModel;
 import com.openHack.ui.model.response.TeamDetailsResposeModel;
 import com.openHack.ui.model.response.TeamMemberAmountToPayWithDisReponseModel;
+import com.openHack.ui.model.response.TeamMembersWithPayment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -59,6 +63,9 @@ public class TeamServiceImpl implements TeamService {
 	
 	@Autowired
 	TeamMembersTeamRepository teamMembersTeamRepository;
+	
+	@Autowired
+	PaymentDetailsRepository paymentDetailsRepository;
 	
 	// service method to store team details
 	@Override
@@ -339,5 +346,60 @@ public class TeamServiceImpl implements TeamService {
 		}
 		
 		return allTeamsDto;
+	}
+
+	@Override
+	public void payment(String userEmail, double amount, String hackathonName, String paymentTime) 
+	{
+		PaymentDetailsEntity payment = new PaymentDetailsEntity();
+		
+		payment.setAmountPaid(amount);
+		payment.setHackathonName(hackathonName);
+		payment.setUserEmail(userEmail);
+		payment.setPaymentTime(paymentTime);
+		
+		paymentDetailsRepository.save(payment);
+	}
+
+
+	@Override
+	public HashMap<String, ArrayList<TeamMembersWithPayment>> getPaymentDetails(String hackathonName) {
+		ArrayList<PaymentDetailsEntity> payments = new ArrayList<PaymentDetailsEntity>();
+		payments = paymentDetailsRepository.getHackathonPayments(hackathonName);
+		HashMap<String, ArrayList<TeamMembersWithPayment>> finalResult = new HashMap<String, ArrayList<TeamMembersWithPayment>>();
+		TeamMembersWithPayment singleTeamMember;
+		TeamEntity teamentity;
+		ArrayList<TeamMembersWithPayment> response = new ArrayList<TeamMembersWithPayment>();
+		
+		String useremail;
+		UserEntity userentity;
+		for(PaymentDetailsEntity payment: payments)
+		{
+			singleTeamMember = new TeamMembersWithPayment();
+			useremail = payment.getUserEmail();
+			userentity = userRepository.findByEmail(useremail);
+			singleTeamMember.setTeamMemberName(userentity.getUserName());
+			singleTeamMember.setAmountPaid(Double.toString(payment.getAmountPaid()));
+			singleTeamMember.setTimePaid(payment.getPaymentTime());
+			
+			//get the team
+			long teamId = teamMemberRepository.getTeamId(userentity.getId());
+			teamentity = new TeamEntity();
+			teamentity = teamRepository.findById(teamId);
+			//response.add(singleTeamMember);
+			
+			if(finalResult.containsKey(teamentity.getTeamName()))
+			{
+				response.add(singleTeamMember);
+				finalResult.replace(teamentity.getTeamName(), response);
+			}
+			else
+			{
+				response = new ArrayList<TeamMembersWithPayment>();
+				response.add(singleTeamMember);
+				finalResult.put(teamentity.getTeamName(), response);
+			}
+		}
+	   return finalResult;
 	}
 }

@@ -10,6 +10,8 @@ import com.openHack.shared.dto.TeamDto;
 import com.openHack.shared.dto.TeamsByJudgeDto;
 import com.openHack.ui.model.request.GetTeamIdRequestModel;
 import com.openHack.ui.model.request.GradeTeamsRequestModel;
+import com.openHack.ui.model.request.HackathonDetailsRequestModel;
+import com.openHack.ui.model.request.PaymentRequestModel;
 import com.openHack.ui.model.request.SubmissionDetailsRequestModel;
 import com.openHack.ui.model.request.TeamDetailsRequestModel;
 import com.openHack.ui.model.request.teamMemberAmountToPayRequestModel;
@@ -18,8 +20,10 @@ import com.openHack.ui.model.response.HackathonTeamsForJudgeResponseModel;
 import com.openHack.ui.model.response.OrganizationDetailsResponseModel;
 import com.openHack.ui.model.response.TeamDetailsResposeModel;
 import com.openHack.ui.model.response.TeamMemberAmountToPayWithDisReponseModel;
+import com.openHack.ui.model.response.TeamMembersWithPayment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.json.JsonObject;
@@ -166,7 +170,23 @@ public class TeamController {
     	
     	teamService.createPayment(id);
     	
-    	return "successfully pay for the hackathon";
+    	return "successfully paid for the hackathon";
+    }
+    
+    // payment by any team member for a hackathon
+    @PostMapping(path="/payment")
+    public String paymentForHackathon(@RequestBody PaymentRequestModel paymentdetails) {
+    	
+    	teamService.payment(paymentdetails.getUserEmail(), paymentdetails.getAmount(),paymentdetails.getHackathonName(), paymentdetails.getPaymentTime());
+    	
+    	return "you have successfully paid for the hackathon";
+    }
+    
+    @GetMapping(path="/getPaymentDetails")
+    public HashMap<String, ArrayList<TeamMembersWithPayment>> getPaymentDeatils(@RequestBody PaymentRequestModel paymentdetails) {
+    	HashMap<String, ArrayList<TeamMembersWithPayment>> results = new HashMap<String, ArrayList<TeamMembersWithPayment>>();
+    	results = teamService.getPaymentDetails(paymentdetails.getHackathonName());
+    	return results;
     }
     
     @PostMapping(path="/assignGrade/{id}/{grade}")
