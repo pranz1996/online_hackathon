@@ -1,8 +1,9 @@
 package com.openHack.service;
 
 import java.util.ArrayList;
-
+import java.util.HashMap;
 import com.openHack.shared.dto.HackathonDto;
+import com.openHack.shared.dto.HackathonResultsDto;
 
 public interface HackathonService {
 	HackathonDto createHackthon(HackathonDto hackathonDto);
