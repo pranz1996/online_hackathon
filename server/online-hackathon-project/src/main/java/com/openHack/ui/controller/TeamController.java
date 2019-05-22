@@ -42,7 +42,7 @@ public class TeamController {
     
     // create and add new Team
     @PostMapping
-    public TeamDetailsResposeModel createTeam(@RequestBody TeamDetailsRequestModel teamDetailsRequestModel) {
+    public TeamDetailsResposeModel createTeam(@RequestBody TeamDetailsRequestModel teamDetailsRequestModel) throws IOException {
 
     	// TeamDetailsRequestModel object: contains input request data
     	
