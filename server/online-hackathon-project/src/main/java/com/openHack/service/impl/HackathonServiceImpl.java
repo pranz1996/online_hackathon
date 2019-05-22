@@ -15,6 +15,7 @@ import com.openHack.io.entity.TeamEntity;
 import com.openHack.io.entity.TeamMemberEntity;
 import com.openHack.io.entity.UserEntity;
 import com.openHack.io.repository.HackathonRepository;
+import com.openHack.io.repository.PaymentDetailsRepository;
 import com.openHack.io.repository.TeamMemberRepository;
 import com.openHack.io.repository.TeamRepository;
 import com.openHack.io.repository.UserRepository;
@@ -22,6 +23,7 @@ import com.openHack.service.HackathonService;
 import com.openHack.shared.dto.HackathonDto;
 import com.openHack.shared.dto.HackathonResultsDto;
 import com.openHack.shared.dto.UserDto;
+import com.openHack.ui.model.response.EarningReportResponseModel;
 
 @Service
 public class HackathonServiceImpl implements HackathonService {
@@ -38,11 +40,12 @@ public class HackathonServiceImpl implements HackathonService {
 	@Autowired
 	TeamRepository teamRepository;
 	
+	@Autowired
+	PaymentDetailsRepository paymentDetailsRepository;
+	
 	// Service method store hackathon object to database
 	@Override
 	public HackathonDto createHackthon(HackathonDto hackathonDto) {
-		
-		
 		System.out.println(hackathonDto);
 		System.out.println(" hackathon ... ");
 		
@@ -360,5 +363,52 @@ public class HackathonServiceImpl implements HackathonService {
 		}
 		finalResults.put("Others",others);
 		return finalResults;
+	}
+
+	@Override
+	public ArrayList<String> getFinalisedHackathons() {	
+		ArrayList<HackathonEntity> finalisedHackathonsEnt = hackathonRepository.getFinaliedHackathons("finalized");
+		ArrayList<String> finalisedHackathons = new ArrayList<String>();
+		
+		for(HackathonEntity ent: finalisedHackathonsEnt)
+		{
+			finalisedHackathons.add(ent.getEventName());
+		}
+		
+		return finalisedHackathons;
+	}
+
+	@Override
+	public EarningReportResponseModel getEarningReport(String hackathonName) {
+		EarningReportResponseModel report = new EarningReportResponseModel();
+		double revenue = paymentDetailsRepository.getRevnueFromPaidRegistration(hackathonName);
+		report.setRevenue(revenue);
+		
+		//get number of unpaid users in a hackathon
+		int usersNo = paymentDetailsRepository.getNumberOfNonPaidUsers(hackathonName);
+		double hackathonCost = Double.valueOf(hackathonRepository.getHackathonCostFromName(hackathonName));
+		
+		report.setUnpaid(hackathonCost*usersNo);
+		
+		String sponsorers = hackathonRepository.getSponsorers(hackathonName);
+		String[] sponsorersList;
+		if(sponsorers!=null)
+		{
+		  sponsorersList = sponsorers.split(",");
+		  report.setRevnueFromSponsorers(sponsorersList.length*1000);
+		}
+		else
+		{
+			report.setRevnueFromSponsorers(0);
+		}
+		
+		double revnue = report.getRevenue(); 
+		double revnueFromSpon = report.getRevnueFromSponsorers();
+		double totalExpenses = report.getTotalExpenses();
+		double totalProfit = revnue+revnueFromSpon+totalExpenses;
+		
+		report.setProfit(totalProfit);
+		
+		return report;
 	}
 }

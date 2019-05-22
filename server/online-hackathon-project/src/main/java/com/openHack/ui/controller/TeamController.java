@@ -120,7 +120,7 @@ public class TeamController {
     }
     
     // get teams by hackathon id
-    @GetMapping(path="/amountToPay")
+    @PostMapping(path="/amountToPay")
     public TeamMemberAmountToPayWithDisReponseModel amountToPay(@RequestBody teamMemberAmountToPayRequestModel user) {
     	TeamMemberAmountToPayWithDisReponseModel amountDetails = new TeamMemberAmountToPayWithDisReponseModel();
     	
@@ -182,7 +182,7 @@ public class TeamController {
     	return "you have successfully paid for the hackathon";
     }
     
-    @GetMapping(path="/getPaymentDetails")
+    @PostMapping(path="/getPaymentDetails")
     public HashMap<String, ArrayList<TeamMembersWithPayment>> getPaymentDeatils(@RequestBody PaymentRequestModel paymentdetails) {
     	HashMap<String, ArrayList<TeamMembersWithPayment>> results = new HashMap<String, ArrayList<TeamMembersWithPayment>>();
     	results = teamService.getPaymentDetails(paymentdetails.getHackathonName());

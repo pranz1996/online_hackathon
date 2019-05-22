@@ -15,6 +15,12 @@ public interface HackathonRepository extends CrudRepository<HackathonEntity, Lon
 	@Query(value="SELECT hackathon_id FROM judges j where j.judge_id =?1", nativeQuery = true)
 	ArrayList<Long> getHackathonIds(long id);
 	
+	@Query(value="SELECT * from hackathons where status like ?1", nativeQuery = true)
+	ArrayList<HackathonEntity> getFinaliedHackathons(String status);	
 	
+	@Query(value="SELECT fee from hackathons where event_name like ?1", nativeQuery = true)
+	String getHackathonCostFromName(String hackathonName);
 	
+	@Query(value="SELECT sponsorers from hackathons where event_name like ?1", nativeQuery = true)
+	String getSponsorers(String hackathonName);
 }

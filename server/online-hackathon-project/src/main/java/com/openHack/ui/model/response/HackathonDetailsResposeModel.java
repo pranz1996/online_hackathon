@@ -11,6 +11,20 @@ public class HackathonDetailsResposeModel {
 	private String maxTeamSize;
 	private String createdBy;
 	private boolean hackatonWinner;
+	private String sponsorers;
+	public String getSponsorers() {
+		return sponsorers;
+	}
+	public void setSponsorers(String sponsorers) {
+		this.sponsorers = sponsorers;
+	}
+	public double getDiscount() {
+		return discount;
+	}
+	public void setDiscount(double discount) {
+		this.discount = discount;
+	}
+	private double discount;
 	private String status;
 	public long getId() {
 		return id;

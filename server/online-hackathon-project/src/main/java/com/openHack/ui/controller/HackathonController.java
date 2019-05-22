@@ -29,6 +29,7 @@ import com.openHack.shared.dto.HackathonResultsDto;
 import com.openHack.shared.dto.UserDto;
 import com.openHack.ui.model.request.HackathonDetailsRequestModel;
 import com.openHack.ui.model.request.JoinRequestDetailsModel;
+import com.openHack.ui.model.response.EarningReportResponseModel;
 import com.openHack.ui.model.response.HackathonDetailsResposeModel;
 import com.openHack.ui.model.response.UserDetailsResponseModel;
 
@@ -200,6 +201,7 @@ public class HackathonController {
 //		System.out.println(" list of Hackathons : " + singleResponseModel);
 		return listOfHackathons;
 	}
+	
 	@GetMapping(path="finaliseHackathon")
 	public HashMap<String, ArrayList<HackathonResultsDto>> getHackathonResults(@RequestBody HackathonDetailsRequestModel hack ) throws IOException {
 		HashMap<String, ArrayList<HackathonResultsDto>> results = new HashMap<String, ArrayList<HackathonResultsDto>>();
@@ -212,6 +214,13 @@ public class HackathonController {
 		results = hackathonService.finaliseHackathon(hackathonDto);
 		
 		return results;
+	}
+	
+	@GetMapping(path="getfinalisedHackathons")
+	public ArrayList<String> getfinalisedHackathons() {
+		ArrayList<String> finalisedHackathons = new ArrayList<String>();
+		finalisedHackathons = hackathonService.getFinalisedHackathons();
+		return finalisedHackathons;
 	}
 	
 	@PostMapping(path="sendEmailAfterHackFinalised")
@@ -252,27 +261,11 @@ public class HackathonController {
 			}
 		}
 	}
-	
-//	@RequestMapping(value = "/joinHackathon", method = RequestMethod.POST, produces = { "application/json", "application/xml" })
-//	public String joinHackathon(@RequestBody JoinRequestDetailsModel joinRequestDetailsModel) {
-//		
-//	
-//		HackathonDetailsResposeModel returnModel = new HackathonDetailsResposeModel();
-//		
-//		// DTO object to hold the input request data
-//		HackathonDto hackathonDto = new HackathonDto();
-//		// transferring input data to DTO object
-//		ModelMapper mapper = new ModelMapper();
-//		hackathonDto = mapper.map(hackathonDetailsRequestModel, HackathonDto.class);
-//		System.out.println(hackathonDto);
-//		// Service method Call to insert data
-//		HackathonDto createHacathon = hackathonService.createHackthon(hackathonDto);
-//		// Transferring DTO object data to response model
-//		mapper = new ModelMapper();
-//		returnModel = mapper.map(createHacathon, HackathonDetailsResposeModel.class);
-//	
-//		return returnModel;
-//	}
-	
-	
+
+	@PostMapping(path="getEarningReport")
+	public EarningReportResponseModel getEarningReport(@RequestBody HackathonDetailsRequestModel hack ){
+		EarningReportResponseModel report = new EarningReportResponseModel();
+		report = hackathonService.getEarningReport(hack.getEventName());
+		return report;
+	}
 }
