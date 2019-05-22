@@ -231,8 +231,6 @@ public class HackathonServiceImpl implements HackathonService {
 		ArrayList<HackathonDto> allHackathonDto = new ArrayList<HackathonDto>();
 		HackathonDto signleHackDto;
 		
-		System.out.println("demo ... ");
-		
 		List<TeamMemberEntity> teamMemberEntity = teamMemberRepository.findByUserId(id);
 		
 		List<Long> listOFHackathonsForUser = new ArrayList<Long>();

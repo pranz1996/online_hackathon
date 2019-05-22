@@ -11,19 +11,20 @@ import com.sendgrid.Response;
 import com.sendgrid.SendGrid;
 
 public class SendEmailForPayment {
-	
-	public boolean sendMail(String email, String subject, String body, String url) throws IOException
+	public boolean sendMail(String email, String subject, String body) throws IOException
 	{
+		//String url = "http://localhost:3000/results";
+		String url = Config_url.url + "/payment";
 		
-//		Email from = new Email("results@hackathon.com");
-		Email from = new Email("test@example.com");
+		
+		Email from = new Email("results@hackathon.com");
 	    Email to = new Email(email);
 
 		Content content = new Content();
 		content.setType("text/html");
-		content.setValue("<html><body><b>"+body+" : "+"</b><a href = '"+url+"'>here</a></body></html>");
+		content.setValue("<html><body><b>"+body+" : "+"</b><a href = "+url+">here</a></body></html>");
 		Mail mail = new Mail(from, subject, to, content);
-		SendGrid sg = new SendGrid("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");
+		SendGrid sg = new SendGrid("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");
 		Request request = new Request();
 		try 
 		{

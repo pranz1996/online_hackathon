@@ -42,9 +42,6 @@ public class HackathonController {
 	@Autowired
 	HackathonService hackathonService;
 	
-	@Value("${results.local.url}")
-	String resultsLocalUrl;
-	
 	// get any hackathon by id
 	@GetMapping(path="/{id}")
 	public HackathonDetailsResposeModel getHackathon(@PathVariable long id) {
@@ -79,7 +76,7 @@ public class HackathonController {
 			BeanUtils.copyProperties(dtoIterator.next(), singleResponseModel);
 			if(singleResponseModel.getStatus().equals("created"))
 				singleResponseModel.setStatus(" start the hackathon");
-			else if(singleResponseModel.getStatus().equals("open"))
+			else if(singleResponseModel.getStatus().equals("start"))
 				singleResponseModel.setStatus(" close the hackathon");
 			else if(singleResponseModel.getStatus().equals("closed"))
 				singleResponseModel.setStatus(" Finalize the hackathon");
@@ -91,7 +88,6 @@ public class HackathonController {
 	@RequestMapping(value = "/getUserHackathons/{id}", method = RequestMethod.GET, produces = { "application/json", "application/xml" })
 	public ArrayList<HackathonDetailsResposeModel> getUserHackathons(@PathVariable long id) 
 	{	
-		
 		ArrayList<HackathonDetailsResposeModel> listOfHackathons = new ArrayList<HackathonDetailsResposeModel>();
 		HackathonDetailsResposeModel singleResponseModel;
 		ArrayList<HackathonDto> hackathonDtoList = new ArrayList<HackathonDto>();
@@ -220,6 +216,12 @@ public class HackathonController {
 		return results;
 	}
 	
+	@PostMapping(path="addExpense")
+	public String addExpense(@RequestBody HackathonDetailsRequestModel hack ) {
+		
+		return "Expense added";
+	}
+	
 	@GetMapping(path="getfinalisedHackathons")
 	public ArrayList<String> getfinalisedHackathons() {
 		ArrayList<String> finalisedHackathons = new ArrayList<String>();
@@ -253,8 +255,7 @@ public class HackathonController {
 		{
 			for(UserDto teamMember: winner.getTeamMembers())
 			{
-				System.out.println(" The email to send $$$$$ : " + teamMember.getEmail());
-				s.sendMail(teamMember.getEmail(), "Congratulations! You won!", messageForWinner, resultsLocalUrl);
+				s.sendMail(teamMember.getEmail(), "Congratulations! You won!", messageForWinner);
 			}
 		}
 		
@@ -262,7 +263,7 @@ public class HackathonController {
 		{
 			for(UserDto teamMember: loser.getTeamMembers())
 			{
-				s.sendMail(teamMember.getEmail(), "Hackathon results are out!", messageRestOftheParticipants, resultsLocalUrl);
+				s.sendMail(teamMember.getEmail(), "Hackathon results are out!", messageRestOftheParticipants);
 			}
 		}
 	}

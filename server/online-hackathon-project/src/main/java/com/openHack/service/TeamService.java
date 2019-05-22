@@ -1,5 +1,6 @@
 package com.openHack.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.json.JsonObject;
@@ -14,7 +15,7 @@ import com.openHack.ui.model.response.TeamMemberAmountToPayWithDisReponseModel;
 import com.openHack.ui.model.response.TeamMembersWithPayment;
 
 public interface TeamService {
-	TeamDto createTeam(TeamDto teamDto);
+	TeamDto createTeam(TeamDto teamDto) throws IOException;
 	TeamDto getTeamById(long id);
 	ArrayList<TeamsByJudgeDto> getTeamByJudge(long id);
 	TeamDto updateTeam(long id, TeamDto teamDto);

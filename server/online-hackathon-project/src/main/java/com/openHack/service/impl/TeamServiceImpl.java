@@ -1,6 +1,8 @@
 package com.openHack.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.openHack.SendEmailForPayment;
+import com.openHack.SendEmailToUsers;
 import com.openHack.io.entity.HackathonEntity;
 import com.openHack.io.entity.OrganizationEntity;
 import com.openHack.io.entity.PaymentDetailsEntity;
@@ -29,6 +31,7 @@ import com.openHack.ui.model.response.TeamDetailsResposeModel;
 import com.openHack.ui.model.response.TeamMemberAmountToPayWithDisReponseModel;
 import com.openHack.ui.model.response.TeamMembersWithPayment;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -69,7 +72,7 @@ public class TeamServiceImpl implements TeamService {
 	
 	// service method to store team details
 	@Override
-	public TeamDto createTeam(TeamDto teamDto) {
+	public TeamDto createTeam(TeamDto teamDto) throws IOException {
 		
 		// returning the saved object to UI
 		TeamDto returnValue = new TeamDto();
@@ -84,6 +87,16 @@ public class TeamServiceImpl implements TeamService {
 		TeamEntity savedTeam = teamRepository.save(teamEntity);
 		
 		List<TeamMemberEntity> teamMembers = savedTeam.getTeamMembers();
+		UserEntity userent;
+		SendEmailForPayment s = new SendEmailForPayment();
+		HackathonEntity hack;
+		for(TeamMemberEntity teamentity : teamMembers)
+		{
+			userent = new UserEntity(); hack = new HackathonEntity();
+			hack = hackathonRepository.findById(teamEntity.getHackathonId());
+			userent = userRepository.findById(teamentity.getUserId());
+			s.sendMail(userent.getEmail(), "Payment for registration for hackathon: "+hack.getEventName(), "Use this link to pay for your registration");
+		}
 		
 		// creating list of team member to send email after registration for hackathon
 		List<String> listOfTeamMembers = new ArrayList<>();
