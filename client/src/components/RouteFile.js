@@ -25,6 +25,13 @@ import ManageOrganization from "./Organization/ManageOrganization";
 import Submission from './Hackathon/Submission';
 import JudgePortal from './Judge/JudgePortal';
 
+import PaymentReports from './Admin/PaymentReports'
+import EarningReports from './Admin/EarningReports'
+
+import Result from './Hackathon/Results';
+import Winner from './Hackathon/winner';
+
+
 require("dotenv").config();
 class RouteFile extends Component {
   render() {
@@ -71,6 +78,13 @@ class RouteFile extends Component {
        
 
          <Route path="/judge" component={JudgePortal} />
+
+         <Route path="/reports" component={PaymentReports}/>
+          <Route path="/earnings" component={EarningReports}/>
+
+          <Route path="/results" component={Result} />
+          <Route exact path="/showWinner/:id" component={Winner} />
+      
       </div>
     );
   }

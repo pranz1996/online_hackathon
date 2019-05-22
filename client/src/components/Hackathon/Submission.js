@@ -86,7 +86,7 @@ export default class Submission extends Component {
     let redirectVar = null;
     if (this.state.successFlag) {
       redirectVar = (
-        <Redirect to='/user' />
+        <Redirect to='/myHackathon' />
     )}
     return (
       <div style={{ backgroundColor: "#f2f2f2" }}>

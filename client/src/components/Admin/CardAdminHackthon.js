@@ -50,11 +50,45 @@ export default class CardAdminHackathon extends Component {
       console.log(" final response " + JSON.stringify(response));
       
       if (response.status === 200) {
-        this.props.history.push({
-          pathname:'/cardAdminHackathon'
-      }) 
+      //   this.props.history.push({
+      //     pathname:'/cardAdminHackathon'
+      // }) 
+
+      var hackathon_name = response.data.eventName;
+      var hackathon_status = response.data.status;
+
+      console.log("hackathon name",hackathon_name);
+      console.log("hackathon stauts", hackathon_status);
+
+      const data = {
+        eventName : hackathon_name
+      };
+
+      // axios.post(`${url}/hackathons/sendEmailAfterHackFinalised`, data)
+      // .then((response) => {
+      //   console.log(" called this now! ");
+      // });
+
+      if(hackathon_status == "finalized"){
+        console.log("this hackathon is finalized");
+
+        const data = {
+          eventName : hackathon_name
+        };
+
+        axios.post(`${url}/hackathons/sendEmailAfterHackFinalised`, data)
+        .then((response) => {
+          console.log(" response " + JSON.stringify(response.data));
+        });
+
+      }
+
+        window.location.replace("http://localhost:3000/cardAdminHackathon");
       }
     });
+
+
+
     }
 
   render() {

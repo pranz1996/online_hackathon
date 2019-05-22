@@ -71,6 +71,14 @@ export default class AdminHeader extends Component {
                   <a class="dropdown-item" href="/createHackathon">
                     Create Hackathons
                   </a>
+                  <div class="dropdown-divider" />
+                  <a class="dropdown-item" href="/reports">
+                    Payment Reports
+                  </a>
+                  <div class="dropdown-divider" />
+                  <a class="dropdown-item" href="/earnings">
+                    Earning Reports
+                  </a>
                 </div>
               </li>
               

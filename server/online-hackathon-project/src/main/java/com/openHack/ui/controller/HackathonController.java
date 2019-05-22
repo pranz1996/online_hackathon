@@ -76,7 +76,7 @@ public class HackathonController {
 			BeanUtils.copyProperties(dtoIterator.next(), singleResponseModel);
 			if(singleResponseModel.getStatus().equals("created"))
 				singleResponseModel.setStatus(" start the hackathon");
-			else if(singleResponseModel.getStatus().equals("start"))
+			else if(singleResponseModel.getStatus().equals("open"))
 				singleResponseModel.setStatus(" close the hackathon");
 			else if(singleResponseModel.getStatus().equals("closed"))
 				singleResponseModel.setStatus(" Finalize the hackathon");
@@ -88,6 +88,7 @@ public class HackathonController {
 	@RequestMapping(value = "/getUserHackathons/{id}", method = RequestMethod.GET, produces = { "application/json", "application/xml" })
 	public ArrayList<HackathonDetailsResposeModel> getUserHackathons(@PathVariable long id) 
 	{	
+		
 		ArrayList<HackathonDetailsResposeModel> listOfHackathons = new ArrayList<HackathonDetailsResposeModel>();
 		HackathonDetailsResposeModel singleResponseModel;
 		ArrayList<HackathonDto> hackathonDtoList = new ArrayList<HackathonDto>();
@@ -202,7 +203,7 @@ public class HackathonController {
 		return listOfHackathons;
 	}
 	
-	@GetMapping(path="finaliseHackathon")
+	@PostMapping(path="finaliseHackathon")
 	public HashMap<String, ArrayList<HackathonResultsDto>> getHackathonResults(@RequestBody HackathonDetailsRequestModel hack ) throws IOException {
 		HashMap<String, ArrayList<HackathonResultsDto>> results = new HashMap<String, ArrayList<HackathonResultsDto>>();
 		// DTO object to hold the input request data
@@ -249,6 +250,7 @@ public class HackathonController {
 		{
 			for(UserDto teamMember: winner.getTeamMembers())
 			{
+				System.out.println(" The email to send $$$$$ : " + teamMember.getEmail());
 				s.sendMail(teamMember.getEmail(), "Congratulations! You won!", messageForWinner);
 			}
 		}

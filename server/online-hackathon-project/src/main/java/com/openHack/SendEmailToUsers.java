@@ -20,7 +20,7 @@ public class SendEmailToUsers
 		content.setType("text/html");
 		content.setValue("<html><body><b>"+body+" : "+"</b><a href = "+url+">here</a></body></html>");
 		Mail mail = new Mail(from, subject, to, content);
-		SendGrid sg = new SendGrid("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");
+		SendGrid sg = new SendGrid("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");
 		Request request = new Request();
 		try 
 		{
