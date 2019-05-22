@@ -73,6 +73,9 @@ export default class Header extends Component {
                   <a class="dropdown-item" href="/myHackathon">
                     View My Hackathon
                   </a>
+                  <a class="dropdown-item" href="/judge">
+                    Judge Hackathon
+                  </a>
                 </div>
               </li>
               <li class="nav-item dropdown">

@@ -8,6 +8,7 @@ import java.util.Map;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,7 +43,7 @@ public class HackathonController {
 	@Autowired
 	HackathonService hackathonService;
 	
-	@Value("${results.local.url}")
+//	@Value("${results.local.url}")
 	String resultsLocalUrl;
 	
 	// get any hackathon by id
