@@ -7,14 +7,14 @@ import java.util.List;
 
 public class SendEmailToUsers 
 {
-	public boolean sendMail(String email, String subject, String body) throws IOException
+	public boolean sendMail(String email, String subject, String body, String url) throws IOException
 	{
 		//String url = "http://localhost:3000/results";
-		String url = Config_url.url + "/results";
+		//String url = Config_url.url + "/results";
 		
 		
-		Email from = new Email("results@hackathon.com");
-	    Email to = new Email(email);
+		Email from = new Email("test@example.com");
+	        Email to = new Email(email);
 
 		Content content = new Content();
 		content.setType("text/html");
