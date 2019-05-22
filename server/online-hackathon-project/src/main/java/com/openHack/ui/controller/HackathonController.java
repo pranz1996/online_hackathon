@@ -42,6 +42,9 @@ public class HackathonController {
 	@Autowired
 	HackathonService hackathonService;
 	
+	@Value("${results.local.url}")
+	String resultsLocalUrl;
+	
 	// get any hackathon by id
 	@GetMapping(path="/{id}")
 	public HackathonDetailsResposeModel getHackathon(@PathVariable long id) {
@@ -251,7 +254,7 @@ public class HackathonController {
 			for(UserDto teamMember: winner.getTeamMembers())
 			{
 				System.out.println(" The email to send $$$$$ : " + teamMember.getEmail());
-				s.sendMail(teamMember.getEmail(), "Congratulations! You won!", messageForWinner);
+				s.sendMail(teamMember.getEmail(), "Congratulations! You won!", messageForWinner, resultsLocalUrl);
 			}
 		}
 		
@@ -259,7 +262,7 @@ public class HackathonController {
 		{
 			for(UserDto teamMember: loser.getTeamMembers())
 			{
-				s.sendMail(teamMember.getEmail(), "Hackathon results are out!", messageRestOftheParticipants);
+				s.sendMail(teamMember.getEmail(), "Hackathon results are out!", messageRestOftheParticipants, resultsLocalUrl);
 			}
 		}
 	}
